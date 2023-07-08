@@ -1,1 +1,25 @@
-.vscode
+# Compiled class files
+*.class
+
+# Build directory
+target/
+
+# Dependency directories
+lib/
+libs/
+
+# IDE files and directories
+.idea/
+.eclipse/
+.vscode/
+
+# Build output
+build/
+bin/
+
+# Log files
+*.log
+
+# Operating System files
+.DS_Store
+Thumbs.db
