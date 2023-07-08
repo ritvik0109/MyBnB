@@ -12,6 +12,7 @@ libs/
 .idea/
 .eclipse/
 .vscode/
+config.properties
 
 # Build output
 build/
