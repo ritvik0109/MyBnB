@@ -13,17 +13,17 @@ public class App {
 		//Register JDBC driver
 		Class.forName(dbClassName);
 		
-        //Database credentials
-        Properties properties = new Properties();
-        try (InputStream input = new FileInputStream("config.properties")) {
-            properties.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		//Database credentials
+		Properties properties = new Properties();
+		try (InputStream input = new FileInputStream("config.properties")) {
+				properties.load(input);
+		} catch (IOException e) {
+				e.printStackTrace();
+		}
 
-        // Retrieve the password from the configuration file
+    // Retrieve the password from the configuration file
 		final String USER = "root";
-        final String PASS = properties.getProperty("db.password");
+    final String PASS = properties.getProperty("db.password");
 		System.out.println("Connecting to database...");
 		
 		try {
