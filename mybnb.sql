@@ -1,4 +1,6 @@
-CREATE TABLE Users {
+Drop TABLE IF EXISTS Users, Listings, Availabilities, Amenities, Bookings;
+
+CREATE TABLE Users (
   user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   address VARCHAR(100),
@@ -6,9 +8,9 @@ CREATE TABLE Users {
   date_of_birth DATE, 
   occupation VARCHAR(50) NOT NULL,
   credit_card INT(16)
-}
+);
 
-CREATE TABLE Listing {
+CREATE TABLE Listings (
   list_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   property_type ENUM('house', 'apartment', 'guesthouse', 'hotel') NOT NULL, 
   title VARCHAR(100) NOT NULL,
@@ -21,20 +23,20 @@ CREATE TABLE Listing {
   unit_room_number VARCHAR(30),
   longitude DECIMAL(9, 6),
   latitude DECIMAL(9, 6),
-  user_id INT NOT NULL,
+  user_id INT,
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
-}
+);
 
-CREATE TABLE Availabilities {
+CREATE TABLE Availabilities (
   avail_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
   start_date DATE, 
   end_date DATE,
   list_id INT NOT NULL,
   FOREIGN KEY (list_id) REFERENCES Listings(list_id)
-}
+);
 
-CREATE TABLE Amenities {
-  amenities_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Amenities (
+  amenity_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   wifi BOOLEAN, 
   kitchen BOOLEAN, 
   washer BOOLEAN, 
@@ -59,9 +61,9 @@ CREATE TABLE Amenities {
   hot_tub BOOLEAN,
   list_id INT NOT NULL,
   FOREIGN KEY (list_id) REFERENCES Listings(list_id)
-}
+);
 
-CREATE TABLE Bookings {
+CREATE TABLE Bookings (
   booking_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
   is_cancelled BOOLEAN, 
   is_cancelled_by_host BOOLEAN, 
@@ -78,4 +80,4 @@ CREATE TABLE Bookings {
   list_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (list_id) REFERENCES Listings(list_id)
-}
+)
