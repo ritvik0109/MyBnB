@@ -12,7 +12,7 @@ public class CLI {
 
             switch (mainChoice) {
                 case 1:
-                    CreateUserHandler.handleCreateUser(scanner);
+                    CreateUserHandler.handleCreateUser();
                     break;
                 case 2:
                     handleOption2(scanner);
@@ -31,7 +31,7 @@ public class CLI {
     }
 
     private static void displayMainMenu() {
-        System.out.println("===== MyBnB Login / Sign Up =====");
+        System.out.println("\n ===== MyBnB Login / Sign Up =====");
         System.out.println("1. Create User");
         System.out.println("2. User Login");
         System.out.println("3. Exit");
