@@ -1,4 +1,7 @@
 import java.sql.DriverManager;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +17,6 @@ public class SQL {
     private static final String DB_CONNECTION = "jdbc:mysql://127.0.0.1/mybnb";
     private static final String DB_USER = "root";
     private static final String DB_PASS = getPassword();
-
-    // TODO: need to find a way to get password currently breaks if not passed as string
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASS);
@@ -81,8 +82,13 @@ public class SQL {
 
     private static String getPassword(){
         Properties properties = new Properties();
+        try (InputStream inputStream = new FileInputStream("config.properties")) {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String pass = properties.getProperty("db.password");
-        System.out.println();
         return pass;
     }
 }
