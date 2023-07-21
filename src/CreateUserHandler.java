@@ -10,7 +10,7 @@ public class CreateUserHandler {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter your name: ");
-        String name  = scanner.nextLine();
+        String name = scanner.nextLine();
         while (!isValidString(name)) {
             System.out.print("Invalid name. Please enter a valid name: ");
             name = scanner.nextLine();
@@ -31,7 +31,7 @@ public class CreateUserHandler {
         }
 
         System.out.print("Enter your address: ");
-        String address  = scanner.nextLine();
+        String address = scanner.nextLine();
         while (!isValidString(address)) {
             System.out.print("Invalid name. Please enter a valid name: ");
             name = scanner.nextLine();
@@ -55,7 +55,7 @@ public class CreateUserHandler {
         String occupation = scanner.nextLine();
         while (!isValidOccupation(occupation)) {
             System.out.print("Invalid occupation. Please enter a valid occupation (only using letters): ");
-            sin = scanner.nextLine();
+            occupation = scanner.nextLine();
         }
 
         // Debugging:
@@ -71,46 +71,19 @@ public class CreateUserHandler {
         // scanner.close();
     }
 
-    // SQL Query: 
-
-    private static boolean doesEmailExist(String email){
-        String sql = "SELECT COUNT(*) FROM Users WHERE email = ?";
-        SQL.CustomResultSet result = SQL.executeQuery(sql, email);
-        if (result.getResultSet() != null) {
-            return true;
-        }
-        else {
-            // Remove if unnecessary:
-            System.out.println("Error: " + result.getErrorMessage());
-            return false;
-        }
-    }
-
-    public static boolean isLoginValid(String email, String password) {
-        String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
-        SQL.CustomResultSet result = SQL.executeQuery(sql, email, password);
-    
-        if (result.getResultSet() != null) {
-            return true;
-        } else {
-            System.out.println("Error: " + result.getErrorMessage());
-            return false;
-        }
-    }
-    
-    private static void createUser(String name, String email, String password, String address, String sin, String dateofBirth, String occupation) {
+    private static void createUser(String name, String email, String password, String address, String sin,
+            String dateofBirth, String occupation) {
         // SQL QUERY: Perform sign-up process here
         String sql = "INSERT INTO USERS (name, email, password, address, sin, date_of_birth, occupation) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String success = SQL.executeUpdate(sql, name, email, password, address, sin, dateofBirth, occupation);
-        if (success.isEmpty()){
+        if (success.isEmpty()) {
             System.out.println("o success!");
-        }
-        else{
+        } else {
             System.out.println("Failed to create user! Please try again.");
             System.out.println("Error: " + success);
         }
     }
-    
+
     // Data validation methods:
 
     private static boolean isValidString(String inputString) {
@@ -134,18 +107,17 @@ public class CreateUserHandler {
         if (occupation == null || occupation.trim().isEmpty()) {
             return false;
         }
-    
+
         // Check if the occupation contains only letters
         for (char c : occupation.toCharArray()) {
             if (!Character.isLetter(c)) {
                 return false;
             }
         }
-    
+
         // If all characters are letters, then the occupation is valid
         return true;
     }
-    
 
     private static boolean isValidDateOfBirth(String dateOfBirthStr) {
         try {
