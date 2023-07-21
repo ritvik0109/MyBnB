@@ -53,7 +53,10 @@ public class CreateUserHandler {
 
         System.out.print("Enter your occupation: ");
         String occupation = scanner.nextLine();
-        //TODO: occupation data validation (?) j characters?
+        while (!isValidOccupation(occupation)) {
+            System.out.print("Invalid occupation. Please enter a valid occupation (only using letters): ");
+            sin = scanner.nextLine();
+        }
 
         // Debugging:
         // String name = "John Does";
@@ -70,6 +73,31 @@ public class CreateUserHandler {
 
     // SQL Query: 
 
+    private static boolean doesEmailExist(String email){
+        String sql = "SELECT COUNT(*) FROM Users WHERE email = ?";
+        SQL.CustomResultSet result = SQL.executeQuery(sql, email);
+        if (result.getResultSet() != null) {
+            return true;
+        }
+        else {
+            // Remove if unnecessary:
+            System.out.println("Error: " + result.getErrorMessage());
+            return false;
+        }
+    }
+
+    public static boolean isLoginValid(String email, String password) {
+        String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
+        SQL.CustomResultSet result = SQL.executeQuery(sql, email, password);
+    
+        if (result.getResultSet() != null) {
+            return true;
+        } else {
+            System.out.println("Error: " + result.getErrorMessage());
+            return false;
+        }
+    }
+    
     private static void createUser(String name, String email, String password, String address, String sin, String dateofBirth, String occupation) {
         // SQL QUERY: Perform sign-up process here
         String sql = "INSERT INTO USERS (name, email, password, address, sin, date_of_birth, occupation) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -85,8 +113,8 @@ public class CreateUserHandler {
     
     // Data validation methods:
 
-    private static boolean isValidString(String inpuString) {
-        return inpuString.length() > 0;
+    private static boolean isValidString(String inputString) {
+        return inputString.length() > 0;
     }
 
     private static boolean isValidEmail(String email) {
@@ -100,6 +128,24 @@ public class CreateUserHandler {
     private static boolean isValidSin(String sin) {
         return sin.matches("\\d{9}");
     }
+
+    private static boolean isValidOccupation(String occupation) {
+        // Validate if the occupation is not null or empty
+        if (occupation == null || occupation.trim().isEmpty()) {
+            return false;
+        }
+    
+        // Check if the occupation contains only letters
+        for (char c : occupation.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+    
+        // If all characters are letters, then the occupation is valid
+        return true;
+    }
+    
 
     private static boolean isValidDateOfBirth(String dateOfBirthStr) {
         try {

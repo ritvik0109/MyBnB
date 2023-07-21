@@ -18,6 +18,25 @@ public class SQL {
     private static final String DB_USER = "root";
     private static final String DB_PASS = getPassword();
 
+     // CustomResultSet class to encapsulate the ResultSet and exception message
+    public static class CustomResultSet {
+        private ResultSet resultSet;
+        private String errorMessage;
+
+        public CustomResultSet(ResultSet resultSet, String errorMessage) {
+            this.resultSet = resultSet;
+            this.errorMessage = errorMessage;
+        }
+
+        public ResultSet getResultSet() {
+            return resultSet;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
+    }
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASS);
     }
@@ -66,17 +85,18 @@ public class SQL {
         }
     }
 
-    public static ResultSet executeQuery(String sql, Object... params) {
+    public static CustomResultSet executeQuery(String sql, Object... params) {
         try {
             Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             for (int i = 0; i < params.length; i++) {
                 statement.setObject(i + 1, params[i]);
             }
-            return statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
+            return new CustomResultSet(resultSet, "");
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return new CustomResultSet(null, e.getMessage());
         }
     }
 
