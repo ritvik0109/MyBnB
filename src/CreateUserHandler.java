@@ -6,62 +6,63 @@ import java.util.Scanner;
 public class CreateUserHandler {
 
     public static void handleCreateUser() {
-        System.out.println("\n--- Create User (Sign Up) ---");
-        // Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Main Menu (Registration/Login) ---");
+        Scanner scanner = new Scanner(System.in);
 
-        // System.out.print("Enter your name: ");
-        // String name  = scanner.nextLine();
-        // while (!isValidString(name)) {
-        //     System.out.print("Invalid name. Please enter a valid name: ");
-        //     name = scanner.nextLine();
-        // }
+        System.out.print("Enter your name: ");
+        String name  = scanner.nextLine();
+        while (!isValidString(name)) {
+            System.out.print("Invalid name. Please enter a valid name: ");
+            name = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your email: ");
-        // String email = scanner.nextLine();
-        // while (!isValidEmail(email)) {
-        //     System.out.print("Invalid email. Please enter a valid email: ");
-        //     email = scanner.nextLine();
-        // }
+        System.out.print("Enter your email: ");
+        String email = scanner.nextLine();
+        while (!isValidEmail(email)) {
+            System.out.print("Invalid email. Please enter a valid email: ");
+            email = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your password: ");
-        // String password = scanner.nextLine();
-        // while (!isValidPassword(password)) {
-        //     System.out.print("Invalid password. Password must be at least 8 characters long: ");
-        //     password = scanner.nextLine();
-        // }
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
+        while (!isValidPassword(password)) {
+            System.out.print("Invalid password. Password must be at least 8 characters long: ");
+            password = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your address: ");
-        // String address  = scanner.nextLine();
-        // while (!isValidString(address)) {
-        //     System.out.print("Invalid name. Please enter a valid name: ");
-        //     name = scanner.nextLine();
-        // }
+        System.out.print("Enter your address: ");
+        String address  = scanner.nextLine();
+        while (!isValidString(address)) {
+            System.out.print("Invalid name. Please enter a valid name: ");
+            name = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your date of birth (YYYY-MM-DD): ");
-        // String dateOfBirth = scanner.nextLine();
-        // while (!isValidDateOfBirth(dateOfBirth)) {
-        //     System.out.print("Invalid date of birth. Please enter a valid date in the format YYYY-MM-DD: ");
-        //     dateOfBirth = scanner.nextLine();
-        // }
+        System.out.print("Enter your date of birth (YYYY-MM-DD): ");
+        String dateOfBirth = scanner.nextLine();
+        while (!isValidDateOfBirth(dateOfBirth)) {
+            System.out.print("Invalid date of birth. Please enter a valid date in the format YYYY-MM-DD: ");
+            dateOfBirth = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your SIN: ");
-        // String sin = scanner.nextLine();
-        // while (!isValidSin(sin)) {
-        //     System.out.print("Invalid SIN. Please enter a valid 9-digit SIN: ");
-        //     sin = scanner.nextLine();
-        // }
+        System.out.print("Enter your SIN: ");
+        String sin = scanner.nextLine();
+        while (!isValidSin(sin)) {
+            System.out.print("Invalid SIN. Please enter a valid 9-digit SIN: ");
+            sin = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your occupation: ");
-        // String occupation = scanner.nextLine();
+        System.out.print("Enter your occupation: ");
+        String occupation = scanner.nextLine();
+        //TODO: occupation data validation (?) j characters?
 
         // Debugging:
-        String name = "John Does";
-        String email = "john@does.com";
-        String password = "johnny";
-        String address = "here";
-        String dateOfBirth = "2002-02-02";
-        String sin = "234567890";
-        String occupation = "strong";
+        // String name = "John Does";
+        // String email = "john@does.com";
+        // String password = "johnny";
+        // String address = "here";
+        // String dateOfBirth = "2002-02-02";
+        // String sin = "234567890";
+        // String occupation = "strong";
 
         createUser(name, email, password, address, sin, dateOfBirth, occupation);
         // scanner.close();
