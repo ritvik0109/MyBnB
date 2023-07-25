@@ -10,33 +10,10 @@ import java.util.Properties;
 
 
 public class SQL {
-    // private static final String DB_URL = "jdbc:mysql://your_database_url"; // Replace with your database URL
-    // private static final String DB_USER = "your_username"; // Replace with your database username
-    // private static final String DB_PASSWORD = "your_password"; // Replace with your database password
-
     private static final String DB_CONNECTION = "jdbc:mysql://127.0.0.1/mybnb";
     private static final String DB_USER = "root";
     private static final String DB_PASS = getPassword();
-
-     // CustomResultSet class to encapsulate the ResultSet and exception message
-    public static class CustomResultSet {
-        private ResultSet resultSet;
-        private String errorMessage;
-
-        public CustomResultSet(ResultSet resultSet, String errorMessage) {
-            this.resultSet = resultSet;
-            this.errorMessage = errorMessage;
-        }
-
-        public ResultSet getResultSet() {
-            return resultSet;
-        }
-
-        public String getErrorMessage() {
-            return errorMessage;
-        }
-    }
-
+    
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASS);
     }
@@ -85,18 +62,17 @@ public class SQL {
         }
     }
 
-    public static CustomResultSet executeQuery(String sql, Object... params) {
+    public static ResultSet executeQuery(String sql, Object... params) {
         try {
             Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             for (int i = 0; i < params.length; i++) {
                 statement.setObject(i + 1, params[i]);
             }
-            ResultSet resultSet = statement.executeQuery();
-            return new CustomResultSet(resultSet, "");
+            return statement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-            return new CustomResultSet(null, e.getMessage());
+            return null;
         }
     }
 
@@ -111,4 +87,27 @@ public class SQL {
         String pass = properties.getProperty("db.password");
         return pass;
     }
+
+    // CustomResultSet class to encapsulate the ResultSet and exception message
+    // public static class CustomResultSet {
+    //     private ResultSet resultSet;
+    //     private String errorMessage;
+
+    //     public CustomResultSet(ResultSet resultSet, String errorMessage) {
+    //         this.resultSet = resultSet;
+    //         this.errorMessage = errorMessage;
+    //     }
+
+    //     public ResultSet getResultSet() {
+    //         return resultSet;
+    //     }
+
+    //     public String getErrorMessage() {
+    //         return errorMessage;
+    //     }
+    // }
+
+    // private static final String DB_URL = "jdbc:mysql://your_database_url"; // Replace with your database URL
+    // private static final String DB_USER = "your_username"; // Replace with your database username
+    // private static final String DB_PASSWORD = "your_password"; // Replace with your database password
 }

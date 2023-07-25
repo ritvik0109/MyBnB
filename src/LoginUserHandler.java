@@ -1,3 +1,5 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LoginUserHandler {
@@ -34,7 +36,7 @@ public class LoginUserHandler {
             password = scanner.nextLine();
         }
 
-        scanner.close();
+        // scanner.close();
 
         if (!exit) {
             UserMainMenu.userHome();
@@ -47,29 +49,36 @@ public class LoginUserHandler {
     }
 
     private static boolean isUserEmail(String email) {
-        String sql = "SELECT COUNT(*) FROM Users WHERE email = ?";
-        SQL.CustomResultSet result = SQL.executeQuery(sql, email);
-        if (result.getResultSet() != null) { // TODO: Fix this case
-            return true;
-        } else {
-            // Remove if unnecessary:
-            System.out.println("Error: " + result.getErrorMessage());
+        String sql = "SELECT COUNT(*) AS count FROM Users WHERE email = ?";
+        try (ResultSet resultSet = SQL.executeQuery(sql, email)) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                if (count > 0){
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
+    
 
-    public static boolean isLoginValid(String email, String password) {
-        String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
-        SQL.CustomResultSet result = SQL.executeQuery(sql, email, password);
-
-        if (result.getResultSet() != null) {
-            System.out.println("Login Success");
-            return true;
-        } else {
-            System.out.println("Error: " + result.getErrorMessage());
+    private static boolean isLoginValid(String email, String password) {
+        String sql = "SELECT COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
+        try (ResultSet resultSet = SQL.executeQuery(sql, email, password)) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
+    
 
     private static String getUserInput(Scanner scanner) {
         while (!scanner.hasNextLine()) {
