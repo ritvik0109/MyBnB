@@ -66,19 +66,27 @@ public class LoginUserHandler {
     
 
     private static boolean isLoginValid(String email, String password) {
-        String sql = "SELECT COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
+        String sql = "SELECT user_id, email, COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
         try (ResultSet resultSet = SQL.executeQuery(sql, email, password)) {
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
-                return count > 0;
+                if (count > 0) {
+                    // Login is valid, set the user details in UserDetails class
+                    int userId = resultSet.getInt("user_id");
+                    String userEmail = resultSet.getString("email");
+    
+                    UserDetails.setUserId(userId);
+                    UserDetails.setUserEmail(userEmail);
+    
+                    return true;
+                }
             }
             return false;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-    }
-    
+    }    
 
     private static String getUserInput(Scanner scanner) {
         while (!scanner.hasNextLine()) {

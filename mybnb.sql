@@ -17,14 +17,14 @@ CREATE TABLE Listings (
   property_type ENUM('house', 'apartment', 'guesthouse', 'hotel') NOT NULL, 
   title VARCHAR(100) NOT NULL,
   description TEXT,
-  price_per_night DECIMAL(10, 2),
+  price_per_night DECIMAL(12, 2),
   address VARCHAR(100),
   city VARCHAR(50),
   country VARCHAR(50),
   postal_code INT(10),
   unit_room_number VARCHAR(30),
-  longitude DECIMAL(9, 6),
-  latitude DECIMAL(9, 6),
+  longitude DOUBLE,
+  latitude DOUBLE,
   user_id INT,
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );

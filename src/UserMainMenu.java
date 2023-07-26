@@ -12,7 +12,7 @@ public class UserMainMenu {
 
             switch (mainChoice) {
                 case 1:
-                    System.out.println("Sub Option 1 selected");
+                    CreateListing.handleCreateListing();
                     break;
                 case 2:
                     System.out.println("Sub Option 2 selected");
@@ -43,11 +43,11 @@ public class UserMainMenu {
 
     private static void displaySubMenu() {
         System.out.println("1. Create Listing");
-        System.out.println("2. Edit existing listing");
-        System.out.println("3. Remove listing");
-        System.out.println("4. Book listing (search)");
-        System.out.println("5. Cancel booking");
-        System.out.println("6. Delete account");
+        System.out.println("2. Edit Existing Listing");
+        System.out.println("3. Remove Listing");
+        System.out.println("4. Book Listing (Search)");
+        System.out.println("5. Cancel Booking");
+        System.out.println("6. Delete Account");
         System.out.println("7. Logout");
         System.out.print("Enter your choice: ");
     }
