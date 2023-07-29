@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CreateUserHandler {
 
     public static void handleCreateUser(Scanner scanner) {
-        System.out.println("\n--- Main Menu (Registration/Login) ---");
+        System.out.println("\n--- Create a User ---");
         scanner.nextLine();
 
         System.out.print("Enter your name: ");
