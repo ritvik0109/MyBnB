@@ -12,10 +12,10 @@ public class PageUserHome {
 
             switch (mainChoice) {
                 case 1:
-                    CreateListing.handleCreateListing(scanner);
+                    CreateListingHandler.handleCreateListing(scanner);
                     break;
                 case 2:
-                    System.out.println("Sub Option 2 selected");
+                    RemoveListingHandler.handleRemoveListing(scanner);
                     break;
                 case 3:
                     System.out.println("Sub Option 3 selected");

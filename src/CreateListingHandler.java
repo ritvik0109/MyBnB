@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
 
-public class CreateListing {
+public class CreateListingHandler {
 
     public static void handleCreateListing(Scanner scanner) {
         System.out.println("\n--- Create a Listing ---");
