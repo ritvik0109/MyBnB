@@ -39,7 +39,9 @@ public class LoginUserHandler {
         // scanner.close();
 
         if (!exit) {
-            UserMainMenu.userHome();
+            System.out.println("\nSuccessfully logged in!\n");
+
+            UserMainMenu.userHome(email);
         }
 
     }
