@@ -1,15 +1,12 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class CreateListing {
 
-    public static void handleCreateListing() {
+    public static void handleCreateListing(Scanner scanner) {
         System.out.println("\n--- Create a Listing ---");
-        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
 
         // Get user input for each attribute of the Listings table
         System.out.print("Enter property type (house/apartment/guesthouse/hotel): ");
@@ -46,11 +43,12 @@ public class CreateListing {
         int userId = UserDetails.getUserId(); 
         System.out.println("UserID: " + Integer.toString(UserDetails.getUserId()));
 
-        BigDecimal truncPrice = pricePerNight.setScale(2, RoundingMode.DOWN);
-        BigDecimal truncLongitude = longitude.setScale(9, RoundingMode.DOWN);
-        BigDecimal truncLatitude = latitude.setScale(9, RoundingMode.DOWN);
+        // Truncated values to fit the schema specifications:
+        BigDecimal trPrice = pricePerNight.setScale(2, RoundingMode.DOWN);
+        BigDecimal trLongitude = longitude.setScale(9, RoundingMode.DOWN);
+        BigDecimal trLatitude = latitude.setScale(9, RoundingMode.DOWN);
 
-        String success = SQL.executeUpdate(sql, propertyType, title, description, truncPrice, address, city, country, postalCode, unitRoomNumber, truncLongitude, truncLatitude, userId);
+        String success = SQL.executeUpdate(sql, propertyType, title, description, trPrice, address, city, country, postalCode, unitRoomNumber, trLongitude, trLatitude, userId);
         if (success.isEmpty()) {
             System.out.println("Successfully added listing! Return to Main Menu");
         } else {
@@ -59,9 +57,8 @@ public class CreateListing {
         }
     }
 
-    // Data validation methods:
+    // -- Data Validation Methods:
 
-    // Function to validate propertyType
     private static boolean isValidPropertyType(String propertyType) {
         return propertyType.equals("house") || propertyType.equals("apartment")
                 || propertyType.equals("guesthouse") || propertyType.equals("hotel");
@@ -126,8 +123,6 @@ public class CreateListing {
     
 }
 
-
-        
 // Debugging:
 // String name = "John Does";
 // String email = "john@does.com";

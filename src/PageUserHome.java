@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-public class UserMainMenu {
-    public static void userHome() {
+public class PageUserHome {
+    public static void userHome(Scanner scanner) {
         System.out.println("\n--- MyBnB Home ---");
-        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         boolean exit = false;
 
         while (!exit) {
@@ -12,7 +12,7 @@ public class UserMainMenu {
 
             switch (mainChoice) {
                 case 1:
-                    CreateListing.handleCreateListing();
+                    CreateListing.handleCreateListing(scanner);
                     break;
                 case 2:
                     System.out.println("Sub Option 2 selected");
@@ -42,6 +42,7 @@ public class UserMainMenu {
     }
 
     private static void displaySubMenu() {
+        System.out.println("=== MyBnB: User Home ===");
         System.out.println("1. Create Listing");
         System.out.println("2. Edit Existing Listing");
         System.out.println("3. Remove Listing");

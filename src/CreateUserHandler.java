@@ -1,13 +1,12 @@
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class CreateUserHandler {
 
-    public static void handleCreateUser() {
+    public static void handleCreateUser(Scanner scanner) {
         System.out.println("\n--- Main Menu (Registration/Login) ---");
-        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
 
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();

@@ -4,10 +4,9 @@ import java.util.Scanner;
 
 public class LoginUserHandler {
 
-    public static void handleUserLogin() {
+    public static void handleUserLogin(Scanner scanner) {
         System.out.println("\n--- User Login ---");
-
-        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         boolean exit = false;
 
         System.out.print("Enter your email address: ");
@@ -36,10 +35,8 @@ public class LoginUserHandler {
             password = scanner.nextLine();
         }
 
-        // scanner.close();
-
         if (!exit) {
-            UserMainMenu.userHome();
+            PageUserHome.userHome(scanner);
         }
 
     }
@@ -88,19 +85,19 @@ public class LoginUserHandler {
         }
     }    
 
-    private static String getUserInput(Scanner scanner) {
-        while (!scanner.hasNextLine()) {
-            System.out.println("Invalid input. Please enter an valid input.");
-            scanner.next(); // Clear the invalid input from the buffer
-        }
-        return scanner.nextLine();
-    }
+    // private static String getUserInput(Scanner scanner) {
+    //     while (!scanner.hasNextLine()) {
+    //         System.out.println("Invalid input. Please enter an valid input.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextLine();
+    // }
 
-    private static int getUserChoice(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Invalid input. Please enter a valid integer choice.");
-            scanner.next(); // Clear the invalid input from the buffer
-        }
-        return scanner.nextInt();
-    }
+    // private static int getUserChoice(Scanner scanner) {
+    //     while (!scanner.hasNextInt()) {
+    //         System.out.println("Invalid input. Please enter a valid integer choice.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextInt();
+    // }
 }
