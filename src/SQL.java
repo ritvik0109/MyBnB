@@ -8,12 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
 public class SQL {
     private static final String DB_CONNECTION = "jdbc:mysql://127.0.0.1/mybnb";
     private static final String DB_USER = "root";
     private static final String DB_PASS = getPassword();
-    
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASS);
     }
@@ -50,7 +49,7 @@ public class SQL {
 
     public static String executeUpdate(String sql, Object... params) {
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+                PreparedStatement statement = connection.prepareStatement(sql)) {
             for (int i = 0; i < params.length; i++) {
                 statement.setObject(i + 1, params[i]);
             }
@@ -76,7 +75,7 @@ public class SQL {
         }
     }
 
-    private static String getPassword(){
+    private static String getPassword() {
         Properties properties = new Properties();
         try (InputStream inputStream = new FileInputStream("config.properties")) {
             properties.load(inputStream);
@@ -90,24 +89,27 @@ public class SQL {
 
     // CustomResultSet class to encapsulate the ResultSet and exception message
     // public static class CustomResultSet {
-    //     private ResultSet resultSet;
-    //     private String errorMessage;
+    // private ResultSet resultSet;
+    // private String errorMessage;
 
-    //     public CustomResultSet(ResultSet resultSet, String errorMessage) {
-    //         this.resultSet = resultSet;
-    //         this.errorMessage = errorMessage;
-    //     }
-
-    //     public ResultSet getResultSet() {
-    //         return resultSet;
-    //     }
-
-    //     public String getErrorMessage() {
-    //         return errorMessage;
-    //     }
+    // public CustomResultSet(ResultSet resultSet, String errorMessage) {
+    // this.resultSet = resultSet;
+    // this.errorMessage = errorMessage;
     // }
 
-    // private static final String DB_URL = "jdbc:mysql://your_database_url"; // Replace with your database URL
-    // private static final String DB_USER = "your_username"; // Replace with your database username
-    // private static final String DB_PASSWORD = "your_password"; // Replace with your database password
+    // public ResultSet getResultSet() {
+    // return resultSet;
+    // }
+
+    // public String getErrorMessage() {
+    // return errorMessage;
+    // }
+    // }
+
+    // private static final String DB_URL = "jdbc:mysql://your_database_url"; //
+    // Replace with your database URL
+    // private static final String DB_USER = "your_username"; // Replace with your
+    // database username
+    // private static final String DB_PASSWORD = "your_password"; // Replace with
+    // your database password
 }

@@ -46,10 +46,11 @@ public class PageUserHome {
         System.out.println("1. Create Listing");
         System.out.println("2. Edit Existing Listing");
         System.out.println("3. Remove Listing");
-        System.out.println("4. Book Listing (Search)");
+        System.out.println("4. Create Booking (Search)");
         System.out.println("5. Cancel Booking");
-        System.out.println("6. Delete Account");
-        System.out.println("7. Logout");
+        System.out.println("6. Review Your Experience (Rate & Comment)");
+        System.out.println("7. Delete Account");
+        System.out.println("8. Logout");
         System.out.print("Enter your choice: ");
     }
 

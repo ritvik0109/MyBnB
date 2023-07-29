@@ -11,8 +11,9 @@ public class CreateListing {
         // Get user input for each attribute of the Listings table
         System.out.print("Enter property type (house/apartment/guesthouse/hotel): ");
         String propertyType = scanner.nextLine();
-        while (!isValidPropertyType(propertyType)){
-            System.out.println("Invalid property type. Allowed values: house, apartment, guesthouse, hotel. \n Please enter a valid property type: ");
+        while (!isValidPropertyType(propertyType)) {
+            System.out.println(
+                    "Invalid property type. Allowed values: house, apartment, guesthouse, hotel. \n Please enter a valid property type: ");
             propertyType = scanner.nextLine();
         }
 
@@ -31,16 +32,18 @@ public class CreateListing {
         BigDecimal longitude = handleInputBigDecimal(scanner, "longitude");
         BigDecimal latitude = handleInputBigDecimal(scanner, "latitude");
 
-        createListing(propertyType, title, description, pricePerNight, address, city, country, postalCode, unitRoomNumber, longitude, latitude);
+        createListing(propertyType, title, description, pricePerNight, address, city, country, postalCode,
+                unitRoomNumber, longitude, latitude);
     }
 
-    private static void createListing(String propertyType, String title, String description, 
-                                      BigDecimal pricePerNight, String address, String city, String country, 
-                                      int postalCode, String unitRoomNumber, BigDecimal longitude, BigDecimal latitude) {
+    private static void createListing(String propertyType, String title, String description,
+            BigDecimal pricePerNight, String address, String city, String country,
+            int postalCode, String unitRoomNumber, BigDecimal longitude, BigDecimal latitude) {
         // SQL QUERY: Perform sign-up process here
-        String sql = "INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        int userId = UserDetails.getUserId(); 
+        String sql = "INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id) "
+                +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        int userId = UserDetails.getUserId();
         System.out.println("UserID: " + Integer.toString(UserDetails.getUserId()));
 
         // Truncated values to fit the schema specifications:
@@ -48,7 +51,8 @@ public class CreateListing {
         BigDecimal trLongitude = longitude.setScale(9, RoundingMode.DOWN);
         BigDecimal trLatitude = latitude.setScale(9, RoundingMode.DOWN);
 
-        String success = SQL.executeUpdate(sql, propertyType, title, description, trPrice, address, city, country, postalCode, unitRoomNumber, trLongitude, trLatitude, userId);
+        String success = SQL.executeUpdate(sql, propertyType, title, description, trPrice, address, city, country,
+                postalCode, unitRoomNumber, trLongitude, trLatitude, userId);
         if (success.isEmpty()) {
             System.out.println("Successfully added listing! Return to Main Menu");
         } else {
@@ -69,7 +73,7 @@ public class CreateListing {
         return inputValue != null && inputValue.compareTo(BigDecimal.ZERO) > 0;
     }
 
-    private static BigDecimal handleInputBigDecimal(Scanner scanner, String value){
+    private static BigDecimal handleInputBigDecimal(Scanner scanner, String value) {
         System.out.print("Enter " + value + ": ");
 
         while (!scanner.hasNextBigDecimal()) {
@@ -83,7 +87,8 @@ public class CreateListing {
         scanner.nextLine(); // Consume the newline character left by nextBigDecimal()
 
         while (!isValidBigDecimal(bigD)) {
-            String message = String.format("Invalid %s, must be larger than 0. Please enter a valid %s: ", value, value);
+            String message = String.format("Invalid %s, must be larger than 0. Please enter a valid %s: ", value,
+                    value);
             System.out.println(message);
             bigD = scanner.nextBigDecimal();
             scanner.nextLine(); // Consume the newline character left by nextBigDecimal()
@@ -94,17 +99,17 @@ public class CreateListing {
 
     private static int handleInputInt(Scanner scanner, String value) {
         System.out.print("Enter " + value + ": ");
-    
+
         while (!scanner.hasNextInt()) {
             // Consume the invalid input
             scanner.nextLine();
             String message = String.format("Invalid %s, Please enter a valid integer %s: ", value, value);
             System.out.println(message);
         }
-    
+
         int intValue = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character left by nextInt()
-    
+
         return intValue;
     }
 
@@ -119,8 +124,7 @@ public class CreateListing {
         }
         return stringValue;
     }
-    
-    
+
 }
 
 // Debugging:
