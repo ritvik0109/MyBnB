@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class UserMainMenu {
-    public static void userHome() {
+    public static void userHome(String email) {
         System.out.println("\n--- MyBnB Home ---");
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -15,7 +15,7 @@ public class UserMainMenu {
                     System.out.println("Sub Option 1 selected");
                     break;
                 case 2:
-                    System.out.println("Sub Option 2 selected");
+                    EditListing.editListing(scanner);
                     break;
                 case 3:
                     System.out.println("Sub Option 3 selected");
@@ -42,7 +42,7 @@ public class UserMainMenu {
     }
 
     private static void displaySubMenu() {
-        System.out.println("1. Create Listing");
+        System.out.println("\n1. Create Listing");
         System.out.println("2. Edit existing listing");
         System.out.println("3. Remove listing");
         System.out.println("4. Book listing (search)");
