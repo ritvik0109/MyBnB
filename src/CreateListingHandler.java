@@ -22,9 +22,9 @@ public class CreateListingHandler {
 
         BigDecimal pricePerNight = handleInputBigDecimal(scanner, "price per night");
 
-        String address = handleInputString(scanner, "address");
-        String city = handleInputString(scanner, "city");
-        String country = handleInputString(scanner, "country");
+        String address = handleInputWord(scanner, "address");
+        String city = handleInputWord(scanner, "city");
+        String country = handleInputWord(scanner, "country");
 
         int postalCode = handleInputInt(scanner, "postal code");
         String unitRoomNumber = handleInputString(scanner, "unit/room number");
@@ -125,6 +125,21 @@ public class CreateListingHandler {
         return stringValue;
     }
 
+    private static String handleInputWord(Scanner scanner, String value) {
+        System.out.print("Enter " + value + ": ");
+        String stringValue = scanner.nextLine();
+        while (isValidWord(stringValue)) {
+            String message = String.format("Invalid %s, Please enter a non-empty %s: ", value, value);
+            System.out.println(message);
+            System.out.print("Enter " + value + ": ");
+            stringValue = scanner.nextLine();
+        }
+        return stringValue;
+    }
+
+    private static boolean isValidWord(String word) {
+        return word.matches("[a-zA-Z]+");
+    }
 }
 
 // Debugging:
