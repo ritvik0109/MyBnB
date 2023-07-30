@@ -22,7 +22,7 @@ public class CreateListingHandler {
 
         BigDecimal pricePerNight = handleInputBigDecimal(scanner, "price per night");
 
-        String address = handleInputWord(scanner, "address");
+        String address = handleInputString(scanner, "address");
         String city = handleInputWord(scanner, "city");
         String country = handleInputWord(scanner, "country");
 
@@ -71,6 +71,10 @@ public class CreateListingHandler {
     private static boolean isValidBigDecimal(BigDecimal inputValue) {
         // Check if the input value is not null and greater than zero
         return inputValue != null && inputValue.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    private static boolean isValidWord(String word) {
+        return word.matches("[a-zA-Z]+");
     }
 
     private static BigDecimal handleInputBigDecimal(Scanner scanner, String value) {
@@ -128,8 +132,8 @@ public class CreateListingHandler {
     private static String handleInputWord(Scanner scanner, String value) {
         System.out.print("Enter " + value + ": ");
         String stringValue = scanner.nextLine();
-        while (isValidWord(stringValue)) {
-            String message = String.format("Invalid %s, Please enter a non-empty %s: ", value, value);
+        while (!isValidWord(stringValue)) {
+            String message = String.format("Invalid %s, Please use only alphabetical characters %s: ", value, value);
             System.out.println(message);
             System.out.print("Enter " + value + ": ");
             stringValue = scanner.nextLine();
@@ -137,9 +141,6 @@ public class CreateListingHandler {
         return stringValue;
     }
 
-    private static boolean isValidWord(String word) {
-        return word.matches("[a-zA-Z]+");
-    }
 }
 
 // Debugging:

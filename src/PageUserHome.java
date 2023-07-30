@@ -13,25 +13,27 @@ public class PageUserHome {
                     CreateListingHandler.handleCreateListing(scanner);
                     break;
                 case 2:
-                    RemoveListingHandler.handleRemoveListing(scanner);
+                    System.out.println("Edit Listing");
                     break;
                 case 3:
-                    System.out.println("Sub Option 3 selected");
+                    RemoveListingHandler.handleRemoveListing(scanner);
                     break;
                 case 4:
-                    System.out.println("Sub Option 4 selected");
+                    System.out.println("Create Booking / Search");
                     break;
                 case 5:
-                    System.out.println("Sub Option 5 selected");
+                    System.out.println("Cancel Booking");
                     break;
                 case 6:
-                    System.out.println("Sub Option 6 selected");
+                    System.out.println("Review Your Experience (Rate / Comment)");
                     break;
                 case 7:
-                    System.out.println("Sub Option 7 selected");
+                    System.out.println("Delete Account");
                     break;
                 case 8:
+                    System.out.println("...logging out");
                     exit = true; // Go back to the main menu
+                    UserDetails.clearUserDetails();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -41,7 +43,7 @@ public class PageUserHome {
     }
 
     private static void displaySubMenu() {
-        System.out.println("=== MyBnB: User Home ===");
+        System.out.println("\n === MyBnB: User Home ===");
         System.out.println("1. Create Listing");
         System.out.println("2. Edit Existing Listing");
         System.out.println("3. Remove Listing");
