@@ -2,8 +2,6 @@ import java.util.Scanner;
 
 public class PageUserHome {
     public static void userHome(Scanner scanner) {
-        System.out.println("\n--- MyBnB Home ---");
-        scanner.nextLine();
         boolean exit = false;
 
         while (!exit) {
@@ -30,6 +28,9 @@ public class PageUserHome {
                     System.out.println("Sub Option 6 selected");
                     break;
                 case 7:
+                    System.out.println("Sub Option 7 selected");
+                    break;
+                case 8:
                     exit = true; // Go back to the main menu
                     break;
                 default:
@@ -37,8 +38,6 @@ public class PageUserHome {
                     break;
             }
         }
-
-        scanner.close();
     }
 
     private static void displaySubMenu() {
