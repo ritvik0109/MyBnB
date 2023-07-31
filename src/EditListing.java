@@ -32,14 +32,8 @@ public class EditListing {
 
                 switch (mainChoice) {
                     case 1:
-                        // TODO: Figure out how to get valid property type input
-                        // System.out.print("Enter new property type (house, apartment, guesthouse, hotel): ");
-                        // String property_type = getUserInput(scanner);
-                        // while (!isValidPropertyType(property_type)){
-                        //     System.out.println("Invalid choice. Please select one of ('house', 'apartment', 'guesthouse', 'hotel'): ");
-                        //     property_type = getUserInput(scanner);
-                        // }
-                        String property_type = getUserInput(scanner);
+                        // TODO: Fix double message being print out to get input
+                        String property_type = getValidPropertyType(scanner);
                         listing.setPropertyType(property_type);
                         break;
                     case 2:
@@ -194,64 +188,25 @@ public class EditListing {
         return new Listing();
     }
 
-    // public static String getValidPropertyType(Scanner scanner) {
-    //     // System.out.println("Enter new property type (house, apartment, guesthouse, hotel): ");
-    //     // String input = getUserInput(scanner);
-    //     // System.out.println(input);
-    //     // while (!isValidPropertyType(input)) {
-    //     //     System.out.println("Invalid choice. Please select one of ('house', 'apartment', 'guesthouse', 'hotel'): ");
-    //     //     input = getUserInput(scanner);
-    //     // }
-    //     // String input;
-    //     // do {
-    //     //     System.out.println("Enter new property type (house, apartment, guesthouse, hotel): ");
-    //     //     System.out.println("-1");
-    //     //     input = scanner.nextLine().trim().toLowerCase();
-    //     // } while (!isValidPropertyType(input));
-    //     while (!scanner.hasNextLine()) {
-    //         System.out.print("Invalid input. Please enter an valid input: ");
-    //         scanner.next(); // Clear the invalid input from the buffer
-    //     }
-    //     String input = scanner.nextLine();
-    //     while (!isValidPropertyType(input)){
-    //         while (!scanner.hasNextLine()) {
-    //             System.out.print("Invalid input. Please enter an valid input: ");
-    //             scanner.next(); // Clear the invalid input from the buffer
-    //         }
-    //         input = scanner.nextLine();
-    //     }
-    //     return input;
-    // }
+    private static String getValidPropertyType(Scanner scanner) {
+        System.out.print("Enter new property type (house, apartment, guesthouse, hotel): ");
+        String input = getUserInput(scanner);
+        while (!(isValidPropertyType(input) || input != "")) {
+            System.out.println("Invalid choice. Please select one of ('house', 'apartment', 'guesthouse', 'hotel'): ");
+            input = getUserInput(scanner);
+        }
+        return input;
+    }
 
-    // private static boolean isValidPropertyType(String input) {
-    //     String[] choices = { "house", "apartment", "guesthouse", "hotel" };
-    //     for (String choice : choices) {
-    //         if (choice.equalsIgnoreCase(input)) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    // public static String getValidPropertyType(String message, String[] choices) {
-    //     String input;
-    //     do {
-    //         System.out.print(message);
-    //         input = scanner.nextLine().trim().toLowerCase();
-    //     } while (!isValidChoice(input, choices));
-
-    //     return input;
-    // }
-
-    // private static boolean isValidChoice(String input, String[] choices) {
-    //     for (String choice : choices) {
-    //         if (choice.equalsIgnoreCase(input)) {
-    //             return true;
-    //         }
-    //     }
-    //     System.out.println("Invalid choice. Please select one of: " + String.join(", ", choices));
-    //     return false;
-    // }
+    private static boolean isValidPropertyType(String input) {
+        String[] choices = { "house", "apartment", "guesthouse", "hotel" };
+        for (String choice : choices) {
+            if (choice.equalsIgnoreCase(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private static String getUserInput(Scanner scanner) {
         while (!scanner.hasNextLine()) {
