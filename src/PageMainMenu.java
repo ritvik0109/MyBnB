@@ -7,7 +7,8 @@ public class PageMainMenu {
 
         while (!exit) {
             displayMainMenu();
-            int mainChoice = getUserChoice(scanner);
+            int mainChoice = 2;
+            // TODO: uncomment, int mainChoice = getUserChoice(scanner);
 
             switch (mainChoice) {
                 case 1:

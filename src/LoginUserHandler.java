@@ -6,34 +6,39 @@ public class LoginUserHandler {
 
     public static void handleUserLogin(Scanner scanner) {
         System.out.println("\n--- User Login ---");
-        scanner.nextLine();
+        // scanner.nextLine();
         boolean exit = false;
+        
+        //TODO: uncomment
+        // System.out.print("Enter your email address: ");
+        // String email = scanner.nextLine();
 
-        System.out.print("Enter your email address: ");
-        String email = scanner.nextLine();
+        // // String email = "r@mail.com"; // Debugging
+        // while (!isValidEmail(email) || !isUserEmail(email)) {
+        //     if (!isValidEmail(email))
+        //         System.out.print("Please enter a valid email address: ");
+        //     else if (!isUserEmail(email))
+        //         System.out.print("No user account with this email exists. Please enter a valid email address: ");
+        //     email = scanner.nextLine();
+        // }
 
-        // String email = "r@mail.com"; // Debugging
-        while (!isValidEmail(email) || !isUserEmail(email)) {
-            if (!isValidEmail(email))
-                System.out.print("Please enter a valid email address: ");
-            else if (!isUserEmail(email))
-                System.out.print("No user account with this email exists. Please enter a valid email address: ");
-            email = scanner.nextLine();
-        }
+        // System.out.print("Enter your password: ");
+        // String password = scanner.nextLine();
+        // int attempts = 3;
+        // while (!isLoginValid(email, password)) {
+        //     attempts -= 1;
+        //     if (attempts == 0) {
+        //         exit = true;
+        //         break;
+        //     }
 
-        System.out.print("Enter your password: ");
-        String password = scanner.nextLine();
-        int attempts = 3;
-        while (!isLoginValid(email, password)) {
-            attempts -= 1;
-            if (attempts == 0) {
-                exit = true;
-                break;
-            }
+        //     System.out.print("Incorrect password. Please try again: ");
+        //     password = scanner.nextLine();
+        // }
 
-            System.out.print("Incorrect password. Please try again: ");
-            password = scanner.nextLine();
-        }
+        String email = "jane.smith@example.com";
+        String password = "password";
+        isLoginValid(email, password);
 
         if (!exit) {
             PageUserHome.userHome(scanner);
