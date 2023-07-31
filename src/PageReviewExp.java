@@ -13,7 +13,7 @@ public class PageReviewExp {
           ReviewAsRenterHandler.handleRenterComments(scanner);
           break;
         case 2:
-          System.out.println("Review as Host");
+          ReviewAsHostHandler.handleHostComments(scanner);
           break;
         case 3:
           System.out.println("...returning to home");

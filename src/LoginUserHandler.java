@@ -6,39 +6,39 @@ public class LoginUserHandler {
 
     public static void handleUserLogin(Scanner scanner) {
         System.out.println("\n--- User Login ---");
-        // scanner.nextLine();
+        scanner.nextLine();
         boolean exit = false;
-        
-        //TODO: uncomment
-        // System.out.print("Enter your email address: ");
-        // String email = scanner.nextLine();
 
-        // // String email = "r@mail.com"; // Debugging
-        // while (!isValidEmail(email) || !isUserEmail(email)) {
-        //     if (!isValidEmail(email))
-        //         System.out.print("Please enter a valid email address: ");
-        //     else if (!isUserEmail(email))
-        //         System.out.print("No user account with this email exists. Please enter a valid email address: ");
-        //     email = scanner.nextLine();
-        // }
+        System.out.print("Enter your email address: ");
+        String email = scanner.nextLine();
 
-        // System.out.print("Enter your password: ");
-        // String password = scanner.nextLine();
-        // int attempts = 3;
-        // while (!isLoginValid(email, password)) {
-        //     attempts -= 1;
-        //     if (attempts == 0) {
-        //         exit = true;
-        //         break;
-        //     }
+        // String email = "r@mail.com"; // Debugging
+        while (!isValidEmail(email) || !isUserEmail(email)) {
+            if (!isValidEmail(email))
+                System.out.print("Please enter a valid email address: ");
+            else if (!isUserEmail(email))
+                System.out.print("No user account with this email exists. Please enter a valid email address: ");
+            email = scanner.nextLine();
+        }
 
-        //     System.out.print("Incorrect password. Please try again: ");
-        //     password = scanner.nextLine();
-        // }
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
+        int attempts = 3;
+        while (!isLoginValid(email, password)) {
+            attempts -= 1;
+            if (attempts == 0) {
+                exit = true;
+                break;
+            }
 
-        String email = "jane.smith@example.com";
-        String password = "password";
-        isLoginValid(email, password);
+            System.out.print("Incorrect password. Please try again: ");
+            password = scanner.nextLine();
+        }
+
+        // Debugging:
+        // String email = "john.doe@example.com";
+        // String password = "pass123";
+        // isLoginValid(email, password);
 
         if (!exit) {
             PageUserHome.userHome(scanner);
@@ -90,18 +90,18 @@ public class LoginUserHandler {
     }
 
     // private static String getUserInput(Scanner scanner) {
-    // while (!scanner.hasNextLine()) {
-    // System.out.println("Invalid input. Please enter an valid input.");
-    // scanner.next(); // Clear the invalid input from the buffer
-    // }
-    // return scanner.nextLine();
+    //     while (!scanner.hasNextLine()) {
+    //         System.out.println("Invalid input. Please enter an valid input.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextLine();
     // }
 
     // private static int getUserChoice(Scanner scanner) {
-    // while (!scanner.hasNextInt()) {
-    // System.out.println("Invalid input. Please enter a valid integer choice.");
-    // scanner.next(); // Clear the invalid input from the buffer
-    // }
-    // return scanner.nextInt();
+    //     while (!scanner.hasNextInt()) {
+    //         System.out.println("Invalid input. Please enter a valid integer choice.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextInt();
     // }
 }

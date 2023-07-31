@@ -6,8 +6,8 @@ public class PageUserHome {
 
         while (!exit) {
             displaySubMenu();
-            int mainChoice = 6;
-            // TODO: uncomment, int mainChoice = getUserChoice(scanner);
+            // int mainChoice = 6;
+            int mainChoice = getUserChoice(scanner);
 
             switch (mainChoice) {
                 case 1:
