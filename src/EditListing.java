@@ -96,7 +96,8 @@ public class EditListing {
                         String start = scanner.nextLine();
                         scanner.next();
                         while (!isValidStartDate(start)) {
-                            System.out.print("Invalid start date. Please enter a valid date in the format YYYY-MM-DD: ");
+                            System.out
+                                    .print("Invalid start date. Please enter a valid date in the format YYYY-MM-DD: ");
                             start = scanner.nextLine();
                         }
 
@@ -116,7 +117,7 @@ public class EditListing {
                         Availability.removeAvailability(availId);
                         break;
                     case 14:
-                        // TODO Edit amenities
+                        editAmenities(id, scanner);
                         break;
                     case 15:
                         noMoreEdits = true;
@@ -271,7 +272,7 @@ public class EditListing {
         }
     }
 
-    private static boolean isValidStartDate(String start){
+    private static boolean isValidStartDate(String start) {
         try {
             // Parse the input date string to a LocalDate object
             LocalDate startDate = LocalDate.parse(start);
@@ -286,7 +287,7 @@ public class EditListing {
         }
     }
 
-    private static boolean isValidEndDate(String start, String end){
+    private static boolean isValidEndDate(String start, String end) {
         try {
             // Parse the input date string to a LocalDate object
             LocalDate startDate = LocalDate.parse(start);
@@ -316,6 +317,159 @@ public class EditListing {
             }
         }
         return false;
+    }
+
+    private static void editAmenities(int id, Scanner scanner) {
+
+        Amenities amenities = getAmenities(id);
+
+        boolean noMoreEdits = false;
+        while (!noMoreEdits) {
+            displayAmenities(amenities);
+
+            System.out.print("Select amenity to toggle: ");
+            int toUpdate = getUserChoice(scanner);
+
+            switch (toUpdate) {
+                case 1:
+                    amenities.setWifi(!amenities.getWifi());
+                    break;
+                case 2:
+                    amenities.setKitchen(!amenities.getKitchen());
+                    break;
+                case 3:
+                    amenities.setWasher(!amenities.getWasher());
+                    break;
+                case 4:
+                    amenities.setDryer(!amenities.getDryer());
+                    break;
+                case 5:
+                    amenities.setAc(!amenities.getAc());
+                    break;
+                case 6:
+                    amenities.setHeating(!amenities.getHeating());
+                    break;
+                case 7:
+                    amenities.setWorkspace(!amenities.getWorkspace());
+                    break;
+                case 8:
+                    amenities.setTv(!amenities.getTv());
+                    break;
+                case 9:
+                    amenities.setHairDryer(!amenities.getHairDryer());
+                    break;
+                case 10:
+                    amenities.setIron(!amenities.getIron());
+                    break;
+                case 11:
+                    amenities.setSmokeAlarm(!amenities.getSmokeAlarm());
+                    break;
+                case 12:
+                    amenities.setCarbonMonoxideAlarm(!amenities.getCarbonMonoxideAlarm());
+                    break;
+                case 13:
+                    amenities.setPool(!amenities.getPool());
+                    break;
+                case 14:
+                    amenities.setFreeParking(!amenities.getFreeParking());
+                    break;
+                case 15:
+                    amenities.setCrib(!amenities.getCrib());
+                    break;
+                case 16:
+                    amenities.setBbqGrill(!amenities.getBbqGrill());
+                    break;
+                case 17:
+                    amenities.setIndoorFireplace(!amenities.getIndoorFireplace());
+                    break;
+                case 18:
+                    amenities.setSmokingAllowed(!amenities.getSmokingAllowed());
+                    break;
+                case 19:
+                    amenities.setBreakfast(!amenities.getBreakfast());
+                    break;
+                case 20:
+                    amenities.setGym(!amenities.getGym());
+                    break;
+                case 21:
+                    amenities.setEvCharger(!amenities.getEvCharger());
+                    break;
+                case 22:
+                    amenities.setHotTub(!amenities.getHotTub());
+                    break;
+                case 23:
+                    noMoreEdits = true;
+                    break;
+                default:
+                    System.out.println("Invalid value");
+                    break;
+            }
+        }
+    }
+
+    private static Amenities getAmenities(int id) {
+        String sql = "SELECT * FROM Amenities WHERE list_id=?";
+        try (ResultSet resultSet = SQL.executeQuery(sql, id)) {
+            while (resultSet.next()) {
+                return new Amenities(
+                        resultSet.getInt("amenity_id"),
+                        resultSet.getBoolean("wifi"),
+                        resultSet.getBoolean("kitchen"),
+                        resultSet.getBoolean("washer"),
+                        resultSet.getBoolean("dryer"),
+                        resultSet.getBoolean("ac"),
+                        resultSet.getBoolean("heating"),
+                        resultSet.getBoolean("workspace"),
+                        resultSet.getBoolean("tv"),
+                        resultSet.getBoolean("hair_dryer"),
+                        resultSet.getBoolean("iron"),
+                        resultSet.getBoolean("smoke_alarm"),
+                        resultSet.getBoolean("carbon_monoxide_alarm"),
+                        resultSet.getBoolean("pool"),
+                        resultSet.getBoolean("free_parking"),
+                        resultSet.getBoolean("crib"),
+                        resultSet.getBoolean("bbq_grill"),
+                        resultSet.getBoolean("indoor_fireplace"),
+                        resultSet.getBoolean("smoking_allowed"),
+                        resultSet.getBoolean("breakfast"),
+                        resultSet.getBoolean("gym"),
+                        resultSet.getBoolean("ev_charger"),
+                        resultSet.getBoolean("hot_tub"),
+                        id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    private static void displayAmenities(Amenities amenities) {
+        System.out.println("\n-------------\n");
+        System.out.println("1.  Wifi: " + (amenities.getWifi() ? "" : "Not ") + "Included");
+        System.out.println("2.  Kitchen: " + (amenities.getKitchen() ? "" : "Not ") + "Included");
+        System.out.println("3.  Washer: " + (amenities.getWasher() ? "" : "Not ") + "Included");
+        System.out.println("4.  Dryer: " + (amenities.getDryer() ? "" : "Not ") + "Included");
+        System.out.println("5.  AC: " + (amenities.getAc() ? "" : "Not ") + "Included");
+        System.out.println("6.  Heating: " + (amenities.getHeating() ? "" : "Not ") + "Included");
+        System.out.println("7.  Workspace: " + (amenities.getWorkspace() ? "" : "Not ") + "Included");
+        System.out.println("8.  TV: " + (amenities.getTv() ? "" : "Not ") + "Included");
+        System.out.println("9.  Hair Dryer: " + (amenities.getHairDryer() ? "" : "Not ") + "Included");
+        System.out.println("10. Iron: " + (amenities.getIron() ? "" : "Not ") + "Included");
+        System.out.println("11. Smoke Alarm: " + (amenities.getSmokeAlarm() ? "" : "Not ") + "Included");
+        System.out.println(
+                "12. Carbon Monoxide Alarm: " + (amenities.getCarbonMonoxideAlarm() ? "" : "Not ") + "Included");
+        System.out.println("13. Pool: " + (amenities.getPool() ? "" : "Not ") + "Included");
+        System.out.println("14. Free Parking: " + (amenities.getFreeParking() ? "" : "Not ") + "Included");
+        System.out.println("15. Crib: " + (amenities.getCrib() ? "" : "Not ") + "Included");
+        System.out.println("16. BBQ Grill: " + (amenities.getBbqGrill() ? "" : "Not ") + "Included");
+        System.out.println("17. Indoor Fireplace: " + (amenities.getIndoorFireplace() ? "" : "Not ") + "Included");
+        System.out.println("18. Smoking Allowed: " + (amenities.getSmokingAllowed() ? "" : "Not ") + "Included");
+        System.out.println("19. Breakfast: " + (amenities.getBreakfast() ? "" : "Not ") + "Included");
+        System.out.println("20. Gym: " + (amenities.getGym() ? "" : "Not ") + "Included");
+        System.out.println("21. EV Charger: " + (amenities.getEvCharger() ? "" : "Not ") + "Included");
+        System.out.println("22. Hot Tub: " + (amenities.getHotTub() ? "" : "Not ") + "Included");
+        System.out.println("23. Exit (no more edits)");
     }
 
     private static String getUserInput(Scanner scanner) {
