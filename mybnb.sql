@@ -51,7 +51,7 @@ CREATE TABLE Amenities (
   iron BOOLEAN, 
   smoke_alarm BOOLEAN, 
   carbon_monoxide_alarm BOOLEAN, 
-  spool BOOLEAN, 
+  pool BOOLEAN, 
   free_parking BOOLEAN, 
   crib BOOLEAN, 
   bbq_grill BOOLEAN, 
@@ -138,7 +138,7 @@ VALUES
   ('2023-08-15', '2023-08-22', 10);
 
 -- Mock data for Amenities table
-INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, spool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
+INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
 VALUES
   (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1),
   (1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 2),
