@@ -109,7 +109,10 @@ public class EditListing {
         System.out.println("9. Longitude");
         System.out.println("10. Latitude");
         System.out.println("11. Unit Room Number");
-        System.out.println("12. Exit (no more edits)");
+        System.out.println("12. Add availability");
+        System.out.println("13. Remove availability");
+        System.out.println("14. Exit (no more edits)");
+
         System.out.print("Select what you would like to update: ");
     }
 
@@ -139,7 +142,7 @@ public class EditListing {
                 listingIds.add(newListing);
 
                 // Display the listing information
-                System.out.println("---------------------------------------\n");
+                System.out.println("\n---------------------------------------\n");
                 System.out.println("Listing ID: " + listId);
                 System.out.println("Property Type: " + propertyType);
                 System.out.println("Title: " + title);
@@ -208,6 +211,33 @@ public class EditListing {
         return false;
     }
 
+    private static List<Availability> displayListingAvailability(int list_id) {
+        String sql = "SELECT * FROM Availabilities WHERE list_id=?";
+        try (ResultSet resultSet = SQL.executeQuery(sql, list_id)) {
+            List<Availability> availabilities = new ArrayList<Availability>();
+
+            while (resultSet.next()) {
+                int availId = resultSet.getInt("avail_id");
+                String startDate = resultSet.getString("start_date");
+                String endDate = resultSet.getString("end_date");
+
+                Availability avail = new Availability(availId, startDate, endDate, list_id);
+
+                availabilities.add(avail);
+
+                // Display the listing information
+                System.out.println("\n--------------\n");
+                System.out.println("Availability ID: " + availId);
+                System.out.println("Start date: " + startDate);
+                System.out.println("End date: " + endDate);
+            }
+            return availabilities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Availability>();
+        }
+    }
+
     private static String getUserInput(Scanner scanner) {
         while (!scanner.hasNextLine()) {
             System.out.print("Invalid input. Please enter an valid input: ");
@@ -224,11 +254,11 @@ public class EditListing {
         return scanner.nextInt();
     }
 
-    private static int getUserDouble(Scanner scanner) {
+    private static double getUserDouble(Scanner scanner) {
         while (!scanner.hasNextDouble()) {
             System.out.print("Invalid input. Please enter a valid decimal: ");
             scanner.next(); // Clear the invalid input from the buffer
         }
-        return scanner.nextInt();
+        return scanner.nextDouble();
     }
 }
