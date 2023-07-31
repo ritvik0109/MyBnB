@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CLI {
+public class PageMainMenu {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -11,12 +11,15 @@ public class CLI {
 
             switch (mainChoice) {
                 case 1:
-                    CreateUserHandler.handleCreateUser();
+                    CreateUserHandler.handleCreateUser(scanner);
                     break;
                 case 2:
-                    LoginUserHandler.handleUserLogin();
+                    LoginUserHandler.handleUserLogin(scanner);
                     break;
                 case 3:
+                    RunReportHandler.handleRunReport(scanner);
+                    break;
+                case 4:
                     System.out.println("Exiting the program");
                     exit = true;
                     break;
@@ -30,10 +33,11 @@ public class CLI {
     }
 
     private static void displayMainMenu() {
-        System.out.println("\n ===== MyBnB Login / Sign Up =====");
+        System.out.println("\n ===== MyBnB Main Menu =====");
         System.out.println("1. Create User");
         System.out.println("2. User Login");
-        System.out.println("3. Exit");
+        System.out.println("3. Run a Report");
+        System.out.println("4. Exit");
         System.out.print("Enter your choice: ");
     }
 

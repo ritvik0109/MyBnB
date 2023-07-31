@@ -1,13 +1,12 @@
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class CreateUserHandler {
 
-    public static void handleCreateUser() {
-        System.out.println("\n--- Main Menu (Registration/Login) ---");
-        Scanner scanner = new Scanner(System.in);
+    public static void handleCreateUser(Scanner scanner) {
+        System.out.println("\n--- Create a User ---");
+        scanner.nextLine();
 
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
@@ -77,7 +76,7 @@ public class CreateUserHandler {
         String sql = "INSERT INTO USERS (name, email, password, address, sin, date_of_birth, occupation) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String success = SQL.executeUpdate(sql, name, email, password, address, sin, dateofBirth, occupation);
         if (success.isEmpty()) {
-            System.out.println("o success!");
+            System.out.println("Successfully created user! Please log in.");
         } else {
             System.out.println("Failed to create user! Please try again.");
             System.out.println("Error: " + success);

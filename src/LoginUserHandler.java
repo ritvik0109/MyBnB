@@ -4,10 +4,9 @@ import java.util.Scanner;
 
 public class LoginUserHandler {
 
-    public static void handleUserLogin() {
+    public static void handleUserLogin(Scanner scanner) {
         System.out.println("\n--- User Login ---");
-
-        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         boolean exit = false;
 
         System.out.print("Enter your email address: ");
@@ -36,10 +35,8 @@ public class LoginUserHandler {
             password = scanner.nextLine();
         }
 
-        // scanner.close();
-
         if (!exit) {
-            UserMainMenu.userHome();
+            PageUserHome.userHome(scanner);
         }
 
     }
@@ -53,7 +50,7 @@ public class LoginUserHandler {
         try (ResultSet resultSet = SQL.executeQuery(sql, email)) {
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
-                if (count > 0){
+                if (count > 0) {
                     return true;
                 }
             }
@@ -63,14 +60,22 @@ public class LoginUserHandler {
             return false;
         }
     }
-    
 
     private static boolean isLoginValid(String email, String password) {
-        String sql = "SELECT COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
+        String sql = "SELECT user_id, email, COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
         try (ResultSet resultSet = SQL.executeQuery(sql, email, password)) {
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
-                return count > 0;
+                if (count > 0) {
+                    // Login is valid, set the user details in UserDetails class
+                    int userId = resultSet.getInt("user_id");
+                    String userEmail = resultSet.getString("email");
+
+                    UserDetails.setUserId(userId);
+                    UserDetails.setUserEmail(userEmail);
+
+                    return true;
+                }
             }
             return false;
         } catch (SQLException e) {
@@ -78,21 +83,20 @@ public class LoginUserHandler {
             return false;
         }
     }
-    
 
-    private static String getUserInput(Scanner scanner) {
-        while (!scanner.hasNextLine()) {
-            System.out.println("Invalid input. Please enter an valid input.");
-            scanner.next(); // Clear the invalid input from the buffer
-        }
-        return scanner.nextLine();
-    }
+    // private static String getUserInput(Scanner scanner) {
+    // while (!scanner.hasNextLine()) {
+    // System.out.println("Invalid input. Please enter an valid input.");
+    // scanner.next(); // Clear the invalid input from the buffer
+    // }
+    // return scanner.nextLine();
+    // }
 
-    private static int getUserChoice(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Invalid input. Please enter a valid integer choice.");
-            scanner.next(); // Clear the invalid input from the buffer
-        }
-        return scanner.nextInt();
-    }
+    // private static int getUserChoice(Scanner scanner) {
+    // while (!scanner.hasNextInt()) {
+    // System.out.println("Invalid input. Please enter a valid integer choice.");
+    // scanner.next(); // Clear the invalid input from the buffer
+    // }
+    // return scanner.nextInt();
+    // }
 }

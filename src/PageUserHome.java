@@ -1,9 +1,7 @@
 import java.util.Scanner;
 
-public class UserMainMenu {
-    public static void userHome() {
-        System.out.println("\n--- MyBnB Home ---");
-        Scanner scanner = new Scanner(System.in);
+public class PageUserHome {
+    public static void userHome(Scanner scanner) {
         boolean exit = false;
 
         while (!exit) {
@@ -12,43 +10,48 @@ public class UserMainMenu {
 
             switch (mainChoice) {
                 case 1:
-                    System.out.println("Sub Option 1 selected");
+                    CreateListingHandler.handleCreateListing(scanner);
                     break;
                 case 2:
-                    System.out.println("Sub Option 2 selected");
+                    System.out.println("Edit Listing");
                     break;
                 case 3:
-                    System.out.println("Sub Option 3 selected");
+                    RemoveListingHandler.handleRemoveListing(scanner);
                     break;
                 case 4:
-                    System.out.println("Sub Option 4 selected");
+                    System.out.println("Create Booking / Search");
                     break;
                 case 5:
-                    System.out.println("Sub Option 5 selected");
+                    System.out.println("Cancel Booking");
                     break;
                 case 6:
-                    System.out.println("Sub Option 6 selected");
+                    System.out.println("Review Your Experience (Rate / Comment)");
                     break;
                 case 7:
+                    System.out.println("Delete Account");
+                    break;
+                case 8:
+                    System.out.println("...logging out");
                     exit = true; // Go back to the main menu
+                    UserDetails.clearUserDetails();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
         }
-
-        scanner.close();
     }
 
     private static void displaySubMenu() {
+        System.out.println("\n === MyBnB: User Home ===");
         System.out.println("1. Create Listing");
-        System.out.println("2. Edit existing listing");
-        System.out.println("3. Remove listing");
-        System.out.println("4. Book listing (search)");
-        System.out.println("5. Cancel booking");
-        System.out.println("6. Delete account");
-        System.out.println("7. Logout");
+        System.out.println("2. Edit Existing Listing");
+        System.out.println("3. Remove Listing");
+        System.out.println("4. Create Booking (Search)");
+        System.out.println("5. Cancel Booking");
+        System.out.println("6. Review Your Experience (Rate & Comment)");
+        System.out.println("7. Delete Account");
+        System.out.println("8. Logout");
         System.out.print("Enter your choice: ");
     }
 
