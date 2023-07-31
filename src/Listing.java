@@ -56,7 +56,7 @@ public class Listing {
         String success = SQL.executeUpdate(sql, this.propertyType, this.listId);
         System.out.println();
         if (success.isEmpty()) {
-            System.out.println("Successfully updated property propertyTypen");
+            System.out.println("Successfully updated property type!\n");
         } else {
             System.out.println("Error: Failed to update property type in database.");
         }
