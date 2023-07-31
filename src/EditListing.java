@@ -34,9 +34,15 @@ public class EditListing {
 
                 switch (mainChoice) {
                     case 1:
-                        // TODO: Fix double message being print out to get input
-                        String property_type = getValidPropertyType(scanner);
-                        listing.setPropertyType(property_type);
+                        System.out.print("Enter new property type (house, apartment, guesthouse, hotel): ");
+                        String propertyType = scanner.nextLine();
+                        scanner.next();
+                        while (!isValidPropertyType(propertyType)) {
+                            System.out.println(
+                                    "Invalid choice. Please select one of ('house', 'apartment', 'guesthouse', 'hotel'): ");
+                            propertyType = scanner.nextLine();
+                        }
+
                         break;
                     case 2:
                         System.out.print("Enter new title: ");
@@ -223,16 +229,6 @@ public class EditListing {
             }
         }
         return new Listing();
-    }
-
-    private static String getValidPropertyType(Scanner scanner) {
-        System.out.print("Enter new property type (house, apartment, guesthouse, hotel): ");
-        String input = getUserInput(scanner);
-        while (!(isValidPropertyType(input) || input != "")) {
-            System.out.println("Invalid choice. Please select one of ('house', 'apartment', 'guesthouse', 'hotel'): ");
-            input = getUserInput(scanner);
-        }
-        return input;
     }
 
     private static boolean isValidPropertyType(String input) {
