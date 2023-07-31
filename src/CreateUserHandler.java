@@ -77,7 +77,7 @@ public class CreateUserHandler {
         String sql = "INSERT INTO USERS (name, email, password, address, sin, date_of_birth, occupation) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String success = SQL.executeUpdate(sql, name, email, password, address, sin, dateofBirth, occupation);
         if (success.isEmpty()) {
-            System.out.println("o success!");
+            System.out.println("Successfully created user!");
         } else {
             System.out.println("Failed to create user! Please try again.");
             System.out.println("Error: " + success);
