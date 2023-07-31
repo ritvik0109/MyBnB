@@ -1,5 +1,7 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -87,6 +89,36 @@ public class EditListing {
                         listing.setUnitRoomNumber(unit);
                         break;
                     case 12:
+                        System.out.println("Current Availability: ");
+                        displayListingAvailability(id);
+
+                        System.out.print("Enter the start date (YYYY-MM-DD): ");
+                        String start = scanner.nextLine();
+                        scanner.next();
+                        while (!isValidStartDate(start)) {
+                            System.out.print("Invalid start date. Please enter a valid date in the format YYYY-MM-DD: ");
+                            start = scanner.nextLine();
+                        }
+
+                        System.out.print("Enter the end date (YYYY-MM-DD): ");
+                        String end = scanner.nextLine();
+                        while (!isValidEndDate(start, end)) {
+                            System.out.print("Invalid end date. Please enter a valid date in the format YYYY-MM-DD: ");
+                            end = scanner.nextLine();
+                        }
+
+                        Availability.addAvailability(id, start, end);
+                        break;
+                    case 13:
+                        System.out.println("Current Availability: ");
+                        List<Availability> availabilities = displayListingAvailability(id);
+                        int availId = getAvailToDelete(availabilities, scanner);
+                        Availability.removeAvailability(availId);
+                        break;
+                    case 14:
+                        // TODO Edit amenities
+                        break;
+                    case 15:
                         noMoreEdits = true;
                         break;
                     default:
@@ -111,7 +143,8 @@ public class EditListing {
         System.out.println("11. Unit Room Number");
         System.out.println("12. Add availability");
         System.out.println("13. Remove availability");
-        System.out.println("14. Exit (no more edits)");
+        System.out.println("14. Edit amenities");
+        System.out.println("15. Exit (no more edits)");
 
         System.out.print("Select what you would like to update: ");
     }
@@ -236,6 +269,53 @@ public class EditListing {
             e.printStackTrace();
             return new ArrayList<Availability>();
         }
+    }
+
+    private static boolean isValidStartDate(String start){
+        try {
+            // Parse the input date string to a LocalDate object
+            LocalDate startDate = LocalDate.parse(start);
+
+            // Get the current date
+            LocalDate currentDate = LocalDate.now();
+
+            // Check if the date of birth is before the current date
+            return startDate.isAfter(currentDate);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private static boolean isValidEndDate(String start, String end){
+        try {
+            // Parse the input date string to a LocalDate object
+            LocalDate startDate = LocalDate.parse(start);
+            LocalDate endDate = LocalDate.parse(end);
+
+            // Check if the date of birth is before the current date
+            return startDate.isBefore(endDate);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private static int getAvailToDelete(List<Availability> availabilities, Scanner scanner) {
+        System.out.print("Select which availability to delete (Availability ID): ");
+        int id = getUserChoice(scanner);
+        while (!containsAvailId(availabilities, id)) {
+            System.out.print("Please select a valid availability id: ");
+            id = getUserChoice(scanner);
+        }
+        return id;
+    }
+
+    private static boolean containsAvailId(List<Availability> availabilities, int id) {
+        for (Availability availability : availabilities) {
+            if (availability.getAvailId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static String getUserInput(Scanner scanner) {
