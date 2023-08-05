@@ -87,6 +87,12 @@ CREATE TABLE Bookings (
 
 -- MOCK DATA: 
 
+//TODO: 
+- each user has a listing, one of the users has alot of listings (same country, city, postal code)
+- Availabilities need to be available before current date.
+
+// SET A:
+
 INSERT INTO Users (name, email, password, address, sin, date_of_birth, occupation, credit_card)
 VALUES
 ('John Doe', 'john.doe@example.com', 'pass123', '123 Main St', 123456789, '1990-05-15', 'Engineer', '1234567890123456'),
@@ -117,16 +123,16 @@ VALUES
 
 INSERT INTO Availabilities (start_date, end_date, list_id)
 VALUES
-('2023-08-01', '2023-08-10', 1),
-('2023-09-15', '2023-09-25', 2),
-('2023-08-20', '2023-08-25', 3),
-('2023-09-05', '2023-09-12', 4),
-('2023-08-10', '2023-08-15', 5),
-('2023-09-18', '2023-09-22', 6),
-('2023-08-25', '2023-09-01', 7),
-('2023-09-10', '2023-09-17', 8),
-('2023-08-15', '2023-08-22', 9),
-('2023-09-01', '2023-09-08', 10);
+('2023-02-01', '2023-11-10', 1),
+('2023-02-15', '2023-12-25', 2),
+('2023-02-20', '2023-11-25', 3),
+('2023-02-05', '2023-12-12', 4),
+('2023-02-10', '2023-11-15', 5),
+('2023-02-18', '2023-12-22', 6),
+('2023-02-25', '2023-11-01', 7),
+('2023-02-10', '2023-12-17', 8),
+('2023-02-15', '2023-11-22', 9),
+('2023-02-01', '2023-12-08', 10);
 
 
 INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, spool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
@@ -156,6 +162,7 @@ VALUES
 (false, false, 204.00, '2023-08-20', '2023-08-24', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 9, 9),
 (false, false, 550.00, '2023-09-05', '2023-09-12', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 10, 10);
 
+// SET A.2
 
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
@@ -173,16 +180,16 @@ VALUES
 
 INSERT INTO Availabilities (start_date, end_date, list_id)
 VALUES
-('2023-07-10', '2023-07-18', 11),
-('2023-08-15', '2023-08-25', 12),
-('2023-07-20', '2023-07-28', 13),
-('2023-08-01', '2023-08-08', 14),
-('2023-07-25', '2023-08-02', 15),
-('2023-08-10', '2023-08-18', 16),
-('2023-07-05', '2023-07-12', 17),
-('2023-08-20', '2023-08-28', 18),
-('2023-07-15', '2023-07-23', 19),
-('2023-08-05', '2023-08-13', 20);
+('2023-01-10', '2023-12-18', 11),
+('2023-01-15', '2023-12-25', 12),
+('2023-01-20', '2023-12-28', 13),
+('2023-01-01', '2023-12-08', 14),
+('2023-01-25', '2023-12-02', 15),
+('2023-01-10', '2023-12-18', 16),
+('2023-01-05', '2023-12-12', 17),
+('2023-01-20', '2023-12-28', 18),
+('2023-01-15', '2023-12-23', 19),
+('2023-01-05', '2023-12-13', 20);
 
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
@@ -223,3 +230,11 @@ VALUES
 ('house', 'Victorian Manor 3', 'Elegant Victorian manor in historic district', 280.00, '789 Maple St', 'London', 'UK', 67890, 'Manor 2', 0.987654, 51.345678, 3),
 ('apartment', 'Riverside Retreat 3', 'Relax by the riverside in this modern apartment', 190.00, '123 Oak St', 'London', 'UK', 67890, 'Unit 4D', 0.987654, 51.345678, 3),
 ('house', 'Garden Oasis 3', 'Peaceful house with a beautiful garden', 160.00, '456 Elm St', 'London', 'UK', 67890, 'House 6', 0.987654, 51.345678, 3);
+
+// 
+- create 5 bookings for renter with user_id 6 in the same country, with different city and postal code .
+- create 4 bookings for Host with user_id 7 in the same city and country, but different postal code.
+- create 3 bookings for Host with user_id 8 in the same city and country and postal code.
+
+// SET B: (10 more users, listings, avail, bookings, amenities)
+
