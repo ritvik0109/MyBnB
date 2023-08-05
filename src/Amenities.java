@@ -58,8 +58,31 @@ public class Amenities {
         this.listId = listId;
     }
 
-    public Amenities() {
+    public Amenities() {}
 
+    public Amenities(boolean bool, int list_id) {
+        this.listId = list_id;
+        this.wifi = bool;
+        this.kitchen = bool;
+        this.washer = bool;
+        this.dryer = bool;
+        this.ac = bool;
+        this.heating = bool;
+        this.workspace = bool;
+        this.tv = bool;
+        this.hairDryer = bool;
+        this.iron = bool;
+        this.smokeAlarm = bool;
+        this.carbonMonoxideAlarm = bool;
+        this.freeParking = bool;
+        this.crib = bool;
+        this.bbqGrill = bool;
+        this.indoorFireplace = bool;
+        this.smokingAllowed = bool;
+        this.breakfast = bool;
+        this.gym = bool;
+        this.evCharger = bool;
+        this.hotTub = bool;
     }
 
     // Getters and setters
@@ -77,6 +100,10 @@ public class Amenities {
 
     public void setWifi(boolean wifi) {
         this.wifi = wifi;
+    }
+
+    public void updateWifi(boolean wifi) {
+        this.wifi = wifi;
         setAmenity("wifi", wifi);
     }
 
@@ -85,6 +112,10 @@ public class Amenities {
     }
 
     public void setKitchen(boolean kitchen) {
+        this.kitchen = kitchen;
+    }
+
+    public void updateKitchen(boolean kitchen) {
         this.kitchen = kitchen;
         setAmenity("kitchen", kitchen);
     }
@@ -95,6 +126,10 @@ public class Amenities {
 
     public void setWasher(boolean washer) {
         this.washer = washer;
+    }
+
+    public void updateWasher(boolean washer) {
+        this.washer = washer;
         setAmenity("washer", washer);
     }
 
@@ -103,6 +138,10 @@ public class Amenities {
     }
 
     public void setDryer(boolean dryer) {
+        this.dryer = dryer;
+    }
+
+    public void updateDryer(boolean dryer) {
         this.dryer = dryer;
         setAmenity("dryer", dryer);
     }
@@ -113,6 +152,10 @@ public class Amenities {
 
     public void setAc(boolean ac) {
         this.ac = ac;
+    }
+
+    public void updateAc(boolean ac) {
+        this.ac = ac;
         setAmenity("ac", ac);
     }
 
@@ -121,6 +164,10 @@ public class Amenities {
     }
 
     public void setHeating(boolean heating) {
+        this.heating = heating;
+    }
+
+    public void updateHeating(boolean heating) {
         this.heating = heating;
         setAmenity("heating", heating);
     }
@@ -131,6 +178,10 @@ public class Amenities {
 
     public void setWorkspace(boolean workspace) {
         this.workspace = workspace;
+    }
+
+    public void updateWorkspace(boolean workspace) {
+        this.workspace = workspace;
         setAmenity("workspace", workspace);
     }
 
@@ -139,6 +190,10 @@ public class Amenities {
     }
 
     public void setTv(boolean tv) {
+        this.tv = tv;
+    }
+
+    public void updateTv(boolean tv) {
         this.tv = tv;
         setAmenity("tv", tv);
     }
@@ -149,6 +204,10 @@ public class Amenities {
 
     public void setHairDryer(boolean hairDryer) {
         this.hairDryer = hairDryer;
+    }
+
+    public void updateHairDryer(boolean hairDryer) {
+        this.hairDryer = hairDryer;
         setAmenity("hair_dryer", hairDryer);
     }
 
@@ -157,6 +216,10 @@ public class Amenities {
     }
 
     public void setIron(boolean iron) {
+        this.iron = iron;
+    }
+
+    public void updateIron(boolean iron) {
         this.iron = iron;
         setAmenity("iron", iron);
     }
@@ -167,6 +230,10 @@ public class Amenities {
 
     public void setSmokeAlarm(boolean smokeAlarm) {
         this.smokeAlarm = smokeAlarm;
+    }
+
+    public void updateSmokeAlarm(boolean smokeAlarm) {
+        this.smokeAlarm = smokeAlarm;
         setAmenity("smoke_alarm", smokeAlarm);
     }
 
@@ -175,6 +242,10 @@ public class Amenities {
     }
 
     public void setCarbonMonoxideAlarm(boolean carbonMonoxideAlarm) {
+        this.carbonMonoxideAlarm = carbonMonoxideAlarm;
+    }
+
+    public void updateCarbonMonoxideAlarm(boolean carbonMonoxideAlarm) {
         this.carbonMonoxideAlarm = carbonMonoxideAlarm;
         setAmenity("carbon_monoxide_alarm", carbonMonoxideAlarm);
     }
@@ -185,6 +256,10 @@ public class Amenities {
 
     public void setPool(boolean pool) {
         this.pool = pool;
+    }
+
+    public void updatePool(boolean pool) {
+        this.pool = pool;
         setAmenity("pool", pool);
     }
 
@@ -193,6 +268,10 @@ public class Amenities {
     }
 
     public void setFreeParking(boolean freeParking) {
+        this.freeParking = freeParking;
+    }
+
+    public void updateFreeParking(boolean freeParking) {
         this.freeParking = freeParking;
         setAmenity("free_parking", freeParking);
     }
@@ -203,6 +282,10 @@ public class Amenities {
 
     public void setCrib(boolean crib) {
         this.crib = crib;
+    }
+
+    public void updateCrib(boolean crib) {
+        this.crib = crib;
         setAmenity("crib", crib);
     }
 
@@ -211,6 +294,10 @@ public class Amenities {
     }
 
     public void setBbqGrill(boolean bbqGrill) {
+        this.bbqGrill = bbqGrill;
+    }
+
+    public void updateBbqGrill(boolean bbqGrill) {
         this.bbqGrill = bbqGrill;
         setAmenity("bbq_grill", bbqGrill);
     }
@@ -221,6 +308,10 @@ public class Amenities {
 
     public void setIndoorFireplace(boolean indoorFireplace) {
         this.indoorFireplace = indoorFireplace;
+    }
+
+    public void updateIndoorFireplace(boolean indoorFireplace) {
+        this.indoorFireplace = indoorFireplace;
         setAmenity("indoor_fireplace", indoorFireplace);
     }
 
@@ -229,6 +320,10 @@ public class Amenities {
     }
 
     public void setSmokingAllowed(boolean smokingAllowed) {
+        this.smokingAllowed = smokingAllowed;
+    }
+
+    public void updateSmokingAllowed(boolean smokingAllowed) {
         this.smokingAllowed = smokingAllowed;
         setAmenity("smoking_allowed", smokingAllowed);
     }
@@ -239,6 +334,10 @@ public class Amenities {
 
     public void setBreakfast(boolean breakfast) {
         this.breakfast = breakfast;
+    }
+
+    public void updateBreakfast(boolean breakfast) {
+        this.breakfast = breakfast;
         setAmenity("breakfast", breakfast);
     }
 
@@ -247,6 +346,10 @@ public class Amenities {
     }
 
     public void setGym(boolean gym) {
+        this.gym = gym;
+    }
+
+    public void updateGym(boolean gym) {
         this.gym = gym;
         setAmenity("gym", gym);
     }
@@ -257,6 +360,10 @@ public class Amenities {
 
     public void setEvCharger(boolean evCharger) {
         this.evCharger = evCharger;
+    }
+
+    public void updateEvCharger(boolean evCharger) {
+        this.evCharger = evCharger;
         setAmenity("ev_charger", evCharger);
     }
 
@@ -266,7 +373,31 @@ public class Amenities {
 
     public void setHotTub(boolean hotTub) {
         this.hotTub = hotTub;
+    }
+
+    public void updateHotTub(boolean hotTub) {
+        this.hotTub = hotTub;
         setAmenity("hot_tub", hotTub);
+    }
+
+    public void addAmenity(){
+        // Adds the current amenity to the amenity 
+        String sql = "INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, " +
+                         "iron, smoke_alarm, carbon_monoxide_alarm, spool, free_parking, crib, bbq_grill, " +
+                         "indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String success = SQL.executeUpdate(sql, this.wifi, this.kitchen, this.washer, this.dryer, this.ac,
+                        this.heating, this.workspace, this.tv, this.hairDryer, this.iron, this.smokeAlarm,
+                        this.carbonMonoxideAlarm, this.pool, this.freeParking, this.crib, this.bbqGrill,
+                        this.indoorFireplace, this.smokingAllowed, this.breakfast, this.gym, this.evCharger,
+                        this.hotTub, this.listId);
+        if (success.isEmpty()) {
+            System.out.println("Successfully added amenities!");
+        } else {
+            System.out.println("Failed to add amenities! Please try again.");
+            System.out.println("Error: " + success);
+        }
     }
 
     private void setAmenity(String code, boolean value) {
