@@ -36,13 +36,12 @@ public class EditListing {
                     case 1:
                         System.out.print("Enter new property type (house, apartment, guesthouse, hotel): ");
                         String propertyType = scanner.nextLine();
-                        scanner.next();
                         while (!isValidPropertyType(propertyType)) {
                             System.out.println(
                                     "Invalid choice. Please select one of ('house', 'apartment', 'guesthouse', 'hotel'): ");
                             propertyType = scanner.nextLine();
                         }
-
+                        listing.setPropertyType(propertyType);
                         break;
                     case 2:
                         System.out.print("Enter new title: ");
@@ -56,7 +55,7 @@ public class EditListing {
                         break;
                     case 4:
                         System.out.print("Enter new price (per night): ");
-                        double price = getUserDouble(scanner);
+                        double price = getPrice(scanner);
                         listing.setPricePerNight(price);
                         break;
                     case 5:
@@ -103,14 +102,14 @@ public class EditListing {
                         scanner.next();
                         while (!isValidStartDate(start)) {
                             System.out
-                                    .print("Invalid start date. Please enter a valid date in the format YYYY-MM-DD: ");
+                                    .print("Invalid start date, it must be a future date. Please enter a valid date in the format YYYY-MM-DD: ");
                             start = scanner.nextLine();
                         }
 
                         System.out.print("Enter the end date (YYYY-MM-DD): ");
                         String end = scanner.nextLine();
                         while (!isValidEndDate(start, end)) {
-                            System.out.print("Invalid end date. Please enter a valid date in the format YYYY-MM-DD: ");
+                            System.out.print("Invalid end date, it must be after start date. Please enter a valid date in the format YYYY-MM-DD: ");
                             end = scanner.nextLine();
                         }
 
@@ -481,10 +480,22 @@ public class EditListing {
             System.out.print("Invalid input. Please enter a valid integer: ");
             scanner.next(); // Clear the invalid input from the buffer
         }
-        return scanner.nextInt();
+        int x = scanner.nextInt();
+        scanner.nextLine(); // Consume the new line character left by nextInt()
+        return x;
     }
 
     private static double getUserDouble(Scanner scanner) {
+        while (!scanner.hasNextDouble()) {
+            System.out.print("Invalid input. Please enter a valid decimal: ");
+            scanner.next(); // Clear the invalid input from the buffer
+        }
+        double d = scanner.nextDouble();
+        scanner.nextLine();// Clear the invalid input from the buffer
+        return d;
+    }
+
+    private static double getPrice(Scanner scanner) {
         while (!scanner.hasNextDouble()) {
             System.out.print("Invalid input. Please enter a valid decimal: ");
             scanner.next(); // Clear the invalid input from the buffer
