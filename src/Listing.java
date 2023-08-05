@@ -75,7 +75,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated title!\n");
         } else {
-            System.out.println("Error: Failed to update title type in database.");
+            System.out.println("Error: Failed to update title in database.");
         }
     }
 
@@ -90,9 +90,9 @@ public class Listing {
         String success = SQL.executeUpdate(sql, this.description, this.listId);
         System.out.println();
         if (success.isEmpty()) {
-            System.out.println("Successfully updated description type!\n");
+            System.out.println("Successfully updated description!\n");
         } else {
-            System.out.println("Error: Failed to update description type in database.");
+            System.out.println("Error: Failed to update description in database.");
         }
     }
 
@@ -109,7 +109,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated price!\n");
         } else {
-            System.out.println("Error: Failed to update price type in database.");
+            System.out.println("Error: Failed to update price in database.");
         }
     }
 
@@ -126,7 +126,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated address!\n");
         } else {
-            System.out.println("Error: Failed to update address type in database.");
+            System.out.println("Error: Failed to update address in database.");
         }
     }
 
@@ -143,7 +143,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated city!\n");
         } else {
-            System.out.println("Error: Failed to update city type in database.");
+            System.out.println("Error: Failed to update city in database.");
         }
     }
 
@@ -160,7 +160,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated country!\n");
         } else {
-            System.out.println("Error: Failed to update country type in database.");
+            System.out.println("Error: Failed to update country in database.");
         }
     }
 
@@ -177,7 +177,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated postal code!\n");
         } else {
-            System.out.println("Error: Failed to update postal code type in database.");
+            System.out.println("Error: Failed to update postal code in database.");
         }
     }
 
@@ -194,7 +194,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated unit/room number!\n");
         } else {
-            System.out.println("Error: Failed to update unit/room number type in database.");
+            System.out.println("Error: Failed to update unit/room number in database.");
         }
     }
 
@@ -211,7 +211,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated longitude!\n");
         } else {
-            System.out.println("Error: Failed to update longitude type in database.");
+            System.out.println("Error: Failed to update longitude in database.");
         }
     }
 
@@ -228,7 +228,7 @@ public class Listing {
         if (success.isEmpty()) {
             System.out.println("Successfully updated latitude!\n");
         } else {
-            System.out.println("Error: Failed to update latitude type in database.");
+            System.out.println("Error: Failed to update latitude in database.");
         }
     }
 
