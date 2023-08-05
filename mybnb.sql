@@ -110,7 +110,7 @@ VALUES
 ('house', 'Charming Villa', 'A charming villa with stunning views', 180.00, '456 Oak St', 'Sydney', 'Australia', 45678, 'Villa 3', 151.123456, -33.678910, 5),
 ('apartment', 'City View Condo', 'Enjoy the city skyline from this condo', 250.00, '789 Pine St', 'Tokyo', 'Japan', 89012, 'Unit 5A', 139.123456, 35.678910, 6),
 ('guesthouse', 'Rustic Cabin', 'Escape to nature in this cozy cabin', 100.00, '123 Elm St', 'Vancouver', 'Canada', 23456, 'Cabin 2', -123.123456, 49.678910, 7),
-('hotel', 'Seaside Resort', 'Relax by the beach at this seaside resort', 280.00, '456 Maple St', 'Miami', 'USA', 56789, 'Room 102', -80.123456, 25.678910, 8),
+('hotel', 'Seaside Resort', 'Relax by the beach at this seaside resort', 280.00, '456 Maple St', 'Miami', 'USA', 56789, 'Room 102', -80.123456, 25.678910, 1),
 ('house', 'Country Farmhouse', 'Experience country living in this farmhouse', 170.00, '789 Oak St', 'Rome', 'Italy', 90123, 'Farmhouse 4', 12.123456, 41.678910, 9),
 ('apartment', 'Urban Loft', 'Stylish loft in the heart of the city', 220.00, '456 Pine St', 'Berlin', 'Germany', 23456, 'Loft 7', 13.123456, 52.678910, 10);
 
@@ -145,14 +145,14 @@ VALUES
 
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
-(false, false, 300.00, '2023-08-05', '2023-08-08', 4, 'Great stay!', 5, 'Wonderful host!', 4, 'Enjoyed the stay!', 1, 1),
-(false, false, 400.00, '2023-09-18', '2023-09-22', 5, 'Fantastic place!', 4, 'Very helpful host!', 5, 'Highly recommended!', 2, 2),
+(false, false, 300.00, '2023-09-05', '2023-09-08', 4, 'Great stay!', 5, 'Wonderful host!', 4, 'Enjoyed the stay!', 2, 1),
+(false, false, 400.00, '2023-09-18', '2023-09-22', 5, 'Fantastic place!', 4, 'Very helpful host!', 5, 'Highly recommended!', 4, 1),
 (true, false, 240.00, '2023-08-25', '2023-08-29', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 3, 3),
-(false, false, 900.00, '2023-09-10', '2023-09-17', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 4, 4),
-(false, false, 360.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 5, 5),
-(false, false, 500.00, '2023-09-20', '2023-09-27', 5, 'Lovely place!', 5, 'Great host!', 5, 'Had a wonderful time!', 6, 6),
-(true, false, 120.00, '2023-08-30', '2023-09-02', 3, 'Decent place!', 4, 'Nice host!', 3, 'It was okay!', 7, 7),
+(false, false, 900.00, '2023-09-10', '2023-09-17', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 1, 4),
+(true, true, 360.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 5, 5),
+(true, false, 500.00, '2023-09-20', '2023-09-27', 5, 'Lovely place!', 5, 'Great host!', 5, 'Had a wonderful time!', 6, 6),
+(false, false, 120.00, '2023-08-30', '2023-09-02', 3, 'Decent place!', 4, 'Nice host!', 3, 'It was okay!', 1, 7),
 (false, false, 450.00, '2023-09-15', '2023-09-19', 4, 'Comfortable stay!', 5, 'Helpful host!', 4, 'Enjoyed the trip!', 8, 8),
-(false, false, 204.00, '2023-08-20', '2023-08-24', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 9, 9),
-(false, false, 550.00, '2023-09-05', '2023-09-12', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 10, 10);
+(false, false, 204.00, '2023-08-20', '2023-08-24', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 9, 8),
+(false, false, 550.00, '2023-09-05', '2023-09-12', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 1, 10);
 
