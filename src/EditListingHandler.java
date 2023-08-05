@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class EditListing {
+public class EditListingHandler {
     public static void editListing(Scanner scanner) {
         System.out.println("\n--- MyBnB Home ---");
         boolean exit = false;
 
         while (!exit) {
-            int user_id = 1; // TODO: Fix me
-            // int user_id = UserDetails.getUserId();
+            int user_id = UserDetails.getUserId();
 
             List<Listing> listings = displayUserListings(user_id);
 

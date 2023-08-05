@@ -13,7 +13,7 @@ public class PageUserHome {
                     CreateListingHandler.handleCreateListing(scanner);
                     break;
                 case 2:
-                    EditListing.editListing(scanner);
+                    EditListingHandler.editListing(scanner);
                     break;
                 case 3:
                     RemoveListingHandler.handleRemoveListing(scanner);
