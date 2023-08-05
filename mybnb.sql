@@ -156,3 +156,70 @@ VALUES
 (false, false, 204.00, '2023-08-20', '2023-08-24', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 9, 9),
 (false, false, 550.00, '2023-09-05', '2023-09-12', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 10, 10);
 
+
+INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
+VALUES
+('apartment', 'Downtown Loft', 'Modern loft in the heart of downtown', 180.00, '123 Elm St', 'New York', 'USA', 56789, 'Unit 7B', -74.123456, 40.678910, 3),
+('house', 'Seaside Retreat', 'A cozy house near the beach', 130.00, '789 Oak St', 'Miami', 'USA', 56789, 'House 2', -80.123456, 25.678910, 4),
+('apartment', 'City Center Studio', 'Charming studio in the city center', 120.00, '123 Pine St', 'Paris', 'France', 90123, 'Unit 4C', 2.123456, 48.678910, 6),
+('guesthouse', 'Mountain Getaway', 'Escape to the mountains in this guesthouse', 110.00, '456 Oak St', 'Vancouver', 'Canada', 23456, 'Guesthouse 1', -123.123456, 49.678910, 7),
+('hotel', 'Urban Oasis', 'Experience luxury living in the city', 280.00, '789 Pine St', 'Berlin', 'Germany', 23456, 'Suite 202', 13.123456, 52.678910, 9),
+('house', 'Countryside Cabin', 'Rustic cabin surrounded by nature', 150.00, '456 Elm St', 'London', 'UK', 67890, 'Cabin 3', 0.987654, 51.345678, 10),
+('apartment', 'Skyline View Condo', 'Enjoy stunning views from this condo', 220.00, '789 Maple St', 'New York', 'USA', 56789, 'Unit 10A', -74.123456, 40.678910, 1),
+('guesthouse', 'Tranquil Haven', 'Find peace and tranquility in this guesthouse', 120.00, '123 Oak St', 'Tokyo', 'Japan', 89012, 'Guesthouse 2', 139.123456, 35.678910, 2),
+('hotel', 'Historic Inn', 'Stay in a charming historic inn', 190.00, '456 Pine St', 'Paris', 'France', 90123, 'Room 203', 2.123456, 48.678910, 4),
+('house', 'Rural Farmhouse', 'Experience the rural charm of this farmhouse', 160.00, '789 Elm St', 'Berlin', 'Germany', 23456, 'Farmhouse 5', 13.123456, 52.678910, 5);
+
+
+INSERT INTO Availabilities (start_date, end_date, list_id)
+VALUES
+('2023-07-10', '2023-07-18', 11),
+('2023-08-15', '2023-08-25', 12),
+('2023-07-20', '2023-07-28', 13),
+('2023-08-01', '2023-08-08', 14),
+('2023-07-25', '2023-08-02', 15),
+('2023-08-10', '2023-08-18', 16),
+('2023-07-05', '2023-07-12', 17),
+('2023-08-20', '2023-08-28', 18),
+('2023-07-15', '2023-07-23', 19),
+('2023-08-05', '2023-08-13', 20);
+
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 270.00, '2023-01-10', '2023-02-15', 4, 'Enjoyed the stay!', 5, 'Great host!', 4, 'Highly recommended!', 3, 11),
+(false, false, 390.00, '2023-01-25', '2023-02-28', 5, 'Fantastic place!', 4, 'Very accommodating host!', 5, 'Had a wonderful time!', 7, 12),
+(false, false, 240.00, '2023-03-05', '2023-03-12', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 10, 13),
+(false, false, 660.00, '2023-09-18', '2023-09-25', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 9, 14),
+(false, false, 320.00, '2023-08-02', '2023-08-08', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 6, 15),
+(true, false, 100.00, '2023-07-08', '2023-07-12', 3, 'Decent place!', 4, 'Nice host!', 3, 'It was okay!', 1, 16),
+(false, false, 410.00, '2023-08-23', '2023-08-28', 4, 'Comfortable stay!', 5, 'Helpful host!', 4, 'Enjoyed the trip!', 2, 17),
+(false, false, 220.00, '2023-07-30', '2023-08-05', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 8, 18),
+(false, false, 360.00, '2023-07-17', '2023-07-25', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 5, 19),
+(false, false, 420.00, '2023-08-10', '2023-08-18', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 4, 20);
+
+-- Listings for Host with user_id 1 in the same country
+INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
+VALUES
+('apartment', 'City Skyline View 1', 'Stunning views of the city skyline', 180.00, '123 Elm St', 'Seattle', 'USA', 56789, 'Unit 7A', -122.123456, 47.678910, 1),
+('house', 'Lakefront Retreat 1', 'Relax by the lake in this cozy house', 150.00, '789 Oak St', 'Seattle', 'USA', 56789, 'House 5', -122.123456, 47.678910, 1),
+('apartment', 'Urban Oasis 1', 'Modern apartment with urban charm', 200.00, '456 Pine St', 'Seattle', 'USA', 56789, 'Unit 10B', -122.123456, 47.678910, 1),
+('house', 'Mountain Cabin 1', 'Escape to the mountains in this cabin', 130.00, '789 Maple St', 'Seattle', 'USA', 56789, 'Cabin 1', -122.123456, 47.678910, 1),
+('apartment', 'Downtown Luxury 1', 'Luxurious apartment in downtown area', 220.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Unit 3D', -122.123456, 47.678910, 1);
+
+-- Listings for Host with user_id 2 in the same city and country
+INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
+VALUES
+('apartment', 'City Center Loft 2', 'Chic loft in the heart of New York', 250.00, '123 Pine St', 'New York', 'USA', 90123, 'Unit 5C', -74.123456, 40.678910, 2),
+('house', 'Cozy Urban Home 2', 'Comfortable house in the heart of the city', 180.00, '456 Oak St', 'New York', 'USA', 90123, 'House 3', -74.123456, 40.678910, 2),
+('apartment', 'Central Studio 2', 'Modern studio apartment in downtown', 190.00, '789 Maple St', 'New York', 'USA', 90123, 'Unit 8B', -74.123456, 40.678910, 2),
+('house', 'City View Mansion 2', 'Mansion with breathtaking city views', 350.00, '123 Oak St', 'New York', 'USA', 90123, 'Mansion 1', -74.123456, 40.678910, 2),
+('apartment', 'Luxury Penthouse 2', 'Opulent penthouse in the city center', 450.00, '456 Pine St', 'New York', 'USA', 90123, 'Penthouse 2', -74.123456, 40.678910, 2);
+
+-- Listings for Host with user_id 3 in the same city and country
+INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
+VALUES
+('house', 'Quaint Cottage 3', 'Charming cottage in the heart of London', 150.00, '123 Elm St', 'London', 'UK', 67890, 'Cottage 1', 0.987654, 51.345678, 3),
+('apartment', 'Cityscape Apartment 3', 'Apartment with stunning cityscape views', 210.00, '456 Pine St', 'London', 'UK', 67890, 'Unit 6A', 0.987654, 51.345678, 3),
+('house', 'Victorian Manor 3', 'Elegant Victorian manor in historic district', 280.00, '789 Maple St', 'London', 'UK', 67890, 'Manor 2', 0.987654, 51.345678, 3),
+('apartment', 'Riverside Retreat 3', 'Relax by the riverside in this modern apartment', 190.00, '123 Oak St', 'London', 'UK', 67890, 'Unit 4D', 0.987654, 51.345678, 3),
+('house', 'Garden Oasis 3', 'Peaceful house with a beautiful garden', 160.00, '456 Elm St', 'London', 'UK', 67890, 'House 6', 0.987654, 51.345678, 3);
