@@ -56,7 +56,7 @@ public class EditListing {
                         break;
                     case 4:
                         System.out.print("Enter new price (per night): ");
-                        int price = getUserChoice(scanner);
+                        double price = getUserDouble(scanner);
                         listing.setPricePerNight(price);
                         break;
                     case 5:
@@ -489,6 +489,14 @@ public class EditListing {
             System.out.print("Invalid input. Please enter a valid decimal: ");
             scanner.next(); // Clear the invalid input from the buffer
         }
-        return scanner.nextDouble();
+        double d = scanner.nextDouble();
+
+        while (d < 0) {
+            String message = String.format("Invalid input, must be larger than 0. Please enter a valid price: ");
+            System.out.println(message);
+            d = scanner.nextDouble();
+            scanner.nextLine();// Clear the invalid input from the buffer
+        }
+        return d;
     }
 }
