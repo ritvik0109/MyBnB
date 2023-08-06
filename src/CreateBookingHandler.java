@@ -8,14 +8,16 @@ public class CreateBookingHandler {
 
         while (!exit){
             // Select filters
-            SearchFilters searchFilters;
+            SearchFilters searchFilters = new SearchFilters();
             if (addFilters(scanner)){
-                searchFilters = getSearchFilters(scanner);
+                searchFilters = getSearchFilters(scanner, searchFilters);
             }
             
             // Select sorting options
-            boolean sortResults = false;
-
+            if (sortFilters(scanner)){
+                searchFilters = getSortFilters(scanner, searchFilters);
+            }
+            
             // display all bookings
 
             // Enter the booking id for the booking you would like to book, or
@@ -39,8 +41,13 @@ public class CreateBookingHandler {
         return (choice == 1);
     }
 
-    private static SearchFilters getSearchFilters(Scanner scanner) {
-        SearchFilters searchFilters = new SearchFilters();
+    private static boolean sortFilters(Scanner scanner) {
+        System.out.print("\nEnter 1 to sort results, or 0 to continue: ");
+        int choice = getUserChoice(scanner);
+        return (choice == 1);
+    }
+
+    private static SearchFilters getSearchFilters(Scanner scanner, SearchFilters searchFilters) {
         boolean exit = false;
 
         while (!exit){
@@ -259,6 +266,55 @@ public class CreateBookingHandler {
         System.out.println("21. EV Charger: " + (amenities.getEvCharger() ? "" : "Not ") + "Included");
         System.out.println("22. Hot Tub: " + (amenities.getHotTub() ? "" : "Not ") + "Included");
         System.out.println("23. Exit (no more edits)");
+    }
+
+    private static SearchFilters getSortFilters(Scanner scanner, SearchFilters searchFilters){
+        displaySortingMenu();
+        int sortChoice = getUserChoice(scanner);
+
+        switch (sortChoice) {
+            case 1:
+                searchFilters.setSortPrice(true);
+                searchFilters.setAscendingPrice(true);
+
+                // We can only sort by 1 option
+                searchFilters.setSortDistance(false);
+                break;
+            case 2:
+                searchFilters.setSortPrice(true);
+                searchFilters.setAscendingPrice(false);
+
+                // We can only sort by 1 option
+                searchFilters.setSortDistance(false);
+                break;
+            case 3:
+                searchFilters.setSortDistance(true);
+                searchFilters.setAscendingDistance(true);
+
+                // We can only sort by 1 option
+                searchFilters.setSortPrice(false);
+                break;
+            case 4:
+                searchFilters.setSortDistance(true);
+                searchFilters.setAscendingDistance(false);
+
+                // We can only sort by 1 option
+                searchFilters.setSortPrice(false);
+                break;
+            default:
+                System.out.println("\nInvalid choice. Please select a valid option between 1 and 4.");
+                break;
+        }
+        
+        return searchFilters;
+    }
+
+    private static void displaySortingMenu() {
+        System.out.println("1. Ascending price (low to high)");
+        System.out.println("2. Descending price (high to low)");
+        System.out.println("3. Ascending distance");
+        System.out.println("4. Descending distance");
+        System.out.print("Select a way to sort the results: ");
     }
 
     // Data validation
