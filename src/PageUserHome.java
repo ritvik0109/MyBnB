@@ -20,6 +20,7 @@ public class PageUserHome {
                     break;
                 case 4:
                     System.out.println("Create Booking / Search");
+                    CreateBookingHandler.search(scanner);
                     break;
                 case 5:
                     System.out.println("Cancel Booking");
