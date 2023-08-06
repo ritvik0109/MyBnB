@@ -1,5 +1,9 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CreateBookingHandler {
@@ -18,12 +22,20 @@ public class CreateBookingHandler {
                 searchFilters = getSortFilters(scanner, searchFilters);
             }
             
-            // display all bookings
+            // display all listings
 
-            // Enter the booking id for the booking you would like to book, or
-            // enter 0 to refine the search, or 
-            // enter -1 to exit
-            exit = true;
+            String sql = searchFilters.getSearchQuery();
+            System.out.println(sql);
+            List<Listing> listings = displayUserListings(sql);
+
+            int id = getListingToEdit(listings, scanner);
+
+            if (id == -1) {
+                exit = true;
+                break;
+            } else if (id != 0){
+                createBooking(id, searchFilters);
+            }
         }
 
         
@@ -315,6 +327,75 @@ public class CreateBookingHandler {
         System.out.println("3. Ascending distance");
         System.out.println("4. Descending distance");
         System.out.print("Select a way to sort the results: ");
+    }
+
+    private static List<Listing> displayUserListings(String sql) {
+        try (ResultSet resultSet = SQL.executeQuery(sql)) {
+            List<Listing> listingIds = new ArrayList<Listing>();
+
+            while (resultSet.next()) {
+                int listId = resultSet.getInt("list_id");
+                String propertyType = resultSet.getString("property_type");
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                double pricePerNight = resultSet.getDouble("price_per_night");
+                String address = resultSet.getString("address");
+                String city = resultSet.getString("city");
+                String country = resultSet.getString("country");
+                int postalCode = resultSet.getInt("postal_code");
+                String unitRoomNumber = resultSet.getString("unit_room_number");
+                double longitude = resultSet.getDouble("longitude");
+                double latitude = resultSet.getDouble("latitude");
+
+                Listing newListing = new Listing(listId, propertyType, title, description, pricePerNight,
+                        address, city, country, postalCode, unitRoomNumber,
+                        longitude, latitude, -1);
+
+                listingIds.add(newListing);
+
+                // Display the listing information
+                System.out.println("\n---------------------------------------\n");
+                System.out.println("Listing ID: " + listId);
+                System.out.println("Property Type: " + propertyType);
+                System.out.println("Title: " + title);
+                System.out.println("Description: " + description);
+                System.out.println("Price per Night: " + pricePerNight);
+                System.out.println("Address: " + address);
+                System.out.println("City: " + city);
+                System.out.println("Country: " + country);
+                System.out.println("Postal Code: " + postalCode);
+                System.out.println("Unit/Room Number: " + unitRoomNumber);
+                System.out.println("Longitude: " + longitude);
+                System.out.println("Latitude: " + latitude);
+            }
+            return listingIds;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Listing>();
+        }
+    }
+
+    private static int getListingToEdit(List<Listing> listings, Scanner scanner) {
+        System.out.print("Select which listing to book (Listing ID), or enter 0 to restart search, or enter -1 to return: ");
+        int id = getUserChoice(scanner);
+        while (!(containsListId(listings, id) || id == 0 || id == -1)) {
+            System.out.print("Please select a valid list id, or enter 0 to restart search, or enter -1 to return: ");
+            id = getUserChoice(scanner);
+        }
+        return id;
+    }
+
+    private static boolean containsListId(List<Listing> listings, int id) {
+        for (Listing listing : listings) {
+            if (listing.getListId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void createBooking(int id, SearchFilters searchFilters){
+        // TODO
     }
 
     // Data validation
