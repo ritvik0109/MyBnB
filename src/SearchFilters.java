@@ -3,7 +3,7 @@ public class SearchFilters {
     private String endDate;
 
     private String address;
-    private String postalCode;
+    private int postalCode;
     private boolean adjacentPC; // TODO: Figure this out
     private String city;
     private String country;
@@ -11,7 +11,8 @@ public class SearchFilters {
     private double longitude;
     private double distance; // or int?
 
-    private double totalPrice;
+    private double minPrice; // per night
+    private double maxPrice; // per night
     private Amenities amenities; // they are looking for the ones that are included!
 
     // Sorting
@@ -24,14 +25,15 @@ public class SearchFilters {
         this.startDate = null;
         this.endDate = null;
         this.address = null;
-        this.postalCode = null;
+        this.postalCode = -1;
         this.adjacentPC = false;
         this.city = null;
         this.country = null;
         this.latitude = 0;
         this.longitude = 0;
         this.distance = -1;
-        this.totalPrice = -1;
+        this.minPrice = -1;
+        this.maxPrice = -1;
         this.amenities = null;
         this.sortDistance = false;
         this.ascendingDistance = false;
@@ -65,11 +67,11 @@ public class SearchFilters {
         this.address = address;
     }
 
-    public String getPostalCode() {
+    public int getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -121,12 +123,20 @@ public class SearchFilters {
         this.distance = distance;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getMinPrice() {
+        return minPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(double maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
     public Amenities getAmenities() {
