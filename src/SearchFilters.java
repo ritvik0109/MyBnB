@@ -1,19 +1,19 @@
 public class SearchFilters {
-    private String startDate;
-    private String endDate;
+    private String startDate; // TODO
+    private String endDate; // TODO
 
-    private String address;
-    private int postalCode;
-    private boolean adjacentPC; // TODO: Figure this out
-    private String city;
-    private String country;
-    private double latitude;
-    private double longitude;
-    private double distance; // or int?
+    private String address; // To test
+    private int postalCode; // To test
+    private boolean adjacentPC; // TODO
+    private String city; // To test
+    private String country; // To test
+    private double latitude; // TODO
+    private double longitude; // TODO
+    private double distance; // TODO
 
-    private double minPrice; // per night
-    private double maxPrice; // per night
-    private Amenities amenities; // they are looking for the ones that are included!
+    private double minPrice; // TODO (per night)
+    private double maxPrice; // TODO per night
+    private Amenities amenities; // TODO 
 
     // Sorting
     private boolean sortDistance;
@@ -39,6 +39,72 @@ public class SearchFilters {
         this.ascendingDistance = false;
         this.sortPrice = false;
         this.ascendingPrice = false;
+    }
+
+    public String getSearchQuery() {
+        String sql = "SELECT * FROM Listings l";
+
+        if (isEmpty())
+            return sql;
+
+        // Add the inner joins here
+
+        sql += " WHERE";
+
+        // Add join conditions here
+
+        if (city != null)
+            sql += String.format(" l.city = \'%s\' AND", city);
+
+        if (country != null)
+            sql += String.format(" l.country = \'%s\' AND", country);
+
+        if (postalCode != -1){
+            if (adjacentPC) {
+                // TODO: Figure out adjacent postal codes
+                // Probably need to + or - like 10, to get the adjacent postal codes
+            } else 
+                sql += String.format(" l.postal_code = %d AND", postalCode);
+        }
+
+        /**
+         * If amentities, is not empty, then we need to inner join with amenities to get all the bookings with those amentities
+         * 
+         * If start date is not null, we need to inner join with availability
+         *  can we assume that there will always be a start and end date?
+         * 
+         * 
+        */
+
+        return removeEndingAND(sql);
+    }
+
+    private boolean isEmpty(){
+        return startDate == null && 
+        endDate == null && 
+        address == null && 
+        postalCode == -1 && 
+        adjacentPC == false && 
+        city == null && 
+        country == null && 
+        latitude == 0 && 
+        longitude == 0 && 
+        distance == -1 && 
+        minPrice == -1 && 
+        maxPrice == -1 && 
+        amenities == null && 
+        sortDistance == false && 
+        ascendingDistance == false && 
+        sortPrice == false && 
+        ascendingPrice == false;
+    }
+
+    private static String removeEndingAND(String input) {
+        if (input.endsWith("AND")) {
+            return input.substring(0, input.length() - 3);
+        } else {
+            return input;
+        }
     }
 
     // Getters and Setters
@@ -177,10 +243,5 @@ public class SearchFilters {
 
     public void setAscendingPrice(boolean ascendingPrice) {
         this.ascendingPrice = ascendingPrice;
-    }
-
-    public String getSearchQuery() {
-        // TODO
-        return "";
     }
 }
