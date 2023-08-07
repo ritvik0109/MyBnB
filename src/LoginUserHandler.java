@@ -37,7 +37,9 @@ public class LoginUserHandler {
         }
 
         if (!exit) {
-            PageUserHome.userHome(scanner);
+            System.out.println("\nSuccessfully logged in!\n");
+
+            PageUserHome.userHome(scanner, email);
         }
 
     }
