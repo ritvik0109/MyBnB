@@ -1,3 +1,7 @@
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class SearchFilters {
     private String startDate; // TODO
     private String endDate; // TODO
@@ -97,6 +101,21 @@ public class SearchFilters {
         ascendingDistance == false && 
         sortPrice == false && 
         ascendingPrice == false;
+    }
+
+    public boolean hasDates() {
+        return !(startDate.isEmpty() && endDate.isEmpty());
+    }
+
+    public int getDays() {
+        try {
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+
+            return (int) ChronoUnit.DAYS.between(start, end);
+        } catch (DateTimeException e) {
+            return -1;
+        }
     }
 
     private static String removeEndingAND(String input) {

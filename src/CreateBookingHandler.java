@@ -22,8 +22,7 @@ public class CreateBookingHandler {
                 searchFilters = getSortFilters(scanner, searchFilters);
             }
             
-            // display all listings
-
+            // Display all listings, based on search filters
             String sql = searchFilters.getSearchQuery();
             System.out.println(sql);
             List<Listing> listings = displayUserListings(sql);
@@ -34,11 +33,10 @@ public class CreateBookingHandler {
                 exit = true;
                 break;
             } else if (id != 0){
-                createBooking(id, searchFilters);
+                createBooking(id, getListingPrice(listings, id), searchFilters, scanner);
+                exit = true;                
             }
         }
-
-        
     }
 
     private static boolean addFilters(Scanner scanner) {
@@ -68,24 +66,7 @@ public class CreateBookingHandler {
 
             switch (filterChoice) {
                 case 1:
-                    System.out.print("\nEnter the start date (YYYY-MM-DD): ");
-                    String start = scanner.nextLine();
-                    while (!isValidStartDate(start)) {
-                        System.out
-                                .print("Invalid start date, it must be a future date. Please enter a valid date in the format YYYY-MM-DD: ");
-                        start = scanner.nextLine();
-                    }
-
-                    System.out.print("\nEnter the end date (YYYY-MM-DD): ");
-                    String end = scanner.nextLine();
-                    while (!isValidEndDate(start, end)) {
-                        System.out.print("Invalid end date, it must be after start date. Please enter a valid date in the format YYYY-MM-DD: ");
-                        end = scanner.nextLine();
-                    }
-
-                    searchFilters.setStartDate(start);
-                    searchFilters.setEndDate(end);
-
+                    searchFilters = getSearchFilterDates(searchFilters, scanner);
                     break;
                 case 2:
                     System.out.print("\nEnter the address: ");
@@ -101,8 +82,9 @@ public class CreateBookingHandler {
                         searchFilters.setAdjacentPC(true);
                     break;
                 case 4:
-                    System.out.print("\nEnter the city: ");
-                    String city = getAlphabeticalInput(scanner);
+                    // System.out.print("\nEnter the city: ");
+                    // String city = getAlphabeticalInput(scanner);
+                    String city = "Seattle";
                     searchFilters.setCity(city);
                     break;
                 case 5:
@@ -394,11 +376,117 @@ public class CreateBookingHandler {
         return false;
     }
 
-    private static void createBooking(int id, SearchFilters searchFilters){
-        // TODO
+    private static double getListingPrice(List<Listing> listings, int id) {
+        for (Listing listing : listings) {
+            if (listing.getListId() == id) {
+                return listing.getPricePerNight();
+            }
+        }
+        return -1;
+    }
+
+    private static void createBooking(int list_id, double pricePerNight, SearchFilters searchFilters, Scanner scanner){
+        // if user does not have a CC in the database, then get CC
+        if (UserDetails.getCreditCard().isEmpty()){
+            System.out.print("Enter credit card number to create a booking: ");
+            String creditCard = getUserInput(scanner);
+            while (!isValidCreditCardNumber(creditCard)){
+                System.out.print("Invalid credit card number. Please enter a valid credit card number: ");
+                creditCard = getUserInput(scanner);
+            }
+            UserDetails.setCreditCard(creditCard);
+        }
+
+        // if filters don't have start and end date, then get start and end date
+        if (!searchFilters.hasDates())
+            searchFilters = getSearchFilterDates(searchFilters, scanner);
+
+        // TODO sql to check there is availability for these days
+        // String sql = "SELECT * FROM Availabilities WHERE list_id = ? AND start_date <= ? AND end_date >= ?";
+        // try (ResultSet resultSet = SQL.executeQuery(sql)) {
+        //     List<Listing> listingIds = new ArrayList<Listing>();
+
+        //     if (resultSet.next()) {
+        //         int listId = resultSet.getInt("list_id");
+        //         String propertyType = resultSet.getString("property_type");
+        //         String title = resultSet.getString("title");
+        //         String description = resultSet.getString("description");
+
+        //         Listing newListing = new Listing();
+        //     }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+
+        // Get total number of days in booking - to calculate total price
+        int days = searchFilters.getDays();
+        if (days == -1){
+            System.out.println("Failed to create booking! Please try again.");
+            return;
+        }
+        double totalCost = days * pricePerNight;
+
+        boolean createdBooking = insertBooking(totalCost, searchFilters.getStartDate(), searchFilters.getEndDate(), list_id);
+
+        if (!createdBooking){
+            System.out.println("Failed to create booking! Please try again.");
+            return;
+        }
+        // TODO sql query to remove the availability for the listing
+        
+    }
+
+    private static SearchFilters getSearchFilterDates(SearchFilters searchFilters, Scanner scanner){
+        System.out.print("\nEnter the start date (YYYY-MM-DD): ");
+        String start = scanner.nextLine();
+        while (!isValidStartDate(start)) {
+            System.out
+                    .print("Invalid start date, it must be a future date. Please enter a valid date in the format YYYY-MM-DD: ");
+            start = scanner.nextLine();
+        }
+
+        System.out.print("\nEnter the end date (YYYY-MM-DD): ");
+        String end = scanner.nextLine();
+        while (!isValidEndDate(start, end)) {
+            System.out.print("Invalid end date, it must be after start date. Please enter a valid date in the format YYYY-MM-DD: ");
+            end = scanner.nextLine();
+        }
+
+        searchFilters.setStartDate(start);
+        searchFilters.setEndDate(end);
+        return searchFilters;
+    }
+
+    private static boolean insertBooking(double totalCost, String startDate, String endDate, int list_id) {
+        String sql = "INSERT INTO Bookings (total_cost, start_date, end_date, user_id, list_id) VALUES (?, ?, ?, ?, ?)";
+        int userId = UserDetails.getUserId();
+
+        String success = SQL.executeUpdate(sql, totalCost, startDate, endDate, userId, list_id);
+        if (success.isEmpty()) {
+            System.out.println("Successfully added booking!");
+            return true;
+        } else {
+            System.out.println("Failed to create booking! Please try again.");
+            System.out.println("Error: " + success);
+            return false;
+        }
     }
 
     // Data validation
+
+    public static boolean isValidCreditCardNumber(String creditCardNumber) {
+        // Remove non-numeric characters from the credit card number
+        String cleanedNumber = creditCardNumber.replaceAll("[^0-9]", "");
+
+        // Check if the cleaned number has a valid length (e.g., 16 digits for most cards)
+        if (cleanedNumber.length() != 16) {
+            return false;
+        }
+
+        // Additional checks or algorithms for checksum validation can be added here
+
+        return true;
+    }
 
     private static boolean isValidStartDate(String start) {
         try {
