@@ -9,10 +9,10 @@ public class LoginUserHandler {
         scanner.nextLine();
         boolean exit = false;
 
+        // String email = "john.doe@example.com"; // Debugging
         System.out.print("Enter your email address: ");
         String email = scanner.nextLine();
 
-        // String email = "r@mail.com"; // Debugging
         while (!isValidEmail(email) || !isUserEmail(email)) {
             if (!isValidEmail(email))
                 System.out.print("Please enter a valid email address: ");
@@ -36,7 +36,9 @@ public class LoginUserHandler {
         }
 
         if (!exit) {
-            PageUserHome.userHome(scanner);
+            System.out.println("\nSuccessfully logged in!\n");
+
+            PageUserHome.userHome(scanner, email);
         }
 
     }
