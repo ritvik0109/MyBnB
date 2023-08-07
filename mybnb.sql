@@ -86,8 +86,10 @@ CREATE TABLE Bookings (
 );
 
 -- MOCK DATA: 
---  each user has a listing, one of the users has alot of listings (same country, city, postal code)
---  Availabilities need to be available before current date.
+
+-- Set A:
+-- RENTERS: (USERID) 7, 8
+-- HOST: (USERID) 3, 5 
 
 INSERT INTO Users (name, email, password, address, sin, date_of_birth, occupation, credit_card)
 VALUES
@@ -111,7 +113,7 @@ VALUES
   ('hotel', 'Luxury Hotel', 'A luxurious hotel with top-notch amenities.', 199.99, '1595 Grand Blvd', 'Cityville', 'Countryland', 789012, 'Suite 202', 56.789012, 78.901234, 4),
   ('apartment', 'Cosy Studio', 'A comfortable studio apartment.', 75.00, '852 Sunny St', 'Townville', 'Countryland', 987654, 'Apt 3', 78.901234, 90.123456, 4),
   ('house', 'Rustic Retreat', 'A charming rustic house in the countryside.', 110.00, '753 Meadow Rd', 'Villageville', 'Countryland', 321654, NULL, 90.123456, 12.345678, 1),
-  ('guesthouse', 'Tranquil Hideaway', 'A tranquil guesthouse by the lake.', 135.00, '951 Lakeview Dr', 'Townville', 'Countryland', 456789, NULL, 67.890123, 23.456789, 7),
+  ('guesthouse', 'Tranquil Hideaway', 'A tranquil guesthouse by the lake.', 135.00, '951 Lakeview Dr', 'Townville', 'Countryland', 456789, NULL, 67.890123, 23.456789, 3),
   ('hotel', 'City Luxury Hotel', 'A luxurious hotel in the heart of the city.', 189.99, '456 High Street', 'Cityville', 'Countryland', 654321, 'Suite 101', 78.901234, 34.567890, 1),
   ('apartment', 'Modern Studio', 'A sleek and modern studio apartment.', 80.00, '789 Urban Ave', 'Cityville', 'Countryland', 987654, 'Apt 7', 90.123456, 45.678901, 9),
   ('house', 'Spacious Family Home', 'A spacious house perfect for families.', 150.00, '753 Family Rd', 'Villageville', 'Countryland', 123456, NULL, 12.345678, 56.789012, 10);
@@ -149,9 +151,9 @@ INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date
 VALUES
 (false, false, 300.00, '2023-08-05', '2023-08-08', 4, 'Great stay!', 5, 'Wonderful host!', 4, 'Enjoyed the stay!', 1, 1),
 (false, false, 400.00, '2023-09-18', '2023-09-22', 5, 'Fantastic place!', 4, 'Very helpful host!', 5, 'Highly recommended!', 2, 2),
-(true, false, 240.00, '2023-08-25', '2023-08-29', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 3, 3),
+(true, false, 240.00, '2023-08-25', '2023-08-29', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 4, 3),
 (false, false, 900.00, '2023-09-10', '2023-09-17', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 4, 4),
-(false, false, 360.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 5, 5),
+(false, false, 360.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 7, 5),
 (false, false, 500.00, '2023-09-20', '2023-09-27', 5, 'Lovely place!', 5, 'Great host!', 5, 'Had a wonderful time!', 6, 6),
 (true, false, 120.00, '2023-08-30', '2023-09-02', 3, 'Decent place!', 4, 'Nice host!', 3, 'It was okay!', 7, 7),
 (false, false, 450.00, '2023-09-15', '2023-09-19', 4, 'Comfortable stay!', 5, 'Helpful host!', 4, 'Enjoyed the trip!', 8, 8),
@@ -165,13 +167,13 @@ VALUES
 ('apartment', 'Downtown Loft', 'Modern loft in the heart of downtown', 180.00, '123 Elm St', 'New York', 'USA', 56789, 'Unit 7B', -74.123456, 40.678910, 3),
 ('house', 'Seaside Retreat', 'A cozy house near the beach', 130.00, '789 Oak St', 'Miami', 'USA', 56789, 'House 2', -80.123456, 25.678910, 4),
 ('apartment', 'City Center Studio', 'Charming studio in the city center', 120.00, '123 Pine St', 'Paris', 'France', 90123, 'Unit 4C', 2.123456, 48.678910, 6),
-('guesthouse', 'Mountain Getaway', 'Escape to the mountains in this guesthouse', 110.00, '456 Oak St', 'Vancouver', 'Canada', 23456, 'Guesthouse 1', -123.123456, 49.678910, 7),
+('guesthouse', 'Mountain Getaway', 'Escape to the mountains in this guesthouse', 110.00, '456 Oak St', 'Vancouver', 'Canada', 23456, 'Guesthouse 1', -123.123456, 49.678910, 3),
 ('hotel', 'Urban Oasis', 'Experience luxury living in the city', 280.00, '789 Pine St', 'Berlin', 'Germany', 23456, 'Suite 202', 13.123456, 52.678910, 9),
 ('house', 'Countryside Cabin', 'Rustic cabin surrounded by nature', 150.00, '456 Elm St', 'London', 'UK', 67890, 'Cabin 3', 0.987654, 51.345678, 10),
 ('apartment', 'Skyline View Condo', 'Enjoy stunning views from this condo', 220.00, '789 Maple St', 'New York', 'USA', 56789, 'Unit 10A', -74.123456, 40.678910, 1),
 ('guesthouse', 'Tranquil Haven', 'Find peace and tranquility in this guesthouse', 120.00, '123 Oak St', 'Tokyo', 'Japan', 89012, 'Guesthouse 2', 139.123456, 35.678910, 2),
 ('hotel', 'Historic Inn', 'Stay in a charming historic inn', 190.00, '456 Pine St', 'Paris', 'France', 90123, 'Room 203', 2.123456, 48.678910, 4),
-('house', 'Rural Farmhouse', 'Experience the rural charm of this farmhouse', 160.00, '789 Elm St', 'Berlin', 'Germany', 23456, 'Farmhouse 5', 13.123456, 52.678910, 5);
+('house', 'Rural Farmhouse', 'Experience the rural charm of this farmhouse', 160.00, '789 Elm St', 'Berlin', 'Germany', 23456, 'Farmhouse 5', 13.123456, 52.678910, 3);
 
 
 INSERT INTO Availabilities (start_date, end_date, list_id)
@@ -189,7 +191,7 @@ VALUES
 
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
-(false, false, 270.00, '2023-01-10', '2023-02-15', 4, 'Enjoyed the stay!', 5, 'Great host!', 4, 'Highly recommended!', 3, 11),
+(false, false, 270.00, '2023-01-10', '2023-02-15', 4, 'Enjoyed the stay!', 5, 'Great host!', 4, 'Highly recommended!', 4, 11),
 (false, false, 390.00, '2023-01-25', '2023-02-28', 5, 'Fantastic place!', 4, 'Very accommodating host!', 5, 'Had a wonderful time!', 7, 12),
 (false, false, 240.00, '2023-03-05', '2023-03-12', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 10, 13),
 (false, false, 660.00, '2023-09-18', '2023-09-25', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 9, 14),
@@ -197,7 +199,7 @@ VALUES
 (true, false, 100.00, '2023-07-08', '2023-07-12', 3, 'Decent place!', 4, 'Nice host!', 3, 'It was okay!', 1, 16),
 (false, false, 410.00, '2023-08-23', '2023-08-28', 4, 'Comfortable stay!', 5, 'Helpful host!', 4, 'Enjoyed the trip!', 2, 17),
 (false, false, 220.00, '2023-07-30', '2023-08-05', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 8, 18),
-(false, false, 360.00, '2023-07-17', '2023-07-25', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 5, 19),
+(false, false, 360.00, '2023-07-17', '2023-07-25', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 6, 19),
 (false, false, 420.00, '2023-08-10', '2023-08-18', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 4, 20);
 
 INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
@@ -236,6 +238,11 @@ VALUES
 -- Availabilities for Listings (User ID: 1, Same Country)
 INSERT INTO Availabilities (start_date, end_date, list_id)
 VALUES
+('2023-08-01', '2023-08-10', 21),
+('2023-09-15', '2023-09-25', 22),
+('2023-08-20', '2023-08-25', 23),
+('2023-09-05', '2023-09-12', 24),
+('2023-08-10', '2023-08-15', 25),
 ('2023-01-01', '2024-12-10', 21),
 ('2023-01-15', '2024-12-25', 22),
 ('2023-01-20', '2024-12-25', 23),
@@ -245,21 +252,11 @@ VALUES
 -- Bookings for Listings (User ID: 1, Same Country)
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
-(false, false, 540.00, '2023-08-05', '2023-08-08', 4, 'Great stay!', 5, 'Wonderful host!', 4, 'Enjoyed the stay!', 1, 21),
-(false, false, 450.00, '2023-09-18', '2023-09-22', 5, 'Fantastic place!', 4, 'Very helpful host!', 5, 'Highly recommended!', 1, 22),
-(true, false, 600.00, '2023-08-25', '2023-08-29', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 1, 23),
-(false, false, 520.00, '2023-09-10', '2023-09-17', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 1, 24),
-(false, false, 1100.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 1, 25);
-
-
--- Availabilities for Listings (User ID: 1, Same Country)
-INSERT INTO Availabilities (start_date, end_date, list_id)
-VALUES
-('2023-08-01', '2023-08-10', 21),
-('2023-09-15', '2023-09-25', 22),
-('2023-08-20', '2023-08-25', 23),
-('2023-09-05', '2023-09-12', 24),
-('2023-08-10', '2023-08-15', 25);
+(false, false, 540.00, '2023-08-05', '2023-08-08', 4, 'Great stay!', 5, 'Wonderful host!', 4, 'Enjoyed the stay!', 2, 21),
+(false, false, 450.00, '2023-09-18', '2023-09-22', 5, 'Fantastic place!', 4, 'Very helpful host!', 5, 'Highly recommended!', 2, 22),
+(true, false, 600.00, '2023-08-25', '2023-08-29', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 7, 23),
+(false, false, 520.00, '2023-09-10', '2023-09-17', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 7, 24),
+(false, false, 1100.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 7, 25);
 
 -- Listings for Host with user_id 2 in the same city and country
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
@@ -288,10 +285,10 @@ VALUES
 -- Bookings for Listings (User ID: 2, Same City and Country)
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
-(false, false, 750.00, '2023-07-08', '2023-07-12', 4, 'Enjoyed the stay!', 5, 'Great host!', 4, 'Highly recommended!', 2, 26),
-(false, false, 540.00, '2023-07-15', '2023-07-23', 5, 'Fantastic place!', 4, 'Helpful host!', 5, 'Would come again!', 2, 27),
-(false, false, 570.00, '2023-07-25', '2023-08-01', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 2, 28),
-(false, false, 1800.00, '2023-07-28', '2023-08-04', 5, 'Lovely place!', 5, 'Wonderful host!', 5, 'Great communication!', 2, 29);
+(false, false, 750.00, '2023-07-08', '2023-07-12', 4, 'Enjoyed the stay!', 5, 'Great host!', 4, 'Highly recommended!', 8, 26),
+(false, false, 540.00, '2023-07-15', '2023-07-23', 5, 'Fantastic place!', 4, 'Helpful host!', 5, 'Would come again!', 7, 27),
+(false, false, 570.00, '2023-07-25', '2023-08-01', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 7, 28),
+(false, false, 1800.00, '2023-07-28', '2023-08-04', 5, 'Lovely place!', 5, 'Wonderful host!', 5, 'Great communication!', 8, 29);
 
 -- Listings for Host with user_id 3 in the same postal code in the USA
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
@@ -325,7 +322,7 @@ VALUES
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
 (false, false, 440.00, '2023-07-20', '2023-07-25', 4, 'Cozy and comfortable', 5, 'Very accommodating host', 4, 'Had a great time!', 4, 30),
-(true, true, 800.00, '2023-08-25', '2023-08-30', 5, 'Perfect getaway', 5, 'Friendly and helpful', 5, 'Definitely coming back!', 5, 31),
+(true, true, 800.00, '2023-08-25', '2023-08-30', 5, 'Perfect getaway', 5, 'Friendly and helpful', 5, 'Definitely coming back!', 7, 31),
 (true, false, 360.00, '2023-09-15', '2023-09-20', 4, 'Nice location', 4, 'Responsive host', 4, 'Enjoyed the stay!', 4, 32),
 (false, false, 660.00, '2023-07-05', '2023-07-10', 4, 'Lovely apartment', 5, 'Great communication', 4, 'Highly recommend!', 6, 30),
 (false, false, 780.00, '2023-08-15', '2023-08-22', 5, 'Wonderful experience', 5, 'Excellent service', 5, 'Absolutely loved it!', 4, 31),
@@ -419,14 +416,12 @@ VALUES
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
 VALUES
 (false, false, 420.00, '2022-09-15', '2022-09-20', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 6, 33),
-(false, false, 550.00, '2022-10-08', '2022-10-15', 4, 'Good property.', 4, 'Great host!', 4, 'Enjoyed the stay!', 7, 34),
-(false, false, 290.00, '2022-11-12', '2022-11-18', 3, 'Decent stay.', 4, 'Friendly host!', 4, 'Had a good time!', 8, 35),
+(false, false, 550.00, '2022-10-08', '2022-10-15', 4, 'Good property.', 4, 'Great host!', 4, 'Enjoyed the stay!', 6, 34),
+(false, false, 290.00, '2022-11-12', '2022-11-18', 3, 'Decent stay.', 4, 'Friendly host!', 4, 'Had a good time!', 6, 35),
 (false, false, 280.00, '2022-09-22', '2022-09-27', 3, 'Average property.', 3, 'Friendly host!', 3, 'Had a decent time!', 9, 36),
 (false, false, 400.00, '2022-10-25', '2022-10-31', 4, 'Great stay!', 5, 'Excellent host!', 4, 'Enjoyed the stay!', 6, 37),
-(false, false, 210.00, '2022-11-18', '2022-11-24', 3, 'Average experience.', 3, 'Friendly host!', 3, 'Had a decent time!', 7, 38),
-(false, false, 340.00, '2022-09-20', '2022-09-25', 4, 'Nice place!', 4, 'Friendly host!', 4, 'Had a good time!', 8, 39),
+(false, false, 210.00, '2022-11-18', '2022-11-24', 3, 'Average experience.', 3, 'Friendly host!', 3, 'Had a decent time!', 6, 38),
+(false, false, 340.00, '2022-09-20', '2022-09-25', 4, 'Nice place!', 4, 'Friendly host!', 4, 'Had a good time!', 6, 39),
 (false, false, 450.00, '2022-09-28', '2022-10-05', 5, 'Excellent property!', 5, 'Superb host!', 5, 'Would recommend!', 9, 40);
 
 -- SET B: (10 more users, listings, avail, bookings, amenities)
-
--- Listing ID 41 onwards:
