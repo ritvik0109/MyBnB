@@ -15,7 +15,7 @@ public class Availability {
     public int getAvailId() {
         return availId;
     }
-
+    
     public String getStartDate() {
         return startDate;
     }
