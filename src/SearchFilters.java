@@ -45,48 +45,17 @@ public class SearchFilters {
         this.ascendingPrice = false;
     }
 
-    /** TODO
-     * Latitude and longitude
-     *      with default distance
-     *      with input distance
-     *  Can also sort these by distance
-     * 
-     * Postal code
-     *      adjacent
-     * 
-     * Date range
-     * 
-     * Amenities
-     * 
-     * Check any combination of the above
-     * */ 
-
     public String getSearchQuery() {
-        String sql = "SELECT l.list_id, l.property_type, l.title, l.description, l.price_per_night, l.address, l.city, l.country, l.postal_code, l.unit_room_number, l.longitude, l.latitude, l.user_id FROM Listings AS l";
+        String sql = "SELECT * FROM Listings l";
 
-        
         if (isEmpty())
             return sql;
 
-        // Join other tables here
-        if (amenities != null)
-            sql += " JOIN Amenities am";
-
-        if (!startDate.isEmpty() && !endDate.isEmpty())
-            sql += " JOIN Availabilities av"; // I think doing this should be OK if there is a date range as well - because only 1 row from availability should match the availability we want
+        // Add the inner joins here
 
         sql += " WHERE";
 
         // Add join conditions here
-        if (amenities != null)
-            sql += " l.list_id = am.list_id AND";
-
-        if (!startDate.isEmpty() && !endDate.isEmpty())
-            sql += " l.list_id = av.list_id AND";
-
-        // Add queries for the respective filters
-        if (!address.isEmpty())
-            sql += String.format(" l.address = \'%s\' AND", address);
 
         if (!city.isEmpty())
             sql += String.format(" l.city = \'%s\' AND", city);
@@ -102,38 +71,6 @@ public class SearchFilters {
                 sql += String.format(" l.postal_code = %d AND", postalCode);
         }
 
-        if (!startDate.isEmpty() && !endDate.isEmpty())
-            sql += String.format(" av.start_date <= %s AND av.end_date >= %s", startDate, endDate);
-
-        if (amenities != null){
-            sql += (amenities.getWifi() ? " am.wifi = true AND" : "");
-            sql += (amenities.getKitchen() ? " am.kitchen = true AND" : "");
-            sql += (amenities.getWasher() ? " am.washer = true AND" : "");
-            sql += (amenities.getDryer() ? " am.dryer = true AND" : "");
-            sql += (amenities.getAc() ? " am.ac = true AND" : "");
-            sql += (amenities.getHeating() ? " am.heating = true AND" : "");
-            sql += (amenities.getWorkspace() ? " am.workspace = true AND" : "");
-            sql += (amenities.getTv() ? " am.tv = true AND" : "");
-            sql += (amenities.getHairDryer() ? " am.hair_dryer = true AND" : "");
-            sql += (amenities.getIron() ? " am.iron = true AND" : "");
-            sql += (amenities.getSmokeAlarm() ? " am.smoke_alarm = true AND" : "");
-            sql += (amenities.getCarbonMonoxideAlarm() ? " am.carbon_monoxide_alarm = true AND" : "");
-            sql += (amenities.getPool() ? " am.spool = true AND" : "");
-            sql += (amenities.getFreeParking() ? " am.free_parking = true AND" : "");
-            sql += (amenities.getCrib() ? " am.crib = true AND" : "");
-            sql += (amenities.getBbqGrill() ? " am.bbq_grill = true AND" : "");
-            sql += (amenities.getIndoorFireplace() ? " am.indoor_fireplace = true AND" : "");
-            sql += (amenities.getSmokingAllowed() ? " am.smoking_allowed = true AND" : "");
-            sql += (amenities.getBreakfast() ? " am.breakfast = true AND" : "");
-            sql += (amenities.getGym() ? " am.gym = true AND" : "");
-            sql += (amenities.getEvCharger() ? " am.ev_charger = true AND" : "");
-            sql += (amenities.getHotTub() ? " am.hot_tub = true AND" : "");
-        }
-
-        if (minPrice != -1 && maxPrice != -1){
-            sql += String.format(" l.price_per_night > %d AND l.price_per_night < %d AND", minPrice, maxPrice);
-        }
-
         /**
          * If amentities, is not empty, then we need to inner join with amenities to get all the bookings with those amentities
          * 
@@ -143,14 +80,7 @@ public class SearchFilters {
          * 
         */
 
-        sql = removeEndingAND(sql);
-
-        if (sortPrice){
-            String sort = ascendingPrice ? "ASC" : "DESC";
-            sql += " ORDER BY l.price_per_night " + sort;
-        }
-
-        return sql;
+        return removeEndingAND(sql);
     }
 
     private boolean isEmpty(){

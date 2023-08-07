@@ -9,21 +9,21 @@ public class LoginUserHandler {
         scanner.nextLine();
         boolean exit = false;
 
-        String email = "john.doe@example.com"; // Debugging
-        String password = "pass123";
-        // System.out.print("Enter your email address: ");
-        // String email = scanner.nextLine();
+        // String email = "john.doe@example.com"; // Debugging
+        // String password = "pass123";
+        System.out.print("Enter your email address: ");
+        String email = scanner.nextLine();
 
-        // while (!isValidEmail(email) || !isUserEmail(email)) {
-        //     if (!isValidEmail(email))
-        //         System.out.print("Please enter a valid email address: ");
-        //     else if (!isUserEmail(email))
-        //         System.out.print("No user account with this email exists. Please enter a valid email address: ");
-        //     email = scanner.nextLine();
-        // }
+        while (!isValidEmail(email) || !isUserEmail(email)) {
+            if (!isValidEmail(email))
+                System.out.print("Please enter a valid email address: ");
+            else if (!isUserEmail(email))
+                System.out.print("No user account with this email exists. Please enter a valid email address: ");
+            email = scanner.nextLine();
+        }
 
-        // System.out.print("Enter your password: ");
-        // String password = scanner.nextLine();
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
         int attempts = 3;
         while (!isLoginValid(email, password)) {
             attempts -= 1;
