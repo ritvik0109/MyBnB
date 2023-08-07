@@ -98,7 +98,6 @@ public class EditListingHandler {
 
                         System.out.print("Enter the start date (YYYY-MM-DD): ");
                         String start = scanner.nextLine();
-                        scanner.next();
                         while (!isValidStartDate(start)) {
                             System.out
                                     .print("Invalid start date, it must be a future date. Please enter a valid date in the format YYYY-MM-DD: ");
