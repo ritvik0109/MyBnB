@@ -12,7 +12,6 @@ public class CreateListingHandler {
         System.out.println("\n--- Create a Listing ---");
         scanner.nextLine();
 
-        // Get user input for each attribute of the Listings table
         System.out.print("Enter property type (house/apartment/guesthouse/hotel): ");
         String propertyType = scanner.nextLine();
         while (!isValidPropertyType(propertyType)) {
@@ -36,31 +35,19 @@ public class CreateListingHandler {
         BigDecimal longitude = handleInputBigDecimal(scanner, "longitude");
         BigDecimal latitude = handleInputBigDecimal(scanner, "latitude");
 
-        // Debugging
-        // String propertyType = "house";
-        // String title = "random title";
-        // String description = "some desctip";
-        // BigDecimal pricePerNight = new BigDecimal(90);
-        // String address = "100 military";
-        // String city = "Scar";
-        // String country = "bourough";
-        // int postalCode = 123;
-        // String unitRoomNumber = "12";
-        // BigDecimal longitude = new BigDecimal(100);
-        // BigDecimal latitude = new BigDecimal(-100);
-
-        boolean success = createListing(propertyType, title, description, pricePerNight, address, city, country, postalCode,
+        boolean success = createListing(propertyType, title, description, pricePerNight, address, city, country,
+                postalCode,
                 unitRoomNumber, longitude, latitude);
 
         int listId = getListId(propertyType, title, description, pricePerNight, address, city, country, postalCode,
                 unitRoomNumber, longitude, latitude);
 
-        if (success && listId != -1){
+        if (success && listId != -1) {
             editAmenities(scanner, listId);
 
             // Add availability
             boolean addAvailability = true;
-            while (addAvailability){
+            while (addAvailability) {
                 System.out.println("\nAdd Availability");
                 System.out.print("Enter the start date (YYYY-MM-DD): ");
                 String start = scanner.nextLine();
@@ -68,7 +55,7 @@ public class CreateListingHandler {
                 while (!isValidStartDate(start)) {
                     System.out
                             .print("Invalid start date. Please enter a valid date in the format YYYY-MM-DD: ");
-                    
+
                     start = scanner.nextLine();
                 }
 
@@ -119,8 +106,8 @@ public class CreateListingHandler {
             BigDecimal pricePerNight, String address, String city, String country,
             int postalCode, String unitRoomNumber, BigDecimal longitude, BigDecimal latitude) {
         // SQL QUERY: Perform sign-up process here
-        String sql = "SELECT list_id FROM Listings WHERE property_type = ? AND title = ?" + 
-                " AND description = ? AND price_per_night = ? AND address = ? AND city = ?" + 
+        String sql = "SELECT list_id FROM Listings WHERE property_type = ? AND title = ?" +
+                " AND description = ? AND price_per_night = ? AND address = ? AND city = ?" +
                 " AND country = ? AND postal_code = ? AND unit_room_number = ?" +
                 " AND longitude = ? AND latitude = ? AND user_id = ?";
         int userId = UserDetails.getUserId();
@@ -131,8 +118,8 @@ public class CreateListingHandler {
         BigDecimal trLatitude = latitude.setScale(9, RoundingMode.DOWN);
 
         try (ResultSet resultSet = SQL.executeQuery(sql, propertyType, title, description,
-                                trPrice, address, city, country, postalCode, unitRoomNumber,
-                                trLongitude, trLatitude, userId);) {
+                trPrice, address, city, country, postalCode, unitRoomNumber,
+                trLongitude, trLatitude, userId);) {
             while (resultSet.next()) {
                 return resultSet.getInt("list_id");
             }
@@ -376,3 +363,16 @@ public class CreateListingHandler {
 // String address = "here";
 // String dateOfBirth = "2002-02-02";
 // String sin = "234567890";
+
+// Debugging
+// String propertyType = "house";
+// String title = "random title";
+// String description = "some desctip";
+// BigDecimal pricePerNight = new BigDecimal(90);
+// String address = "100 military";
+// String city = "Scar";
+// String country = "bourough";
+// int postalCode = 123;
+// String unitRoomNumber = "12";
+// BigDecimal longitude = new BigDecimal(100);
+// BigDecimal latitude = new BigDecimal(-100);
