@@ -25,7 +25,7 @@ public class CreateBookingHandler {
             
             // Display all listings, based on search filters
             String sql = searchFilters.getSearchQuery();
-            System.out.println(sql);
+            // System.out.println(sql); 
             List<Listing> listings = displayUserListings(sql);
 
             int id = getListingToEdit(listings, scanner);
@@ -83,9 +83,8 @@ public class CreateBookingHandler {
                         searchFilters.setAdjacentPC(true);
                     break;
                 case 4:
-                    // System.out.print("\nEnter the city: ");
-                    // String city = getAlphabeticalInput(scanner);
-                    String city = "Seattle";
+                    System.out.print("\nEnter the city: ");
+                    String city = getAlphabeticalInput(scanner);
                     searchFilters.setCity(city);
                     break;
                 case 5:
@@ -98,14 +97,15 @@ public class CreateBookingHandler {
                     double latitude = getUserDouble(scanner);
                     searchFilters.setLatitude(latitude);
 
-
                     System.out.print("\nEnter the longitude: ");
                     double longitude = getUserDouble(scanner);
                     searchFilters.setLongitude(longitude);
 
-                    System.out.print("\nEnter the distance (radius for search, in km): ");
-                    double distance = getNonNegativeDouble(scanner, "distance");
+                    System.out.print("\nEnter the distance (radius for search, in km), or enter -1 to use default distance: ");
+                    double distance = getDistance(scanner);
                     searchFilters.setDistance(distance);
+
+                    searchFilters.setGeolocation(true);
                     break;
                 case 7:
                     Amenities amenities = getSearchAmenities(scanner);
@@ -538,6 +538,23 @@ public class CreateBookingHandler {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    private static double getDistance(Scanner scanner) {
+        while (!scanner.hasNextDouble()) {
+            System.out.print("Invalid input. Please enter a valid decimal, or enter -1 to use default distance: ");
+            scanner.next(); // Clear the invalid input from the buffer
+        }
+        double d = scanner.nextDouble();
+        scanner.nextLine(); // Consume the new line character left by nextInt()
+
+        while (d < 0 && d != -1) {
+            String message = String.format("Invalid input, must be larger than 0. Please enter a valid distance, or -1 to use default distance: ");
+            System.out.print(message);
+            d = scanner.nextDouble();
+            scanner.nextLine();// Clear the invalid input from the buffer
+        }
+        return d;
     }
 
     private static double getNonNegativeDouble(Scanner scanner, String value) {
