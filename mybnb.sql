@@ -87,11 +87,11 @@ CREATE TABLE Bookings (
 
 -- MOCK DATA: 
 
-//TODO: 
-- each user has a listing, one of the users has alot of listings (same country, city, postal code)
-- Availabilities need to be available before current date.
+-- //TODO: 
+-- - each user has a listing, one of the users has alot of listings (same country, city, postal code)
+-- - Availabilities need to be available before current date.
 
-// SET A:
+-- // SET A:
 
 INSERT INTO Users (name, email, password, address, sin, date_of_birth, occupation, credit_card)
 VALUES
@@ -162,7 +162,7 @@ VALUES
 (false, false, 204.00, '2023-08-20', '2023-08-24', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 9, 9),
 (false, false, 550.00, '2023-09-05', '2023-09-12', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 10, 10);
 
-// SET A.2
+-- // SET A.2
 
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
@@ -231,10 +231,10 @@ VALUES
 ('apartment', 'Riverside Retreat 3', 'Relax by the riverside in this modern apartment', 190.00, '123 Oak St', 'London', 'UK', 67890, 'Unit 4D', 0.987654, 51.345678, 3),
 ('house', 'Garden Oasis 3', 'Peaceful house with a beautiful garden', 160.00, '456 Elm St', 'London', 'UK', 67890, 'House 6', 0.987654, 51.345678, 3);
 
-// 
-- create 5 bookings for renter with user_id 6 in the same country, with different city and postal code .
-- create 4 bookings for Host with user_id 7 in the same city and country, but different postal code.
-- create 3 bookings for Host with user_id 8 in the same city and country and postal code.
+-- // 
+-- - create 5 bookings for renter with user_id 6 in the same country, with different city and postal code .
+-- - create 4 bookings for Host with user_id 7 in the same city and country, but different postal code.
+-- - create 3 bookings for Host with user_id 8 in the same city and country and postal code.
 
-// SET B: (10 more users, listings, avail, bookings, amenities)
+-- // SET B: (10 more users, listings, avail, bookings, amenities)
 
