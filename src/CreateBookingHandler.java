@@ -1,6 +1,7 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -401,22 +402,27 @@ public class CreateBookingHandler {
         if (!searchFilters.hasDates())
             searchFilters = getSearchFilterDates(searchFilters, scanner);
 
-        // TODO sql to check there is availability for these days
-        // String sql = "SELECT * FROM Availabilities WHERE list_id = ? AND start_date <= ? AND end_date >= ?";
-        // try (ResultSet resultSet = SQL.executeQuery(sql)) {
-        //     List<Listing> listingIds = new ArrayList<Listing>();
+        String start = searchFilters.getStartDate();
+        String end = searchFilters.getEndDate();
 
-        //     if (resultSet.next()) {
-        //         int listId = resultSet.getInt("list_id");
-        //         String propertyType = resultSet.getString("property_type");
-        //         String title = resultSet.getString("title");
-        //         String description = resultSet.getString("description");
-
-        //         Listing newListing = new Listing();
-        //     }
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-        // }
+        // Check there is availability for these days
+        String sql = "SELECT * FROM Availabilities WHERE list_id = ? AND start_date <= ? AND end_date >= ?";
+        Availability availability;
+        try (ResultSet resultSet = SQL.executeQuery(sql, list_id, start, end)) {
+            if (resultSet.next()) {
+                int availId = resultSet.getInt("avail_id");
+                String availStart = resultSet.getString("start_date");
+                String availEnd = resultSet.getString("end_date");
+                availability = new Availability(availId, availStart, availEnd, list_id);
+            } else {
+                System.out.println("Failed to create booking! Please try again.");
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to create booking! Please try again.");
+            return;
+        }
 
         // Get total number of days in booking - to calculate total price
         int days = searchFilters.getDays();
@@ -426,14 +432,17 @@ public class CreateBookingHandler {
         }
         double totalCost = days * pricePerNight;
 
-        boolean createdBooking = insertBooking(totalCost, searchFilters.getStartDate(), searchFilters.getEndDate(), list_id);
+        boolean createdBooking = insertBooking(totalCost, start, end, list_id);
 
         if (!createdBooking){
             System.out.println("Failed to create booking! Please try again.");
             return;
         }
-        // TODO sql query to remove the availability for the listing
-        
+
+        // Remove the availability for the listing
+        Availability.removeAvailability(availability.getAvailId());
+        Availability.addAvailability(list_id, availability.getStartDate(), getPreviousDay(start));
+        Availability.addAvailability(list_id, getNextDay(end), availability.getEndDate());
     }
 
     private static SearchFilters getSearchFilterDates(SearchFilters searchFilters, Scanner scanner){
@@ -472,6 +481,21 @@ public class CreateBookingHandler {
         }
     }
 
+    private static String getPreviousDay(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        
+        LocalDate previousDay = date.minusDays(1);
+        return previousDay.format(formatter);
+    }
+
+    private static String getNextDay(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        
+        LocalDate nextDay = date.plusDays(1);
+        return nextDay.format(formatter);
+    }
     // Data validation
 
     public static boolean isValidCreditCardNumber(String creditCardNumber) {
