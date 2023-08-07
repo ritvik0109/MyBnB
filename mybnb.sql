@@ -82,7 +82,7 @@ CREATE TABLE Bookings (
   list_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (list_id) REFERENCES Listings(list_id),
-  UNIQUE KEY user_list_unique (user_id, list_id)
+  KEY user_list_unique (user_id, list_id)
 );
 
 -- MOCK DATA: 
