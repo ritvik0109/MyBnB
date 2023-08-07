@@ -36,6 +36,11 @@ public class LoginUserHandler {
             password = scanner.nextLine();
         }
 
+        // Debugging:
+        // String email = "john.doe@example.com";
+        // String password = "pass123";
+        // isLoginValid(email, password);
+
         if (!exit) {
             System.out.println("\nSuccessfully logged in!\n");
 
@@ -90,18 +95,18 @@ public class LoginUserHandler {
     }
 
     // private static String getUserInput(Scanner scanner) {
-    // while (!scanner.hasNextLine()) {
-    // System.out.println("Invalid input. Please enter an valid input.");
-    // scanner.next(); // Clear the invalid input from the buffer
-    // }
-    // return scanner.nextLine();
+    //     while (!scanner.hasNextLine()) {
+    //         System.out.println("Invalid input. Please enter an valid input.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextLine();
     // }
 
     // private static int getUserChoice(Scanner scanner) {
-    // while (!scanner.hasNextInt()) {
-    // System.out.println("Invalid input. Please enter a valid integer choice.");
-    // scanner.next(); // Clear the invalid input from the buffer
-    // }
-    // return scanner.nextInt();
+    //     while (!scanner.hasNextInt()) {
+    //         System.out.println("Invalid input. Please enter a valid integer choice.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextInt();
     // }
 }

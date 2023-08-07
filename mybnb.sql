@@ -33,7 +33,7 @@ CREATE TABLE Availabilities (
   avail_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
   start_date DATE, 
   end_date DATE,
-  list_id INT NOT NULL,
+  list_id INT,
   FOREIGN KEY (list_id) REFERENCES Listings(list_id)
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE Amenities (
   gym BOOLEAN, 
   ev_charger BOOLEAN, 
   hot_tub BOOLEAN,
-  list_id INT NOT NULL UNIQUE,
+  list_id INT UNIQUE,
   FOREIGN KEY (list_id) REFERENCES Listings(list_id)
 );
 
@@ -78,8 +78,8 @@ CREATE TABLE Bookings (
   comment_on_host TEXT, 
   rate_renter TINYINT, 
   comment_on_renter TEXT,
-  user_id INT NOT NULL,
-  list_id INT NOT NULL,
+  user_id INT,
+  list_id INT,
   FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (list_id) REFERENCES Listings(list_id),
   KEY user_list_unique (user_id, list_id)
