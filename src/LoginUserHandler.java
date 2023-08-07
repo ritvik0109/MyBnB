@@ -10,7 +10,7 @@ public class LoginUserHandler {
         boolean exit = false;
 
         // String email = "john.doe@example.com"; // Debugging
-        // String password = "pass123";
+        // String password = "password1";
         System.out.print("Enter your email address: ");
         String email = scanner.nextLine();
 
