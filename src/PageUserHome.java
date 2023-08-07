@@ -6,6 +6,7 @@ public class PageUserHome {
 
         while (!exit) {
             displaySubMenu();
+            // int mainChoice = 6;
             int mainChoice = getUserChoice(scanner);
 
             switch (mainChoice) {
@@ -25,7 +26,7 @@ public class PageUserHome {
                     System.out.println("Cancel Booking");
                     break;
                 case 6:
-                    System.out.println("Review Your Experience (Rate / Comment)");
+                    PageReviewExp.handleReviewExp(scanner);
                     break;
                 case 7:
                     System.out.println("Delete Account");
