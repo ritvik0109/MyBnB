@@ -82,16 +82,12 @@ CREATE TABLE Bookings (
   list_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (list_id) REFERENCES Listings(list_id),
-  UNIQUE KEY user_list_unique (user_id, list_id)
+  KEY user_list_unique (user_id, list_id)
 );
 
 -- MOCK DATA: 
-
--- //TODO: 
--- - each user has a listing, one of the users has alot of listings (same country, city, postal code)
--- - Availabilities need to be available before current date.
-
--- // SET A:
+--  each user has a listing, one of the users has alot of listings (same country, city, postal code)
+--  Availabilities need to be available before current date.
 
 INSERT INTO Users (name, email, password, address, sin, date_of_birth, occupation, credit_card)
 VALUES
@@ -162,7 +158,7 @@ VALUES
 (false, false, 204.00, '2023-08-20', '2023-08-24', 3, 'Good experience!', 4, 'Friendly host!', 3, 'Had a nice stay!', 9, 9),
 (false, false, 550.00, '2023-09-05', '2023-09-12', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 10, 10);
 
--- // SET A.2
+-- SET A.2
 
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
@@ -204,37 +200,233 @@ VALUES
 (false, false, 360.00, '2023-07-17', '2023-07-25', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 5, 19),
 (false, false, 420.00, '2023-08-10', '2023-08-18', 5, 'Excellent place!', 5, 'Amazing host!', 5, 'Highly recommended!', 4, 20);
 
--- Listings for Host with user_id 1 in the same country
+INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
+VALUES
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 11), -- Downtown Loft
+(true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, 12), -- Seaside Retreat
+(true, true, false, false, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 13), -- City Center Studio
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 14), -- Mountain Getaway
+(true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, true, false, false, false, 15), -- Urban Oasis
+(true, false, true, true, true, true, false, true, false, true, true, true, false, true, false, false, false, false, true, false, false, false, 16), -- Countryside Cabin
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 17), -- Skyline View Condo
+(true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, true, false, false, false, 18), -- Tranquil Haven
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 19), -- Historic Inn
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 20); -- Rural Farmhouse
+
+-- SET FOR TESTING REPORTS:
+
+-- Listings for Host with user_id 1 in the same country (different city and different postal code (but nearby))
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
-('apartment', 'City Skyline View 1', 'Stunning views of the city skyline', 180.00, '123 Elm St', 'Seattle', 'USA', 56789, 'Unit 7A', -122.123456, 47.678910, 1),
-('house', 'Lakefront Retreat 1', 'Relax by the lake in this cozy house', 150.00, '789 Oak St', 'Seattle', 'USA', 56789, 'House 5', -122.123456, 47.678910, 1),
-('apartment', 'Urban Oasis 1', 'Modern apartment with urban charm', 200.00, '456 Pine St', 'Seattle', 'USA', 56789, 'Unit 10B', -122.123456, 47.678910, 1),
-('house', 'Mountain Cabin 1', 'Escape to the mountains in this cabin', 130.00, '789 Maple St', 'Seattle', 'USA', 56789, 'Cabin 1', -122.123456, 47.678910, 1),
-('apartment', 'Downtown Luxury 1', 'Luxurious apartment in downtown area', 220.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Unit 3D', -122.123456, 47.678910, 1);
+('apartment', 'City Skyline View', 'Stunning views of the city skyline', 180.00, '123 Elm St', 'New York', 'USA', 56781, 'Unit 7A', -122.123456, 47.678910, 1),
+('house', 'Lakefront Retreat', 'Relax by the lake in this cozy house', 150.00, '789 Oak St', 'Seattle', 'USA', 56789, 'House 5', -122.123456, 47.678910, 1),
+('apartment', 'Urban Oasis', 'Modern apartment with urban charm', 200.00, '456 Pine St', 'Bridgerton', 'USA', 56720, 'Unit 10B', -122.123456, 47.678910, 1),
+('house', 'Mountain Cabin', 'Escape to the mountains in this cabin', 130.00, '789 Maple St', 'Sattleland', 'USA', 56710, 'Cabin 1', -122.123456, 47.678910, 1),
+('apartment', 'Downtown Luxury', 'Luxurious apartment in downtown area', 220.00, '123 Oak St', 'Bordstorm', 'USA', 56760, 'Unit 3D', -122.123456, 47.678910, 1);
+
+-- Amenities for Listings (User ID: 1, Same Country)
+INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
+VALUES
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 21), -- City Skyline View
+(true, false, true, true, true, true, true, true, false, true, true, true, false, true, true, false, false, false, true, false, false, false, 22), -- Lakefront Retreat
+(true, true, true, true, false, true, true, false, true, true, false, true, false, true, false, true, false, false, true, false, false, false, 23), -- Urban Oasis
+(true, true, false, true, true, true, false, true, true, true, true, true, false, true, false, true, false, false, true, false, false, false, 24), -- Mountain Cabin
+(false, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 25); -- Downtown Luxury
+
+-- Availabilities for Listings (User ID: 1, Same Country)
+INSERT INTO Availabilities (start_date, end_date, list_id)
+VALUES
+('2023-01-01', '2024-12-10', 21),
+('2023-01-15', '2024-12-25', 22),
+('2023-01-20', '2024-12-25', 23),
+('2023-01-05', '2024-12-12', 24),
+('2023-01-10', '2024-12-15', 25);
+
+-- Bookings for Listings (User ID: 1, Same Country)
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 540.00, '2023-08-05', '2023-08-08', 4, 'Great stay!', 5, 'Wonderful host!', 4, 'Enjoyed the stay!', 1, 21),
+(false, false, 450.00, '2023-09-18', '2023-09-22', 5, 'Fantastic place!', 4, 'Very helpful host!', 5, 'Highly recommended!', 1, 22),
+(true, false, 600.00, '2023-08-25', '2023-08-29', 3, 'Good place!', 4, 'Friendly host!', 3, 'Had a nice time!', 1, 23),
+(false, false, 520.00, '2023-09-10', '2023-09-17', 5, 'Amazing stay!', 5, 'Superb host!', 5, 'Would come again!', 1, 24),
+(false, false, 1100.00, '2023-08-15', '2023-08-19', 4, 'Nice place!', 4, 'Helpful host!', 4, 'Enjoyed the trip!', 1, 25);
+
+
+-- Availabilities for Listings (User ID: 1, Same Country)
+INSERT INTO Availabilities (start_date, end_date, list_id)
+VALUES
+('2023-08-01', '2023-08-10', 21),
+('2023-09-15', '2023-09-25', 22),
+('2023-08-20', '2023-08-25', 23),
+('2023-09-05', '2023-09-12', 24),
+('2023-08-10', '2023-08-15', 25);
 
 -- Listings for Host with user_id 2 in the same city and country
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
-('apartment', 'City Center Loft 2', 'Chic loft in the heart of New York', 250.00, '123 Pine St', 'New York', 'USA', 90123, 'Unit 5C', -74.123456, 40.678910, 2),
-('house', 'Cozy Urban Home 2', 'Comfortable house in the heart of the city', 180.00, '456 Oak St', 'New York', 'USA', 90123, 'House 3', -74.123456, 40.678910, 2),
-('apartment', 'Central Studio 2', 'Modern studio apartment in downtown', 190.00, '789 Maple St', 'New York', 'USA', 90123, 'Unit 8B', -74.123456, 40.678910, 2),
-('house', 'City View Mansion 2', 'Mansion with breathtaking city views', 350.00, '123 Oak St', 'New York', 'USA', 90123, 'Mansion 1', -74.123456, 40.678910, 2),
-('apartment', 'Luxury Penthouse 2', 'Opulent penthouse in the city center', 450.00, '456 Pine St', 'New York', 'USA', 90123, 'Penthouse 2', -74.123456, 40.678910, 2);
+('apartment', 'City Center Loft 2', 'Chic loft in the heart of New York', 250.00, '123 Pine St', 'New York', 'USA', 90125, 'Unit 5C', -74.123451, 40.678916, 2),
+('house', 'Cozy Urban Home 2', 'Comfortable house in the heart of the city', 180.00, '456 Oak St', 'New York', 'USA', 90121, 'House 3', -74.123459, 40.678915, 2),
+('apartment', 'Central Studio 2', 'Modern studio apartment in downtown', 190.00, '789 Maple St', 'New York', 'USA', 90128, 'Unit 8B', -74.123453, 40.678914, 2),
+('apartment', 'Luxury Penthouse', 'Opulent penthouse in the city center', 450.00, '456 Pine St', 'New York', 'USA', 90129, 'Penthouse 2', -74.123451, 40.678912, 2);
 
--- Listings for Host with user_id 3 in the same city and country
+-- Amenities for Listings (User ID: 2, Same City and Country)
+INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
+VALUES
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 26), -- City Center Loft
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 27), -- Cozy Urban Home
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, false, false, false, true, false, false, false, 28), -- Central Studio
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, true, false, false, true, false, false, false, 29); -- Luxury Penthouse
+
+-- Availabilities for Listings (User ID: 2, Same City and Country)
+INSERT INTO Availabilities (start_date, end_date, list_id)
+VALUES
+('2023-07-10', '2023-11-18', 26),
+('2023-08-15', '2023-10-25', 27),
+('2023-07-20', '2023-09-28', 28),
+('2023-07-25', '2023-11-02', 29);
+
+-- Bookings for Listings (User ID: 2, Same City and Country)
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 750.00, '2023-07-08', '2023-07-12', 4, 'Enjoyed the stay!', 5, 'Great host!', 4, 'Highly recommended!', 2, 26),
+(false, false, 540.00, '2023-07-15', '2023-07-23', 5, 'Fantastic place!', 4, 'Helpful host!', 5, 'Would come again!', 2, 27),
+(false, false, 570.00, '2023-07-25', '2023-08-01', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 2, 28),
+(false, false, 1800.00, '2023-07-28', '2023-08-04', 5, 'Lovely place!', 5, 'Wonderful host!', 5, 'Great communication!', 2, 29);
+
+-- Listings for Host with user_id 3 in the same postal code in the USA
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
-('house', 'Quaint Cottage 3', 'Charming cottage in the heart of London', 150.00, '123 Elm St', 'London', 'UK', 67890, 'Cottage 1', 0.987654, 51.345678, 3),
-('apartment', 'Cityscape Apartment 3', 'Apartment with stunning cityscape views', 210.00, '456 Pine St', 'London', 'UK', 67890, 'Unit 6A', 0.987654, 51.345678, 3),
-('house', 'Victorian Manor 3', 'Elegant Victorian manor in historic district', 280.00, '789 Maple St', 'London', 'UK', 67890, 'Manor 2', 0.987654, 51.345678, 3),
-('apartment', 'Riverside Retreat 3', 'Relax by the riverside in this modern apartment', 190.00, '123 Oak St', 'London', 'UK', 67890, 'Unit 4D', 0.987654, 51.345678, 3),
-('house', 'Garden Oasis 3', 'Peaceful house with a beautiful garden', 160.00, '456 Elm St', 'London', 'UK', 67890, 'House 6', 0.987654, 51.345678, 3);
+('apartment', 'Cozy Urban Studio', 'Charming studio in the heart of the city', 110.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Unit 2A', -122.123456, 47.678910, 3),
+('house', 'Modern Townhouse', 'Contemporary townhouse with all amenities', 160.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Townhouse 3', -122.123456, 47.678910, 3),
+('apartment', 'Riverside Retreat', 'Relax by the river in this serene apartment', 140.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Unit 6B', -122.123456, 47.678910, 3);
 
--- // 
--- - create 5 bookings for renter with user_id 6 in the same country, with different city and postal code .
--- - create 4 bookings for Host with user_id 7 in the same city and country, but different postal code.
--- - create 3 bookings for Host with user_id 8 in the same city and country and postal code.
+-- Amenities for Listings (User ID: 3, Same Postal Code in the USA)
+INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
+VALUES
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 30), -- Cozy Urban Studio
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 31), -- Modern Townhouse
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 32); -- Riverside Retreat
 
--- // SET B: (10 more users, listings, avail, bookings, amenities)
+-- Availabilities for Listings (User ID: 3, Same Postal Code in the USA)
+INSERT INTO Availabilities (start_date, end_date, list_id)
+VALUES
+('2023-07-10', '2023-12-15', 30),
+('2023-08-20', '2023-11-28', 31),
+('2023-09-05', '2023-12-10', 32);
 
+-- Bookings rented by User ID: 4
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 330.00, '2023-07-12', '2023-07-18', 4, 'Great place!', 5, 'Excellent host!', 4, 'Enjoyed the stay!', 4, 30),
+(false, false, 960.00, '2023-08-22', '2023-08-27', 5, 'Amazing property!', 5, 'Superb host!', 5, 'Would recommend!', 4, 31),
+(false, false, 420.00, '2023-09-08', '2023-09-12', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 4, 32);
+
+-- Additional Bookings for Listings with IDs 30, 31, and 32
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 440.00, '2023-07-20', '2023-07-25', 4, 'Cozy and comfortable', 5, 'Very accommodating host', 4, 'Had a great time!', 4, 30),
+(true, true, 800.00, '2023-08-25', '2023-08-30', 5, 'Perfect getaway', 5, 'Friendly and helpful', 5, 'Definitely coming back!', 5, 31),
+(true, false, 360.00, '2023-09-15', '2023-09-20', 4, 'Nice location', 4, 'Responsive host', 4, 'Enjoyed the stay!', 4, 32),
+(false, false, 660.00, '2023-07-05', '2023-07-10', 4, 'Lovely apartment', 5, 'Great communication', 4, 'Highly recommend!', 6, 30),
+(false, false, 780.00, '2023-08-15', '2023-08-22', 5, 'Wonderful experience', 5, 'Excellent service', 5, 'Absolutely loved it!', 4, 31),
+(true, false, 300.00, '2023-09-25', '2023-09-30', 4, 'Pleasant stay', 4, 'Attentive host', 4, 'Had a good time!', 6, 32),
+(false, false, 510.00, '2023-07-28', '2023-08-03', 4, 'Clean and cozy', 5, 'Helpful and friendly', 4, 'Would stay again!', 4, 30),
+(false, true, 720.00, '2023-08-10', '2023-08-18', 5, 'Great property', 5, 'Superb hospitality', 5, 'Highly recommended!', 7, 31),
+(true, true, 380.00, '2023-09-18', '2023-09-25', 4, 'Relaxing stay', 4, 'Responsive host', 4, 'Enjoyed every moment!', 4, 32),
+(false, false, 600.00, '2023-07-15', '2023-07-22', 4, 'Good location', 5, 'Welcoming host', 4, 'Had a pleasant time!', 7, 30);
+
+-- Listings for Host with user_id 3 in Japan (IDs 33 to 40)
+INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
+VALUES
+('apartment', 'Sakura Blossom Studio', 'Cozy studio with Sakura views', 90.00, '123 Sakura St', 'Tokyo', 'Japan', 12345, 'Unit 2C', 139.123456, 35.678910, 3),
+('house', 'Kyoto Garden Retreat', 'Traditional house near Kyoto temples', 120.00, '456 Zen St', 'Kyoto', 'Japan', 56789, 'House 7', 135.123456, 35.678910, 3),
+('apartment', 'Osaka Urban Oasis', 'Modern apartment in downtown Osaka', 110.00, '789 Umeda St', 'Osaka', 'Japan', 90123, 'Unit 15B', 135.123456, 34.678910, 3),
+('house', 'Nara Serenity', 'Tranquil house in the heart of Nara', 100.00, '456 Deer St', 'Nara', 'Japan', 23456, 'House 2', 135.123456, 34.123456, 3),
+('apartment', 'Hiroshima Skyline View', 'Stunning views of Hiroshima skyline', 130.00, '123 Peace St', 'Hiroshima', 'Japan', 67890, 'Unit 11A', 132.123456, 34.678910, 4),
+('house', 'Fukuoka Coastal Getaway', 'Relax by the coast in Fukuoka', 140.00, '789 Beach St', 'Fukuoka', 'Japan', 34567, 'House 3', 130.123456, 33.678910, 4),
+('apartment', 'Sapporo Snowy Retreat', 'Cozy apartment in snowy Sapporo', 100.00, '123 Snow St', 'Sapporo', 'Japan', 78901, 'Unit 5D', 141.123456, 43.678910, 4),
+('house', 'Okinawa Beach House', 'Beachfront house in Okinawa paradise', 160.00, '456 Coral St', 'Okinawa', 'Japan', 89012, 'House 1', 127.123456, 26.123456, 5);
+
+-- Amenities for Listings (User ID: 3, Japan)
+INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
+VALUES
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 33), -- Sakura Blossom Studio
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 34), -- Kyoto Garden Retreat
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 35), -- Osaka Urban Oasis
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 36), -- Nara Serenity
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 37), -- Hiroshima Skyline View
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 38), -- Fukuoka Coastal Getaway
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 39), -- Sapporo Snowy Retreat
+(true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, false, true, false, false, false, 40); -- Okinawa Beach House
+
+-- Availabilities for Listings (User ID: 3, Japan)
+INSERT INTO Availabilities (start_date, end_date, list_id)
+VALUES
+('2022-09-10', '2022-09-15', 33),
+('2022-09-20', '2022-09-25', 33),
+('2022-10-05', '2022-10-10', 33),
+('2022-11-15', '2022-11-20', 33),
+('2022-11-25', '2022-11-30', 33),
+('2022-09-10', '2022-09-15', 34),
+('2022-10-05', '2022-10-10', 34),
+('2022-10-15', '2022-10-20', 34),
+('2022-11-10', '2022-11-15', 34),
+('2022-11-20', '2022-11-25', 34),
+('2022-09-15', '2022-09-20', 35),
+('2022-09-25', '2022-09-30', 35),
+('2022-10-15', '2022-10-20', 35),
+('2022-11-05', '2022-11-10', 35),
+('2022-11-15', '2022-11-20', 35),
+('2022-09-05', '2022-09-10', 36),
+('2022-09-15', '2022-09-20', 36),
+('2022-10-10', '2022-10-15', 36),
+('2022-11-10', '2022-11-15', 36),
+('2022-11-25', '2022-11-30', 36),
+('2022-09-10', '2022-09-15', 37),
+('2022-10-05', '2022-10-10', 37),
+('2022-10-20', '2022-10-25', 37),
+('2022-11-05', '2022-11-10', 37),
+('2022-11-20', '2022-11-25', 37),
+('2022-09-15', '2022-09-20', 38),
+('2022-09-25', '2022-09-30', 38),
+('2022-10-15', '2022-10-20', 38),
+('2022-11-10', '2022-11-15', 38),
+('2022-11-20', '2022-11-25', 38),
+('2022-09-10', '2022-09-15', 39),
+('2022-09-20', '2022-09-25', 39),
+('2022-10-05', '2022-10-10', 39),
+('2022-11-15', '2022-11-20', 39),
+('2022-11-25', '2022-11-30', 39),
+('2022-09-15', '2022-09-20', 40),
+('2022-09-25', '2022-09-30', 40),
+('2022-10-10', '2022-10-15', 40),
+('2022-11-10', '2022-11-15', 40),
+('2022-11-20', '2022-11-25', 40);
+
+-- Bookings rented by User ID: 4 (within the given time range)
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 450.00, '2022-09-12', '2022-09-18', 4, 'Great place!', 5, 'Excellent host!', 4, 'Enjoyed the stay!', 4, 33),
+(false, false, 720.00, '2022-10-05', '2022-10-12', 5, 'Amazing property!', 5, 'Superb host!', 5, 'Would recommend!', 4, 34),
+(false, false, 330.00, '2022-11-08', '2022-11-12', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 4, 35),
+(false, false, 300.00, '2022-09-08', '2022-09-12', 4, 'Comfortable stay!', 5, 'Friendly host!', 4, 'Had a good time!', 4, 36),
+(false, false, 420.00, '2022-10-18', '2022-10-25', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 4, 37),
+(false, false, 250.00, '2022-11-10', '2022-11-15', 3, 'Decent stay.', 4, 'Friendly host!', 4, 'Had a good time!', 4, 38),
+(false, false, 380.00, '2022-09-15', '2022-09-20', 4, 'Good place.', 4, 'Friendly host!', 4, 'Had a good time!', 4, 39),
+(false, false, 480.00, '2022-09-25', '2022-09-30', 5, 'Excellent stay!', 5, 'Great host!', 5, 'Would come back!', 4, 40);
+
+-- Bookings rented by User IDs: 6, 7, 8, 9 (within the given time range)
+INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
+VALUES
+(false, false, 420.00, '2022-09-15', '2022-09-20', 4, 'Nice stay!', 4, 'Friendly host!', 4, 'Had a good time!', 6, 33),
+(false, false, 550.00, '2022-10-08', '2022-10-15', 4, 'Good property.', 4, 'Great host!', 4, 'Enjoyed the stay!', 7, 34),
+(false, false, 290.00, '2022-11-12', '2022-11-18', 3, 'Decent stay.', 4, 'Friendly host!', 4, 'Had a good time!', 8, 35),
+(false, false, 280.00, '2022-09-22', '2022-09-27', 3, 'Average property.', 3, 'Friendly host!', 3, 'Had a decent time!', 9, 36),
+(false, false, 400.00, '2022-10-25', '2022-10-31', 4, 'Great stay!', 5, 'Excellent host!', 4, 'Enjoyed the stay!', 6, 37),
+(false, false, 210.00, '2022-11-18', '2022-11-24', 3, 'Average experience.', 3, 'Friendly host!', 3, 'Had a decent time!', 7, 38),
+(false, false, 340.00, '2022-09-20', '2022-09-25', 4, 'Nice place!', 4, 'Friendly host!', 4, 'Had a good time!', 8, 39),
+(false, false, 450.00, '2022-09-28', '2022-10-05', 5, 'Excellent property!', 5, 'Superb host!', 5, 'Would recommend!', 9, 40);
+
+-- SET B: (10 more users, listings, avail, bookings, amenities)
+
+-- Listing ID 41 onwards:
