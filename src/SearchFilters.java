@@ -22,13 +22,13 @@ public class SearchFilters {
     private boolean ascendingPrice;
 
     public SearchFilters() {
-        this.startDate = null;
-        this.endDate = null;
-        this.address = null;
+        this.startDate = "";
+        this.endDate = "";
+        this.address = "";
         this.postalCode = -1;
         this.adjacentPC = false;
-        this.city = null;
-        this.country = null;
+        this.city = "";
+        this.country = "";
         this.latitude = 0;
         this.longitude = 0;
         this.distance = -1;
@@ -53,10 +53,10 @@ public class SearchFilters {
 
         // Add join conditions here
 
-        if (city != null)
+        if (!city.isEmpty())
             sql += String.format(" l.city = \'%s\' AND", city);
 
-        if (country != null)
+        if (!country.isEmpty())
             sql += String.format(" l.country = \'%s\' AND", country);
 
         if (postalCode != -1){
@@ -80,13 +80,13 @@ public class SearchFilters {
     }
 
     private boolean isEmpty(){
-        return startDate == null && 
-        endDate == null && 
-        address == null && 
+        return startDate.isEmpty() && 
+        endDate.isEmpty() && 
+        address.isEmpty() && 
         postalCode == -1 && 
         adjacentPC == false && 
-        city == null && 
-        country == null && 
+        city.isEmpty() && 
+        country.isEmpty() && 
         latitude == 0 && 
         longitude == 0 && 
         distance == -1 && 
