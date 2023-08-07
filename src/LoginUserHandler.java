@@ -62,7 +62,7 @@ public class LoginUserHandler {
     }
 
     private static boolean isLoginValid(String email, String password) {
-        String sql = "SELECT user_id, email, COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
+        String sql = "SELECT user_id, email, credit_card, COUNT(*) AS count FROM Users WHERE email = ? AND password = ?";
         try (ResultSet resultSet = SQL.executeQuery(sql, email, password)) {
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
@@ -70,9 +70,11 @@ public class LoginUserHandler {
                     // Login is valid, set the user details in UserDetails class
                     int userId = resultSet.getInt("user_id");
                     String userEmail = resultSet.getString("email");
+                    String creditCard = resultSet.getString("credit_card");
 
                     UserDetails.setUserId(userId);
                     UserDetails.setUserEmail(userEmail);
+                    UserDetails.setCreditCard(creditCard);
 
                     return true;
                 }
