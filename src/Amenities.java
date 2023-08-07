@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Amenities {
 
     private int amenityId;
@@ -46,6 +49,7 @@ public class Amenities {
         this.iron = iron;
         this.smokeAlarm = smokeAlarm;
         this.carbonMonoxideAlarm = carbonMonoxideAlarm;
+        this.pool = pool;
         this.freeParking = freeParking;
         this.crib = crib;
         this.bbqGrill = bbqGrill;
@@ -83,6 +87,106 @@ public class Amenities {
         this.gym = bool;
         this.evCharger = bool;
         this.hotTub = bool;
+    }
+
+    public List<String> getNotIncludedCodes() {
+        List<String> codes = new ArrayList<String>();
+        
+        if (!this.wifi) 
+            codes.add("wifi");
+        if (!this.kitchen) 
+            codes.add("kitchen");
+        if (!this.washer) 
+            codes.add("washer");
+        if (!this.dryer) 
+            codes.add("dryer");
+        if (!this.ac) 
+            codes.add("ac");
+        if (!this.heating) 
+            codes.add("heating");
+        if (!this.workspace) 
+            codes.add("workspace");
+        if (!this.tv) 
+            codes.add("tv");
+        if (!this.hairDryer) 
+            codes.add("hair_dryer");
+        if (!this.iron) 
+            codes.add("iron");
+        if (!this.smokeAlarm) 
+            codes.add("smoke_alarm");
+        if (!this.carbonMonoxideAlarm) 
+            codes.add("carbon_monoxide_alarm");
+        if (!this.pool) 
+            codes.add("pool");
+        if (!this.freeParking) 
+            codes.add("free_parking");
+        if (!this.crib) 
+            codes.add("crib");
+        if (!this.bbqGrill) 
+            codes.add("bbq_grill");
+        if (!this.indoorFireplace) 
+            codes.add("indoor_fireplace");
+        if (!this.smokingAllowed) 
+            codes.add("smoking_allowed");
+        if (!this.breakfast) 
+            codes.add("breakfast");
+        if (!this.gym) 
+            codes.add("gym");
+        if (!this.evCharger) 
+            codes.add("ev_charger");
+        if (!this.hotTub) 
+            codes.add("hot_tub");
+
+        return codes;
+    }
+
+    public String getAmenityNamebyCode(String code) {
+        if (code == "wifi")
+            return "Wifi";
+        if (code == "kitchen")
+            return "Kitchen";
+        if (code == "washer")
+            return "Washer";
+        if (code == "dryer")
+            return "Dryer";
+        if (code == "ac")
+            return "AC";
+        if (code == "heating")
+            return "Heating";
+        if (code == "workspace")
+            return "Workspace";
+        if (code == "tv")
+            return "TV";
+        if (code == "hair_dryer")
+            return "Hair Dryer";
+        if (code == "iron")
+            return "Iron";
+        if (code == "smoke_alarm")
+            return "Smoke Alarm";
+        if (code == "carbon_monoxide_alarm")
+            return "Carbon Monoxide Alarm";
+        if (code == "pool")
+            return "Pool";
+        if (code == "free_parking")
+            return "Free Parking";
+        if (code == "crib")
+            return "Crib";
+        if (code == "bbq_grill")
+            return "BBQ Grill";
+        if (code == "indoor_fireplace")
+            return "Indoor Fireplace";
+        if (code == "smoking_allowed")
+            return "Smoking Allowed";
+        if (code == "breakfast")
+            return "Breakfast";
+        if (code == "gym")
+            return "Gym";
+        if (code == "ev_charger")
+            return "EV Charger";
+        if (code == "hot_tub")
+            return "Hot Tub";
+        
+        return "";
     }
 
     // Getters and setters

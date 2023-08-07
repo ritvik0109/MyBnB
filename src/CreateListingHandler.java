@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class CreateListingHandler {
@@ -36,6 +37,10 @@ public class CreateListingHandler {
         BigDecimal longitude = handleInputBigDecimal(scanner, "longitude");
         BigDecimal latitude = handleInputBigDecimal(scanner, "latitude");
 
+        // TODO
+        // Longitude and latitude can be 0 and -ve
+        // City name can have spaces
+
         // Debugging
         // String propertyType = "house";
         // String title = "random title";
@@ -52,11 +57,13 @@ public class CreateListingHandler {
         boolean success = createListing(propertyType, title, description, pricePerNight, address, city, country, postalCode,
                 unitRoomNumber, longitude, latitude);
 
+        // For the getListId method, I assume that all the attributes will together be unique!
         int listId = getListId(propertyType, title, description, pricePerNight, address, city, country, postalCode,
                 unitRoomNumber, longitude, latitude);
 
         if (success && listId != -1){
-            editAmenities(scanner, listId);
+            Amenities amenities = new Amenities(false, listId);
+            amenities = editAmenities(scanner, amenities);
 
             // Add availability
             boolean addAvailability = true;
@@ -85,6 +92,19 @@ public class CreateListingHandler {
                 if (exit == 0)
                     addAvailability = false;
             }
+
+            // Host Toolkit!
+
+            suggestAmenities(amenities, pricePerNight.doubleValue()); // all countries
+
+            if (addMoreAmenities(scanner))
+                amenities = editAmenities(scanner, amenities);
+
+            // TODO We suggest a price for the listing now
+
+            // Would you like to update the price?
+
+            // 
         }
         System.out.println("\nSuccessfully added listing! Return to Main Menu");
     }
@@ -142,9 +162,7 @@ public class CreateListingHandler {
         return -1;
     }
 
-    private static void editAmenities(Scanner scanner, int list_id) {
-
-        Amenities amenities = new Amenities(false, list_id);
+    private static Amenities editAmenities(Scanner scanner, Amenities amenities) {
 
         boolean noMoreEdits = false;
         while (!noMoreEdits) {
@@ -229,6 +247,8 @@ public class CreateListingHandler {
         }
 
         amenities.addAmenity();
+
+        return amenities;
     }
 
     private static void displayAmenities(Amenities amenities) {
@@ -259,6 +279,31 @@ public class CreateListingHandler {
         System.out.println("23. Exit (no more edits)");
     }
 
+    private static void suggestAmenities(Amenities amenities, double price_per_night){
+        List<String> codes = amenities.getNotIncludedCodes();
+
+        for (String code : codes){
+            // Get average price of listings that have this amenity
+            String sql = String.format("SELECT AVG(price_per_night) AS average_price FROM Listings AS l JOIN Amenities AS am WHERE l.list_id = am.list_id AND am.%s = true", code);
+            try (ResultSet resultSet = SQL.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    int averagePrice = resultSet.getInt("average_price");
+                    if (averagePrice > price_per_night) {
+                        System.out.println("Suggested amenity to add: " + amenities.getAmenityNamebyCode(code) + "; Suggested price increase: " + (averagePrice - price_per_night));
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static boolean addMoreAmenities(Scanner scanner) {
+        System.out.print("\nEnter 1 to add more amenities, or 0 to continue: ");
+        int choice = getUserChoice(scanner);
+        return (choice == 1);
+    }
+
     // -- Data Validation Methods:
 
     private static boolean isValidStartDate(String start) {
@@ -274,6 +319,16 @@ public class CreateListingHandler {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    private static int getUserChoice(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            System.out.print("Invalid input. Please enter a valid integer: ");
+            scanner.next(); // Clear the invalid input from the buffer
+        }
+        int x = scanner.nextInt();
+        scanner.nextLine(); // Consume the new line character left by nextInt()
+        return x;
     }
 
     private static boolean isValidEndDate(String start, String end) {
