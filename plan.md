@@ -1,14 +1,14 @@
 todo:
 [x] N: create listing
-[ ] R: edit listing 
 [ ] N: remove listing
+[ ] N: logout 
+[ ] N: review your experience, comments
+[ ] N: run a report 
+[ ] R: edit listing 
 [ ] R: book listing (create a booking + search)
 [ ] R: cancel booking
 [ ] R: delete account (email TA)
-[ ] N: logout 
-[ ] N: review your experience, comments
 [ ] R: host toolkit
-[ ] N: run a report 
  
 to test:
 

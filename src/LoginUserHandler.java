@@ -9,10 +9,10 @@ public class LoginUserHandler {
         scanner.nextLine();
         boolean exit = false;
 
+        // String email = "john.doe@example.com"; // Debugging
         System.out.print("Enter your email address: ");
         String email = scanner.nextLine();
 
-        // String email = "r@mail.com"; // Debugging
         while (!isValidEmail(email) || !isUserEmail(email)) {
             if (!isValidEmail(email))
                 System.out.print("Please enter a valid email address: ");
@@ -35,8 +35,15 @@ public class LoginUserHandler {
             password = scanner.nextLine();
         }
 
+        // Debugging:
+        // String email = "john.doe@example.com";
+        // String password = "pass123";
+        // isLoginValid(email, password);
+
         if (!exit) {
-            PageUserHome.userHome(scanner);
+            System.out.println("\nSuccessfully logged in!\n");
+
+            PageUserHome.userHome(scanner, email);
         }
 
     }
@@ -85,18 +92,18 @@ public class LoginUserHandler {
     }
 
     // private static String getUserInput(Scanner scanner) {
-    // while (!scanner.hasNextLine()) {
-    // System.out.println("Invalid input. Please enter an valid input.");
-    // scanner.next(); // Clear the invalid input from the buffer
-    // }
-    // return scanner.nextLine();
+    //     while (!scanner.hasNextLine()) {
+    //         System.out.println("Invalid input. Please enter an valid input.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextLine();
     // }
 
     // private static int getUserChoice(Scanner scanner) {
-    // while (!scanner.hasNextInt()) {
-    // System.out.println("Invalid input. Please enter a valid integer choice.");
-    // scanner.next(); // Clear the invalid input from the buffer
-    // }
-    // return scanner.nextInt();
+    //     while (!scanner.hasNextInt()) {
+    //         System.out.println("Invalid input. Please enter a valid integer choice.");
+    //         scanner.next(); // Clear the invalid input from the buffer
+    //     }
+    //     return scanner.nextInt();
     // }
 }

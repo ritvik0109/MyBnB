@@ -1,11 +1,12 @@
 import java.util.Scanner;
 
 public class PageUserHome {
-    public static void userHome(Scanner scanner) {
+    public static void userHome(Scanner scanner, String email) {
         boolean exit = false;
 
         while (!exit) {
             displaySubMenu();
+            // int mainChoice = 6;
             int mainChoice = getUserChoice(scanner);
 
             switch (mainChoice) {
@@ -13,7 +14,7 @@ public class PageUserHome {
                     CreateListingHandler.handleCreateListing(scanner);
                     break;
                 case 2:
-                    System.out.println("Edit Listing");
+                    EditListingHandler.editListing(scanner);
                     break;
                 case 3:
                     RemoveListingHandler.handleRemoveListing(scanner);
@@ -25,7 +26,7 @@ public class PageUserHome {
                     CancelBookingHandler.handleCancelBooking(scanner);
                     break;
                 case 6:
-                    System.out.println("Review Your Experience (Rate / Comment)");
+                    PageReviewExp.handleReviewExp(scanner);
                     break;
                 case 7:
                     System.out.println("Delete Account");
