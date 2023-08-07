@@ -111,13 +111,13 @@ public class EditListingHandler {
                             end = scanner.nextLine();
                         }
 
-                        Availability.addAvailability(id, start, end);
+                        Availability.addAvailability(id, start, end, true);
                         break;
                     case 13:
                         System.out.println("Current Availability: ");
                         List<Availability> availabilities = displayListingAvailability(id);
                         int availId = getAvailToDelete(availabilities, scanner);
-                        Availability.removeAvailability(availId);
+                        Availability.removeAvailability(availId, true);
                         break;
                     case 14:
                         editAmenities(id, scanner);

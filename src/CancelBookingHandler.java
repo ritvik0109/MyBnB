@@ -123,7 +123,7 @@ public class CancelBookingHandler {
     private static void addBackAvailability(List<Booking> bookings, int id) {
         for (Booking booking : bookings) {
             if (booking.getBookingId() == id) {
-                Availability.addAvailability(booking.getListId(), booking.getStartDate(), booking.getEndDate());
+                Availability.addAvailability(booking.getListId(), booking.getStartDate(), booking.getEndDate(), false);
             }
         }
     }

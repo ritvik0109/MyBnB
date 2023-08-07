@@ -79,7 +79,7 @@ public class CreateListingHandler {
                     end = scanner.nextLine();
                 }
 
-                Availability.addAvailability(listId, start, end);
+                Availability.addAvailability(listId, start, end, false);
 
                 int exit = handleInputInt(scanner, "0 to exit, or 1 to add more availability");
                 if (exit == 0)
