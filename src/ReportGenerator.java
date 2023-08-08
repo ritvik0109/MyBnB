@@ -472,6 +472,68 @@ public class ReportGenerator {
 
   // 14. Report hosts and renters with the largest number of cancellations within
   // a year.
+  public static void handleHostsRentersTotalCancellations(Scanner scanner) {
+    scanner.nextLine();
+    String year = handleInputYear(scanner, "year");
+
+    String renterSql = "SELECT u.user_id AS renter_id, u.name AS renter_name, COUNT(*) AS total_cancellations " +
+        "FROM Users u " +
+        "JOIN Bookings b ON u.user_id = b.user_id " +
+        "WHERE YEAR(start_date) = ? AND is_cancelled = true AND is_cancelled_by_host = false " +
+        "GROUP BY u.user_id, renter_name " +
+        "ORDER BY total_cancellations DESC";
+
+    String hostSql = "SELECT u.user_id AS host_id, u.name AS host_name, COUNT(*) AS total_cancellations " +
+        "FROM Users u " +
+        "JOIN Listings l ON u.user_id = l.user_id " +
+        "JOIN Bookings b ON l.list_id = b.list_id " +
+        "WHERE YEAR(start_date) = ? AND is_cancelled = true AND is_cancelled_by_host = true " +
+        "GROUP BY u.user_id, host_name " +
+        "ORDER BY total_cancellations DESC";
+
+    try (ResultSet renterResultSet = SQL.executeQuery(renterSql, year);
+        ResultSet hostResultSet = SQL.executeQuery(hostSql, year)) {
+
+      if (renterResultSet != null) {
+        System.out.println("\nRank of Renters by Total Number of Cancellations in " + year + ":");
+        System.out.println("+------------+-----------------+---------------------+");
+        System.out.println("| User ID    | Renter Name     | Total Cancellations |");
+        System.out.println("+------------+-----------------+---------------------+");
+        while (renterResultSet.next()) {
+          int renterId = renterResultSet.getInt("renter_id");
+          String renterName = renterResultSet.getString("renter_name");
+          int totalCancellations = renterResultSet.getInt("total_cancellations");
+          System.out.printf("| %-10d | %-15s | %-18d |\n", renterId, renterName, totalCancellations);
+        }
+        System.out.println("+------------+-----------------+--------------------+");
+      }
+
+      if (hostResultSet != null) {
+        System.out.println("\nRank of Hosts by Total Number of Cancellations in " + year + ":");
+        System.out.println("+----------+-----------------+---------------------+");
+        System.out.println("| User ID  | Host Name       | Total Cancellations |");
+        System.out.println("+----------+-----------------+---------------------+");
+        while (hostResultSet.next()) {
+          int hostId = hostResultSet.getInt("host_id");
+          String hostName = hostResultSet.getString("host_name");
+          int totalCancellations = hostResultSet.getInt("total_cancellations");
+          System.out.printf("| %-8d | %-15s | %-18d |\n", hostId, hostName, totalCancellations);
+        }
+        System.out.println("+----------+-----------------+--------------------+");
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // 15. For each listing, report the most popular noun phrases in the comments
+  // for that listing
+  public static void handleReportPopularNounPhrasesForListing(Scanner scanner) {
+    scanner.nextLine();
+    String year = handleInputYear(scanner, "year");
+    return;
+  }
 
   // Helpers to retrieve user input:
 
@@ -487,26 +549,25 @@ public class ReportGenerator {
     return stringValue;
   }
 
-  private static Date getDateInput(Scanner scanner, String value) {
-    return handleInputDate(scanner, value, dateFormatter);
-  }
-
-  private static Date handleInputDate(Scanner scanner, String value, SimpleDateFormat dateFormatter) {
-    while (true) {
-      System.out.print("Enter " + value + " (yyyy-MM-dd): ");
-      String dateString = scanner.nextLine();
-      try {
-        return dateFormatter.parse(dateString);
-      } catch (ParseException e) {
-        String message = String
-            .format("Invalid %s format. Please enter a valid date in the format (yyyy-MM-dd): ", value);
-        System.out.println(message);
-      }
-    }
-  }
-
   private static boolean isValidWord(String word) {
     return word.matches("[a-zA-Z]+");
+  }
+
+  private static String handleInputYear(Scanner scanner, String value) {
+    System.out.print("Enter " + value + " (YYYY): ");
+    String stringValue = scanner.nextLine();
+    while (!isValidYear(stringValue)) {
+      String message = String.format("Invalid %s, Please enter a valid year in YYYY format: ", value);
+      System.out.println(message);
+      System.out.print("Enter " + value + " (YYYY): ");
+      stringValue = scanner.nextLine();
+    }
+    return stringValue;
+  }
+
+  private static boolean isValidYear(String input) {
+    // Check if the input matches the YYYY format
+    return input.matches("\\d{4}");
   }
 
   private static int handleInputPostalCode(Scanner scanner, String value) {

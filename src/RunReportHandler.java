@@ -50,6 +50,12 @@ public class RunReportHandler {
         case 13:
           ReportGenerator.handleRankNumBookingsTimeCityMin2(scanner);
           break;
+        case 14:
+          ReportGenerator.handleHostsRentersTotalCancellations(scanner);
+          break;
+        case 15:
+          ReportGenerator.handleReportPopularNounPhrasesForListing(scanner);
+          break;
         case 16:
           System.out.println("...returning to main menu");
           exit = true; // Go back to the main menu
@@ -77,8 +83,10 @@ public class RunReportHandler {
     System.out.println("10. List the hosts that have > 10% of listings for all cities, and countries.");
     System.out.println("11. Rank renters by number of bookings in a specific time.");
     System.out.println("12. Rank renters by number of bookings in a specific time, by city.");
-    System.out.println("13. Rank renters (with a minimum of 2 bookings) by number of bookings in a specific time, by city.");
-
+    System.out
+        .println("13. Rank renters (with a minimum of 2 bookings) by number of bookings in a specific time, by city.");
+    System.out.println("14. Report hosts and renters with the largest number of cancellations within a year.");
+    System.out.println("15. For each listing, report the most popular noun phrases in the comments for that listing.");
     System.out.println("16. Exit, go back to main menu.");
     System.out.print("Enter your choice: ");
   }
