@@ -82,7 +82,7 @@ public class LoginUserHandler {
 
                     UserDetails.setUserId(userId);
                     UserDetails.setUserEmail(userEmail);
-                    UserDetails.setCreditCard(creditCard);
+                    UserDetails.setCreditCard(creditCard, false);
 
                     return true;
                 }

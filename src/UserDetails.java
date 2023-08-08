@@ -17,16 +17,18 @@ public class UserDetails {
         userEmail = email;
     }
 
-    public static void setCreditCard(String cc) {
+    public static void setCreditCard(String cc, boolean show_messages) {
         creditCard = cc;
 
         String sql = "UPDATE Users SET credit_card = ? WHERE user_id = ?";
         String success = SQL.executeUpdate(sql, cc, userId);
         System.out.println();
         if (success.isEmpty()) {
-            System.out.println("Successfully updated credit card!\n");
+            if (show_messages)
+                System.out.println("Successfully updated credit card!\n");
         } else {
-            System.out.println("Error: Failed to update credit card in database.");
+            if (show_messages)
+                System.out.println("Error: Failed to update credit card in database.");
         }
     }
 
