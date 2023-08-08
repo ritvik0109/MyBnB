@@ -1,11 +1,20 @@
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ReportGenerator {
   private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -531,11 +540,111 @@ public class ReportGenerator {
   // for that listing
   public static void handleReportPopularNounPhrasesForListing(Scanner scanner) {
     scanner.nextLine();
-    String year = handleInputYear(scanner, "year");
+    int listingId = handleInputListingId(scanner, "Listing ID");
+
+    // Retrieve the listing and associated comments
+    String sql = "SELECT title, comment_on_listing " +
+        "FROM Listings l " +
+        "JOIN Bookings b ON l.list_id = b.list_id " +
+        "WHERE l.list_id = ? AND b.comment_on_listing IS NOT NULL";
+
+    System.out.println("...currently loading comments and noun phrases");
+
+    PrintStream originalOut = System.out;
+    PrintStream originalErr = System.err;
+
+    // Redirect System.out and System.err to do-nothing streams
+    System.setOut(new PrintStream(new OutputStream() {
+      public void write(int b) {
+      }
+    }));
+    System.setErr(new PrintStream(new OutputStream() {
+      public void write(int b) {
+      }
+    }));
+
+    NLPProcessor nlpProcessor = new NLPProcessor();
+
+    System.setOut(originalOut);
+    System.setErr(originalErr);
+
+    ArrayList<String> commentList = new ArrayList<String>();
+
+    try (ResultSet resultSet = SQL.executeQuery(sql, listingId)) {
+      if (resultSet != null) {
+
+        while (resultSet.next()) {
+          String comment = resultSet.getString("comment_on_listing");
+          commentList.add(comment.toLowerCase());
+        }
+
+        // Perform NLP processing to extract noun phrases
+        List<String> nounPhrases = nlpProcessor.extractNounPhrases(commentList);
+        // Count and rank noun phrases for the listing
+        updateNounPhraseRanking(listingId, nounPhrases);
+
+        // Display the results
+        displayNounPhraseRankings(listingId);
+      } else {
+        System.out.println("No comments found for the specified listing.");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return;
   }
 
-  // Helpers to retrieve user input:
+  private static void updateNounPhraseRanking(int listingId, List<String> nounPhrases) {
+    String deleteSql = "DELETE * FROM NounPhraseRanking WHERE listing_id = ?";
+    SQL.executeUpdate(deleteSql, listingId);
+
+    String insertSql = "INSERT INTO NounPhraseRanking (listing_id, noun_phrase, frequency) VALUES (?, ?, ?)";
+    try {
+      for (String nounPhrase : nounPhrases) {
+        // Count the frequency of each noun phrase in the list
+        int frequency = Collections.frequency(nounPhrases, nounPhrase);
+        SQL.executeUpdate(insertSql, listingId, nounPhrase, frequency);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void displayNounPhraseRankings(int listingId) {
+    String selectSql = "SELECT noun_phrase, frequency FROM NounPhraseRanking WHERE listing_id = ? ORDER BY frequency DESC";
+    try {
+      Connection connection = SQL.getConnection();
+      try (PreparedStatement selectStatement = connection.prepareStatement(selectSql)) {
+        selectStatement.setInt(1, listingId);
+        try (ResultSet resultSet = selectStatement.executeQuery()) {
+          System.out.println("\nNoun Phrase Rankings for Listing ID " + listingId + ":");
+          System.out.println("+-----------------------------------------------+-----------+");
+          System.out.println("| Noun Phrase                                   | Frequency |");
+          System.out.println("+-----------------------------------------------+-----------+");
+
+          // Use a HashSet to store and check for duplicate noun phrases
+          Set<String> displayedNounPhrases = new HashSet<>();
+
+          while (resultSet.next()) {
+            String nounPhrase = resultSet.getString("noun_phrase");
+            int frequency = resultSet.getInt("frequency");
+
+            // Check if the noun phrase has already been displayed
+            if (!displayedNounPhrases.contains(nounPhrase)) {
+              System.out.printf("| %-45s | %-9d |\n", nounPhrase, frequency);
+              displayedNounPhrases.add(nounPhrase);
+            }
+          }
+          System.out.println("+-----------------------------------------------+-----------+");
+        }
+      }
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // --- Helpers to retrieve user input:
 
   private static String handleInputWord(Scanner scanner, String value) {
     System.out.print("Enter " + value + ": ");
@@ -645,4 +754,31 @@ public class ReportGenerator {
     }
   }
 
+  private static int handleInputListingId(Scanner scanner, String value) {
+    System.out.print("Enter " + value + ": ");
+    int listingId = scanner.nextInt();
+
+    // Perform validation: Check if the listing exists in the database
+    if (!isListingExists(listingId)) {
+      System.out.println("Invalid Listing ID. The specified listing does not exist.");
+      return handleInputListingId(scanner, value);
+    }
+
+    return listingId;
+  }
+
+  private static boolean isListingExists(int listingId) {
+    String sql = "SELECT COUNT(*) AS count FROM Listings WHERE list_id = ?";
+
+    try (ResultSet resultSet = SQL.executeQuery(sql, listingId)) {
+      if (resultSet != null && resultSet.next()) {
+        int count = resultSet.getInt("count");
+        return count > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return false;
+  }
 }

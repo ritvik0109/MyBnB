@@ -1,4 +1,4 @@
-Drop TABLE IF EXISTS Users, Listings, Availabilities, Amenities, Bookings;
+Drop TABLE IF EXISTS Users, Listings, Availabilities, Amenities, Bookings, NounPhraseRanking;
 
 CREATE TABLE Users (
   user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -83,6 +83,14 @@ CREATE TABLE Bookings (
   FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (list_id) REFERENCES Listings(list_id),
   KEY user_list_unique (user_id, list_id)
+);
+
+CREATE TABLE NounPhraseRanking (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  listing_id INT,
+  noun_phrase VARCHAR(255),
+  frequency INT,
+  FOREIGN KEY (listing_id) REFERENCES Listings(list_id)
 );
 
 -- MOCK DATA: 
