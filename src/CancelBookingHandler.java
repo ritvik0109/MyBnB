@@ -49,7 +49,7 @@ public class CancelBookingHandler {
             cancelBooking(id, is_host);
             addBackAvailability(bookings, id);
 
-            System.out.print("Enter -1 to return, or enter anything to delete more bookings: ");
+            System.out.print("Enter 0 to delete more bookings, or -1 to return: ");
             int value = getUserChoice(scanner);
             if (value == -1)
                 noMoreCancellations = true;

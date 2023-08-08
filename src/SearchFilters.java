@@ -95,7 +95,7 @@ public class SearchFilters {
         }
 
         if (!startDate.isEmpty() && !endDate.isEmpty())
-            sql += String.format(" av.start_date <= \'%s\' AND av.end_date >= \'%s\'", startDate, endDate);
+            sql += String.format(" av.start_date <= \'%s\' AND av.end_date >= \'%s\' AND", startDate, endDate);
 
         if (amenities != null){
             sql += (amenities.getWifi() ? " am.wifi = true AND" : "");
@@ -123,7 +123,7 @@ public class SearchFilters {
         }
 
         if (minPrice != -1 && maxPrice != -1){
-            sql += String.format(" l.price_per_night > %d AND l.price_per_night < %d AND", minPrice, maxPrice);
+            sql += String.format(" l.price_per_night > %f AND l.price_per_night < %f AND", minPrice, maxPrice);
         }
 
         sql = removeSuffix(sql, "WHERE");

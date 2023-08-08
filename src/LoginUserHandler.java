@@ -38,7 +38,7 @@ public class LoginUserHandler {
 
         // Debugging:
         // String email = "john.doe@example.com";
-        // String password = "pass123";
+        // String password = "password1";
         // isLoginValid(email, password);
 
         if (!exit) {

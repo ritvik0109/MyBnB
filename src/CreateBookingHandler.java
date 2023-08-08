@@ -12,6 +12,7 @@ public class CreateBookingHandler {
         boolean exit = false;
 
         while (!exit){
+            System.out.println("\n--- Search ---");
             // Select filters
             SearchFilters searchFilters = new SearchFilters();
             if (addFilters(scanner)){
@@ -27,6 +28,11 @@ public class CreateBookingHandler {
             String sql = searchFilters.getSearchQuery();
             // System.out.println(sql); 
             List<Listing> listings = displayUserListings(sql);
+
+            if (listings.isEmpty()){
+                System.out.println("\nNo listings found. Please try again.");
+                continue;
+            }
 
             int id = getListingToEdit(listings, scanner);
 
@@ -395,7 +401,7 @@ public class CreateBookingHandler {
                 System.out.print("Invalid credit card number. Please enter a valid credit card number: ");
                 creditCard = getUserInput(scanner);
             }
-            UserDetails.setCreditCard(creditCard);
+            UserDetails.setCreditCard(creditCard, true);
         }
 
         // if filters don't have start and end date, then get start and end date
@@ -415,7 +421,7 @@ public class CreateBookingHandler {
                 String availEnd = resultSet.getString("end_date");
                 availability = new Availability(availId, availStart, availEnd, list_id);
             } else {
-                System.out.println("Failed to create booking! Please try again.");
+                System.out.println("No availability for these dates. Please try again.");
                 return;
             }
         } catch (SQLException e) {
@@ -467,10 +473,10 @@ public class CreateBookingHandler {
     }
 
     private static boolean insertBooking(double totalCost, String startDate, String endDate, int list_id) {
-        String sql = "INSERT INTO Bookings (total_cost, start_date, end_date, user_id, list_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, user_id, list_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         int userId = UserDetails.getUserId();
 
-        String success = SQL.executeUpdate(sql, totalCost, startDate, endDate, userId, list_id);
+        String success = SQL.executeUpdate(sql, false, false, totalCost, startDate, endDate, userId, list_id);
         if (success.isEmpty()) {
             System.out.println("Successfully added booking!");
             return true;
