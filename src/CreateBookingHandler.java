@@ -431,7 +431,7 @@ public class CreateBookingHandler {
         }
 
         // Get total number of days in booking - to calculate total price
-        int days = searchFilters.getDays();
+        int days = searchFilters.getDays() + 1;
         if (days == -1){
             System.out.println("Failed to create booking! Please try again.");
             return;
