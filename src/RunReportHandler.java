@@ -41,7 +41,16 @@ public class RunReportHandler {
         case 10:
           ReportGenerator.handleListHosts10PercentAllCountryCity(scanner);
           break;
-        case 15:
+        case 11:
+          ReportGenerator.handleRankNumBookingsTime(scanner);
+          break;
+        case 12:
+          ReportGenerator.handleRankNumBookingsTimeCity(scanner);
+          break;
+        case 13:
+          ReportGenerator.handleRankNumBookingsTimeCityMin2(scanner);
+          break;
+        case 16:
           System.out.println("...returning to main menu");
           exit = true; // Go back to the main menu
           break;
@@ -66,8 +75,11 @@ public class RunReportHandler {
     System.out.println("8. List the hosts that have > 10% of listings in a country.");
     System.out.println("9. List the hosts that have > 10% of listings in a city, and country.");
     System.out.println("10. List the hosts that have > 10% of listings for all cities, and countries.");
+    System.out.println("11. Rank renters by number of bookings in a specific time.");
+    System.out.println("12. Rank renters by number of bookings in a specific time, by city.");
+    System.out.println("13. Rank renters (with a minimum of 2 bookings) by number of bookings in a specific time, by city.");
 
-    System.out.println("15. Exit, go back to main menu.");
+    System.out.println("16. Exit, go back to main menu.");
     System.out.print("Enter your choice: ");
   }
 

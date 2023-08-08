@@ -186,7 +186,7 @@ public class ReportGenerator {
       if (resultSet != null) {
         System.out.println("\nRank of Hosts by Total Listings in " + country + ":");
         System.out.println("+-----------------+-----------------+------------------+----------------+");
-        System.out.println("| Country         | HostID          | Host Name        | Total Listings |");
+        System.out.println("| Country         | UserID (Host)   | Host Name        | Total Listings |");
         System.out.println("+-----------------+-----------------+------------------+----------------+");
         while (resultSet.next()) {
           String countryName = resultSet.getString("country");
@@ -223,7 +223,7 @@ public class ReportGenerator {
         System.out
             .println("+-----------------+-----------------+-----------------+------------------+----------------+");
         System.out
-            .println("| Country         | City            | HostID          | Host Name        | Total Listings |");
+            .println("| Country         | City            | UserID (Host)   | Host Name        | Total Listings |");
         System.out
             .println("+-----------------+-----------------+-----------------+------------------+----------------+");
         while (resultSet.next()) {
@@ -262,7 +262,7 @@ public class ReportGenerator {
       if (resultSet != null) {
         System.out.println("\nHosts with > 10% of Listings in " + country + ":");
         System.out.println("+-----------------+-----------------+------------------+----------------+------------+");
-        System.out.println("| Country         | HostID          | Host Name        | Total Listings | Percentage |");
+        System.out.println("| Country         | UserID (Host)   | Host Name        | Total Listings | Percentage |");
         System.out.println("+-----------------+-----------------+------------------+----------------+------------+");
         while (resultSet.next()) {
           String countryName = resultSet.getString("country");
@@ -302,7 +302,7 @@ public class ReportGenerator {
         System.out.println(
             "+-----------------+-----------------+-----------------+------------------+----------------+------------+");
         System.out.println(
-            "| Country         | City            | HostID          | Host Name        | Total Listings | Percentage |");
+            "| Country         | City            | UserID (Host)   | Host Name        | Total Listings | Percentage |");
         System.out.println(
             "+-----------------+-----------------+-----------------+------------------+----------------+------------+");
         while (resultSet.next()) {
@@ -342,7 +342,7 @@ public class ReportGenerator {
         System.out.println(
             "+-----------------+-----------------+-----------------+------------------+----------------+------------+");
         System.out.println(
-            "| Country         | City            | HostID          | Host Name        | Total Listings | Percentage |");
+            "| Country         | City            | UserID (Host)   | Host Name        | Total Listings | Percentage |");
         System.out.println(
             "+-----------------+-----------------+-----------------+------------------+----------------+------------+");
         while (resultSet.next()) {
@@ -362,6 +362,116 @@ public class ReportGenerator {
       e.printStackTrace();
     }
   }
+
+  // 11. Rank renters by num of bookings in a specific time
+  public static void handleRankNumBookingsTime(Scanner scanner) {
+    scanner.nextLine();
+    LocalDate startDate = handleInputStartDate(scanner);
+    LocalDate endDate = handleInputEndDate(scanner, startDate);
+
+    String sql = "SELECT u.user_id AS renter_id, u.name AS renter_name, COUNT(b.user_id) AS total_bookings " +
+        "FROM Users u " +
+        "JOIN Bookings b ON u.user_id = b.user_id " +
+        "WHERE b.start_date >= ? AND b.end_date <= ? " +
+        "GROUP BY u.user_id, renter_name " +
+        "ORDER BY total_bookings DESC";
+
+    try (ResultSet resultSet = SQL.executeQuery(sql, startDate, endDate)) {
+      if (resultSet != null) {
+        System.out.println("\nRank of Renters by Total Number of Bookings (" + startDate + " to " + endDate + "):");
+        System.out.println("+-----------------+------------------+----------------+");
+        System.out.println("| Renter ID       | Renter Name      | Total Bookings |");
+        System.out.println("+-----------------+------------------+----------------+");
+        while (resultSet.next()) {
+          int renterId = resultSet.getInt("renter_id");
+          String renterName = resultSet.getString("renter_name");
+          int totalBookings = resultSet.getInt("total_bookings");
+          System.out.printf("| %-15d | %-16s | %-14d |\n",
+              renterId, renterName, totalBookings);
+        }
+        System.out.println("+-----------------+------------------+----------------+");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // 12. Rank renters by number of bookings in a specific time, per city
+  public static void handleRankNumBookingsTimeCity(Scanner scanner) {
+    scanner.nextLine();
+    LocalDate startDate = handleInputStartDate(scanner);
+    LocalDate endDate = handleInputEndDate(scanner, startDate);
+    String city = handleInputWord(scanner, "city");
+
+    String sql = "SELECT l.city, u.user_id AS renter_id, u.name AS renter_name, COUNT(b.user_id) AS total_bookings " +
+        "FROM Users u " +
+        "JOIN Bookings b ON u.user_id = b.user_id " +
+        "JOIN Listings l ON b.list_id = l.list_id " +
+        "WHERE b.start_date >= ? AND b.end_date <= ? AND l.city = ? " +
+        "GROUP BY l.city, u.user_id, renter_name " +
+        "ORDER BY total_bookings DESC";
+
+    try (ResultSet resultSet = SQL.executeQuery(sql, startDate, endDate, city)) {
+      if (resultSet != null) {
+        System.out
+            .println("\nRank of Renters by Number of Bookings in " + city + " (" + startDate + " to " + endDate + "):");
+        System.out.println("+-----------------+-----------------+------------------+----------------+");
+        System.out.println("| City            | Renter ID       | Renter Name      | Total Bookings |");
+        System.out.println("+-----------------+-----------------+------------------+----------------+");
+        while (resultSet.next()) {
+          int renterId = resultSet.getInt("renter_id");
+          String renterName = resultSet.getString("renter_name");
+          int totalBookings = resultSet.getInt("total_bookings");
+          System.out.printf("| %-15s | %-15d | %-16s | %-14d |\n",
+              city, renterId, renterName, totalBookings);
+        }
+        System.out.println("+-----------------+-----------------+------------------+----------------+");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // 13. Rank renters by number of bookings in a specific time, per city,
+  // with a minimum of 2 bookings.
+  public static void handleRankNumBookingsTimeCityMin2(Scanner scanner) {
+    scanner.nextLine();
+    LocalDate startDate = handleInputStartDate(scanner);
+    LocalDate endDate = handleInputEndDate(scanner, startDate);
+    String city = handleInputWord(scanner, "city");
+
+    String sql = "SELECT l.city, u.user_id AS renter_id, u.name AS renter_name, COUNT(b.user_id) AS total_bookings " +
+        "FROM Users u " +
+        "JOIN Bookings b ON u.user_id = b.user_id " +
+        "JOIN Listings l ON b.list_id = l.list_id " +
+        "WHERE b.start_date >= ? AND b.end_date <= ? AND l.city = ? " +
+        "GROUP BY l.city, u.user_id, renter_name " +
+        "HAVING total_bookings >= 2 " +
+        "ORDER BY total_bookings DESC";
+
+    try (ResultSet resultSet = SQL.executeQuery(sql, startDate, endDate, city)) {
+      if (resultSet != null) {
+        System.out
+            .println("\nRank of Renters by Number of Bookings in " + city + " (" + startDate + " to " + endDate + "):");
+        System.out.println("+-----------------+-----------------+------------------+----------------+");
+        System.out.println("| City            | Renter ID       | Renter Name      | Total Bookings |");
+        System.out.println("+-----------------+-----------------+------------------+----------------+");
+        while (resultSet.next()) {
+          int renterId = resultSet.getInt("renter_id");
+          String renterName = resultSet.getString("renter_name");
+          int totalBookings = resultSet.getInt("total_bookings");
+          System.out.printf("| %-15s | %-15d | %-16s | %-14d |\n",
+              city, renterId, renterName, totalBookings);
+        }
+        System.out.println("+-----------------+-----------------+------------------+----------------+");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // 14. Report hosts and renters with the largest number of cancellations within
+  // a year.
 
   // Helpers to retrieve user input:
 
