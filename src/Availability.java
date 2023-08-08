@@ -45,7 +45,7 @@ public class Availability {
         this.listId = listId;
     }
 
-    public static void addAvailability(int listId, String startDate, String endDate){
+    public static void addAvailability(int listId, String startDate, String endDate, boolean show_messages){
         // If there is an availability with an end_date = startDate - 1, then merge them
         String sql = "SELECT * FROM Availabilities WHERE list_id = ? AND end_date = ?";
         try (ResultSet resultSet = SQL.executeQuery(sql, listId, getPreviousDay(startDate))) {
@@ -54,7 +54,7 @@ public class Availability {
                 String availStart = resultSet.getString("start_date");
 
                 // Delete this availability
-                removeAvailability(availId);
+                removeAvailability(availId, show_messages);
 
                 // Merged availability has new start date
                 startDate = availStart;
@@ -74,7 +74,7 @@ public class Availability {
                 String availEnd = resultSet.getString("end_date");
 
                 // Delete this availability
-                removeAvailability(availId);
+                removeAvailability(availId, show_messages);
 
                 // Merged availability has new end date
                 endDate = availEnd;
@@ -86,28 +86,35 @@ public class Availability {
             return;
         }
 
-        insertAvailability(listId, startDate, endDate);
+        insertAvailability(listId, startDate, endDate, show_messages);
     }
 
-    private static void insertAvailability(int listId, String startDate, String endDate){
+    private static void insertAvailability(int listId, String startDate, String endDate, boolean show_messages){
         String sql = "INSERT INTO Availabilities (start_date, end_date, list_id) VALUES (?, ?, ?)";
         String success = SQL.executeUpdate(sql, startDate, endDate, listId);
         if (success.isEmpty()) {
-            System.out.println("Successfully added availability!");
+            if (show_messages)
+                System.out.println("Successfully added availability!");
+            return;
         } else {
-            System.out.println("Failed to add availability! Please try again.");
-            System.out.println("Error: " + success);
+            if (show_messages){
+                System.out.println("Failed to add availability! Please try again.");
+                System.out.println("Error: " + success);
+            }
         }
     }
 
-    public static void removeAvailability(int availId){
+    public static void removeAvailability(int availId, boolean show_messages){
         String sql = "DELETE FROM Availabilities WHERE avail_id = ?";
         String success = SQL.executeUpdate(sql, availId);
         if (success.isEmpty()) {
-            System.out.println("Successfully deleted availability!");
+            if (show_messages)
+                System.out.println("Successfully deleted availability!");
         } else {
-            System.out.println("Failed to delete availability! Please try again.");
-            System.out.println("Error: " + success);
+            if (show_messages){
+                System.out.println("Failed to delete availability! Please try again.");
+                System.out.println("Error: " + success);
+            }
         }
     }
 

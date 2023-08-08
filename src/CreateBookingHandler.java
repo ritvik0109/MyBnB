@@ -440,9 +440,9 @@ public class CreateBookingHandler {
         }
 
         // Remove the availability for the listing
-        Availability.removeAvailability(availability.getAvailId());
-        Availability.addAvailability(list_id, availability.getStartDate(), getPreviousDay(start));
-        Availability.addAvailability(list_id, getNextDay(end), availability.getEndDate());
+        Availability.removeAvailability(availability.getAvailId(), false);
+        Availability.addAvailability(list_id, availability.getStartDate(), getPreviousDay(start), false);
+        Availability.addAvailability(list_id, getNextDay(end), availability.getEndDate(), false);
     }
 
     private static SearchFilters getSearchFilterDates(SearchFilters searchFilters, Scanner scanner){

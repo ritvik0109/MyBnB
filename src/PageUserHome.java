@@ -23,7 +23,7 @@ public class PageUserHome {
                     CreateBookingHandler.search(scanner);
                     break;
                 case 5:
-                    System.out.println("Cancel Booking");
+                    CancelBookingHandler.handleCancelBooking(scanner);
                     break;
                 case 6:
                     PageReviewExp.handleReviewExp(scanner);
