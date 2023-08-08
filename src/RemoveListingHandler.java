@@ -28,7 +28,7 @@ public class RemoveListingHandler {
       ListingInfo selectedListing = listings.get(selectedNumber - 1);
       int listId = selectedListing.getListId();
 
-      boolean success = removeListing(listId);
+      boolean success = removeListing(listId, false);
 
       if (success) {
         System.out.println("Listing with title: \"" + selectedListing.getTitle() + "\", number: "
@@ -42,8 +42,65 @@ public class RemoveListingHandler {
     }
   }
 
-  private static boolean removeListing(int listId) {
-    String sql = "DELETE FROM Listings WHERE list_id = ?";
+  private static boolean removeListing(int listId, boolean show_messages) {
+    // Remove all availability for listing
+    String sql = "DELETE FROM Availabilities WHERE list_id = ?";
+    String success = SQL.executeUpdate(sql, listId);
+    if (success.isEmpty()) {
+        if (show_messages)
+            System.out.println("Successfully deleted availability!");
+    } else {
+        if (show_messages){
+            System.out.println("Failed to delete availability! Please try again later.");
+            System.out.println("Error: " + success);
+        }
+        return false;
+    }
+
+    // Remove all amenities for listing
+    sql = "DELETE FROM Amenities WHERE list_id = ?";
+    success = SQL.executeUpdate(sql, listId);
+    if (success.isEmpty()) {
+        if (show_messages)
+            System.out.println("Successfully deleted amenities!");
+    } else {
+        if (show_messages){
+            System.out.println("Failed to delete amenities! Please try again later.");
+            System.out.println("Error: " + success);
+        }
+        return false;
+    }
+
+    // Cancel all future booking for listing
+    sql = "UPDATE Bookings SET is_cancelled = true, is_cancelled_by_host = true WHERE start_date > CURDATE() AND list_id = ?";
+    success = SQL.executeUpdate(sql, listId);
+    if (success.isEmpty()) {
+        if (show_messages)
+            System.out.println("Successfully cancelled all future bookings!");
+    } else {
+        if (show_messages){
+            System.out.println("Failed to cancel future bookings for this listing! Please try again later.");
+            System.out.println("Error: " + success);
+        }
+        return false;
+    }
+
+    // Set list_id to NULL for all bookings (past and future) with this listing
+    sql = "UPDATE Bookings SET list_id = NULL WHERE list_id = ?";
+    success = SQL.executeUpdate(sql, listId);
+    if (success.isEmpty()) {
+        if (show_messages)
+            System.out.println("Successfully updated all bookings for this listing!");
+    } else {
+        if (show_messages){
+            System.out.println("Failed to update bookings for this listing! Please try again later.");
+            System.out.println("Error: " + success);
+        }
+        return false;
+    }
+
+    // Remove listing from listings table
+    sql = "DELETE FROM Listings WHERE list_id = ?";
     try {
       String result = SQL.executeUpdate(sql, listId);
       return result.isEmpty(); // If the result is empty, it means the deletion was successful
