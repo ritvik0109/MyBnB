@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Amenities {
 
     private int amenityId;
@@ -46,6 +49,7 @@ public class Amenities {
         this.iron = iron;
         this.smokeAlarm = smokeAlarm;
         this.carbonMonoxideAlarm = carbonMonoxideAlarm;
+        this.pool = pool;
         this.freeParking = freeParking;
         this.crib = crib;
         this.bbqGrill = bbqGrill;
@@ -83,6 +87,106 @@ public class Amenities {
         this.gym = bool;
         this.evCharger = bool;
         this.hotTub = bool;
+    }
+
+    public List<String> getCodes(boolean included) {
+        List<String> codes = new ArrayList<String>();
+
+        if (this.wifi == included)
+            codes.add("wifi");
+        if (this.kitchen == included)
+            codes.add("kitchen");
+        if (this.washer == included)
+            codes.add("washer");
+        if (this.dryer == included)
+            codes.add("dryer");
+        if (this.ac == included)
+            codes.add("ac");
+        if (this.heating == included)
+            codes.add("heating");
+        if (this.workspace == included)
+            codes.add("workspace");
+        if (this.tv == included)
+            codes.add("tv");
+        if (this.hairDryer == included)
+            codes.add("hair_dryer");
+        if (this.iron == included)
+            codes.add("iron");
+        if (this.smokeAlarm == included)
+            codes.add("smoke_alarm");
+        if (this.carbonMonoxideAlarm == included)
+            codes.add("carbon_monoxide_alarm");
+        if (this.pool == included)
+            codes.add("pool");
+        if (this.freeParking == included)
+            codes.add("free_parking");
+        if (this.crib == included)
+            codes.add("crib");
+        if (this.bbqGrill == included)
+            codes.add("bbq_grill");
+        if (this.indoorFireplace == included)
+            codes.add("indoor_fireplace");
+        if (this.smokingAllowed == included)
+            codes.add("smoking_allowed");
+        if (this.breakfast == included)
+            codes.add("breakfast");
+        if (this.gym == included)
+            codes.add("gym");
+        if (this.evCharger == included)
+            codes.add("ev_charger");
+        if (this.hotTub == included)
+            codes.add("hot_tub");
+        
+        return codes;
+    }
+
+    public String getAmenityNamebyCode(String code) {
+        if (code == "wifi")
+            return "Wifi";
+        if (code == "kitchen")
+            return "Kitchen";
+        if (code == "washer")
+            return "Washer";
+        if (code == "dryer")
+            return "Dryer";
+        if (code == "ac")
+            return "AC";
+        if (code == "heating")
+            return "Heating";
+        if (code == "workspace")
+            return "Workspace";
+        if (code == "tv")
+            return "TV";
+        if (code == "hair_dryer")
+            return "Hair Dryer";
+        if (code == "iron")
+            return "Iron";
+        if (code == "smoke_alarm")
+            return "Smoke Alarm";
+        if (code == "carbon_monoxide_alarm")
+            return "Carbon Monoxide Alarm";
+        if (code == "pool")
+            return "Pool";
+        if (code == "free_parking")
+            return "Free Parking";
+        if (code == "crib")
+            return "Crib";
+        if (code == "bbq_grill")
+            return "BBQ Grill";
+        if (code == "indoor_fireplace")
+            return "Indoor Fireplace";
+        if (code == "smoking_allowed")
+            return "Smoking Allowed";
+        if (code == "breakfast")
+            return "Breakfast";
+        if (code == "gym")
+            return "Gym";
+        if (code == "ev_charger")
+            return "EV Charger";
+        if (code == "hot_tub")
+            return "Hot Tub";
+
+        return "";
     }
 
     // Getters and setters
@@ -380,18 +484,18 @@ public class Amenities {
         setAmenity("hot_tub", hotTub);
     }
 
-    public void addAmenity(){
-        // Adds the current amenity to the amenity 
+    public void addAmenity() {
+        // Adds the current amenity to the amenity
         String sql = "INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, " +
-                         "iron, smoke_alarm, carbon_monoxide_alarm, spool, free_parking, crib, bbq_grill, " +
-                         "indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, " +
+                "indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String success = SQL.executeUpdate(sql, this.wifi, this.kitchen, this.washer, this.dryer, this.ac,
-                        this.heating, this.workspace, this.tv, this.hairDryer, this.iron, this.smokeAlarm,
-                        this.carbonMonoxideAlarm, this.pool, this.freeParking, this.crib, this.bbqGrill,
-                        this.indoorFireplace, this.smokingAllowed, this.breakfast, this.gym, this.evCharger,
-                        this.hotTub, this.listId);
+                this.heating, this.workspace, this.tv, this.hairDryer, this.iron, this.smokeAlarm,
+                this.carbonMonoxideAlarm, this.pool, this.freeParking, this.crib, this.bbqGrill,
+                this.indoorFireplace, this.smokingAllowed, this.breakfast, this.gym, this.evCharger,
+                this.hotTub, this.listId);
         if (success.isEmpty()) {
             System.out.println("Successfully added amenities!");
         } else {

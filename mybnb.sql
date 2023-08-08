@@ -483,7 +483,8 @@ VALUES
 ('hotel', 'Elegant Beachfront Resort', 'An elegant resort located right on the beachfront.', 320.00, '2525 Pine St', 'Miami Beach', 'USA', 33139, 'Suite 400', -80.130045, 25.790654, 18),
 ('house', 'Cozy Country Cabin', 'A cozy cabin in the countryside, perfect for a getaway.', 150.00, '2626 Birch St', 'Carmel', 'USA', 93923, 'Unit 6', -121.935791, 36.555239, 19),
 ('apartment', 'Urban Chic Loft', 'An urban chic loft with a trendy and artistic ambiance.', 180.00, '2727 Cedar St', 'Kansas City', 'USA', 64105, 'Unit 10C', -94.578566, 39.099724, 20);
-
+-- Average price for listings 71 to 80 is 208
+-- Only listings 71 to 80 have a hot tub!!
 
 -- Bookings Table (100)
 INSERT INTO Bookings (is_cancelled, is_cancelled_by_host, total_cost, start_date, end_date, rate_listing, comment_on_listing, rate_host, comment_on_host, rate_renter, comment_on_renter, user_id, list_id)
@@ -644,31 +645,31 @@ VALUES
 ('2023-01-12', '2023-12-17', 79),
 ('2023-01-20', '2023-12-25', 80);
 
-
+-- Listings 51 to 55 have no amenities
 
 -- Amenities Table (40)
 INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
 VALUES
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 41),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 41),
 (true, true, true, false, true, true, true, true, true, false, true, true, false, true, false, true, false, false, true, true, true, false, 42),
 (true, true, false, false, true, true, true, true, false, false, true, true, false, true, false, true, false, true, true, false, true, false, 43),
 (true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 44),
 (false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 45),
 (true, true, true, false, true, true, true, true, false, false, true, true, false, true, false, true, true, false, true, false, true, false, 46),
 (false, true, true, false, true, true, true, true, false, false, true, true, false, true, false, true, false, true, true, true, true, false, 47),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 48),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 49),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 48),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 49),
 (true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 50),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 51),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 52),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 53),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 54),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 55),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 56),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 57),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 58),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 59),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 60),
+(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 51),
+(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 52),
+(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 53),
+(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 54),
+(false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 55),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 56),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 57),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 58),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 59),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 60),
 (true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 61),
 (true, true, true, false, true, true, true, true, true, false, true, true, false, true, false, true, false, false, true, true, true, false, 62),
 (true, true, false, false, true, true, true, true, false, false, true, true, false, true, false, true, false, true, true, false, true, false, 63),
@@ -676,8 +677,8 @@ VALUES
 (false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 65),
 (true, true, true, false, true, true, true, true, false, false, true, true, false, true, false, true, true, false, true, false, true, false, 66),
 (false, true, true, false, true, true, true, true, false, false, true, true, false, true, false, true, false, true, true, true, true, false, 67),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 68),
-(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 69),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 68),
+(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 69),
 (true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, 70),
 (true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 71),
 (true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, 72),
