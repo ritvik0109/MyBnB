@@ -60,7 +60,7 @@ public class CreateListingHandler {
 
         if (listId != -1){
             Amenities amenities = new Amenities(false, listId);
-            amenities.addAmenity();
+            amenities.addAmenity(false);
             amenities = editAmenities(scanner, amenities);
 
             // Add availability
@@ -119,7 +119,6 @@ public class CreateListingHandler {
                 +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int userId = UserDetails.getUserId();
-        System.out.println("UserID: " + Integer.toString(UserDetails.getUserId()));
 
         // Truncated values to fit the schema specifications:
         BigDecimal trPrice = pricePerNight.setScale(2, RoundingMode.DOWN);
@@ -381,7 +380,7 @@ public class CreateListingHandler {
 
     private static boolean isValidBigDecimal(BigDecimal inputValue) {
         // Check if the input value is not null and greater than zero
-        return inputValue != null && inputValue.compareTo(BigDecimal.ZERO) > 0;
+        return inputValue != null;
     }
 
     private static boolean isValidWord(String word) {

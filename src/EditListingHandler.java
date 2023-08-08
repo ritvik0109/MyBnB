@@ -93,7 +93,7 @@ public class EditListingHandler {
                         listing.setUnitRoomNumber(unit);
                         break;
                     case 12:
-                        System.out.println("Current Availability: ");
+                        System.out.println("\nCurrent Availability: ");
                         displayListingAvailability(id);
 
                         System.out.print("Enter the start date (YYYY-MM-DD): ");
@@ -114,7 +114,7 @@ public class EditListingHandler {
                         Availability.addAvailability(id, start, end, true);
                         break;
                     case 13:
-                        System.out.println("Current Availability: ");
+                        System.out.println("\nCurrent Availability: ");
                         List<Availability> availabilities = displayListingAvailability(id);
                         int availId = getAvailToDelete(availabilities, scanner);
                         Availability.removeAvailability(availId, true);
@@ -253,10 +253,10 @@ public class EditListingHandler {
                 availabilities.add(avail);
 
                 // Display the listing information
-                System.out.println("\n--------------\n");
                 System.out.println("Availability ID: " + availId);
                 System.out.println("Start date: " + startDate);
                 System.out.println("End date: " + endDate);
+                System.out.println("\n--------------\n");
             }
             return availabilities;
         } catch (SQLException e) {
@@ -294,10 +294,10 @@ public class EditListingHandler {
     }
 
     private static int getAvailToDelete(List<Availability> availabilities, Scanner scanner) {
-        System.out.print("Select which availability to delete (Availability ID): ");
+        System.out.print("Select which availability to delete (Availability ID), or enter -1 to return: ");
         int id = getUserChoice(scanner);
-        while (!containsAvailId(availabilities, id)) {
-            System.out.print("Please select a valid availability id: ");
+        while (!containsAvailId(availabilities, id) && id != -1) {
+            System.out.print("Please select a valid availability id, or enter -1 to return: ");
             id = getUserChoice(scanner);
         }
         return id;
@@ -325,70 +325,70 @@ public class EditListingHandler {
 
             switch (toUpdate) {
                 case 1:
-                    amenities.setWifi(!amenities.getWifi());
+                    amenities.updateWifi(!amenities.getWifi());
                     break;
                 case 2:
-                    amenities.setKitchen(!amenities.getKitchen());
+                    amenities.updateKitchen(!amenities.getKitchen());
                     break;
                 case 3:
-                    amenities.setWasher(!amenities.getWasher());
+                    amenities.updateWasher(!amenities.getWasher());
                     break;
                 case 4:
-                    amenities.setDryer(!amenities.getDryer());
+                    amenities.updateDryer(!amenities.getDryer());
                     break;
                 case 5:
-                    amenities.setAc(!amenities.getAc());
+                    amenities.updateAc(!amenities.getAc());
                     break;
                 case 6:
-                    amenities.setHeating(!amenities.getHeating());
+                    amenities.updateHeating(!amenities.getHeating());
                     break;
                 case 7:
-                    amenities.setWorkspace(!amenities.getWorkspace());
+                    amenities.updateWorkspace(!amenities.getWorkspace());
                     break;
                 case 8:
-                    amenities.setTv(!amenities.getTv());
+                    amenities.updateTv(!amenities.getTv());
                     break;
                 case 9:
-                    amenities.setHairDryer(!amenities.getHairDryer());
+                    amenities.updateHairDryer(!amenities.getHairDryer());
                     break;
                 case 10:
-                    amenities.setIron(!amenities.getIron());
+                    amenities.updateIron(!amenities.getIron());
                     break;
                 case 11:
-                    amenities.setSmokeAlarm(!amenities.getSmokeAlarm());
+                    amenities.updateSmokeAlarm(!amenities.getSmokeAlarm());
                     break;
                 case 12:
-                    amenities.setCarbonMonoxideAlarm(!amenities.getCarbonMonoxideAlarm());
+                    amenities.updateCarbonMonoxideAlarm(!amenities.getCarbonMonoxideAlarm());
                     break;
                 case 13:
-                    amenities.setPool(!amenities.getPool());
+                    amenities.updatePool(!amenities.getPool());
                     break;
                 case 14:
-                    amenities.setFreeParking(!amenities.getFreeParking());
+                    amenities.updateFreeParking(!amenities.getFreeParking());
                     break;
                 case 15:
-                    amenities.setCrib(!amenities.getCrib());
+                    amenities.updateCrib(!amenities.getCrib());
                     break;
                 case 16:
-                    amenities.setBbqGrill(!amenities.getBbqGrill());
+                    amenities.updateBbqGrill(!amenities.getBbqGrill());
                     break;
                 case 17:
-                    amenities.setIndoorFireplace(!amenities.getIndoorFireplace());
+                    amenities.updateIndoorFireplace(!amenities.getIndoorFireplace());
                     break;
                 case 18:
-                    amenities.setSmokingAllowed(!amenities.getSmokingAllowed());
+                    amenities.updateSmokingAllowed(!amenities.getSmokingAllowed());
                     break;
                 case 19:
-                    amenities.setBreakfast(!amenities.getBreakfast());
+                    amenities.updateBreakfast(!amenities.getBreakfast());
                     break;
                 case 20:
-                    amenities.setGym(!amenities.getGym());
+                    amenities.updateGym(!amenities.getGym());
                     break;
                 case 21:
-                    amenities.setEvCharger(!amenities.getEvCharger());
+                    amenities.updateEvCharger(!amenities.getEvCharger());
                     break;
                 case 22:
-                    amenities.setHotTub(!amenities.getHotTub());
+                    amenities.updateHotTub(!amenities.getHotTub());
                     break;
                 case 23:
                     noMoreEdits = true;

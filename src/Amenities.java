@@ -484,7 +484,7 @@ public class Amenities {
         setAmenity("hot_tub", hotTub);
     }
 
-    public void addAmenity() {
+    public void addAmenity(boolean show_messages) {
         // Adds the current amenity to the amenity
         String sql = "INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, " +
                 "iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, " +
@@ -497,10 +497,13 @@ public class Amenities {
                 this.indoorFireplace, this.smokingAllowed, this.breakfast, this.gym, this.evCharger,
                 this.hotTub, this.listId);
         if (success.isEmpty()) {
-            System.out.println("Successfully added amenities!");
+            if (show_messages)
+                System.out.println("Successfully added amenities!");
         } else {
-            System.out.println("Failed to add amenities! Please try again.");
-            System.out.println("Error: " + success);
+            if (show_messages){
+                System.out.println("Failed to add amenities! Please try again.");
+                System.out.println("Error: " + success);
+            }
         }
     }
 
