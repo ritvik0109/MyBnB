@@ -28,8 +28,8 @@ public class CreateListingHandler {
         BigDecimal pricePerNight = handleInputBigDecimal(scanner, "price per night");
 
         String address = handleInputString(scanner, "address");
-        String city = handleInputWord(scanner, "city");
-        String country = handleInputWord(scanner, "country");
+        String city = handleInputString(scanner, "city");
+        String country = handleInputString(scanner, "country");
 
         int postalCode = handleInputInt(scanner, "postal code");
         String unitRoomNumber = handleInputString(scanner, "unit/room number");
@@ -284,7 +284,7 @@ public class CreateListingHandler {
 
             codes = amenities.getCodes(false);
             for (String code : codes){
-                sql += String.format("AND am.%s = false", code);
+                sql += String.format(" AND am.%s = false", code);
             }
 
             try (ResultSet resultSet = SQL.executeQuery(sql)) {
