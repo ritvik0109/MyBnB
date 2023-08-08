@@ -54,15 +54,13 @@ public class CreateListingHandler {
         // BigDecimal longitude = new BigDecimal(100);
         // BigDecimal latitude = new BigDecimal(-100);
 
-        boolean success = createListing(propertyType, title, description, pricePerNight, address, city, country, postalCode,
+        int listId = createListing(propertyType, title, description, pricePerNight, address, city, country, postalCode,
                 unitRoomNumber, longitude, latitude);
 
-        // For the getListId method, I assume that all the attributes will together be unique!
-        int listId = getListId(propertyType, title, description, pricePerNight, address, city, country, postalCode,
-                unitRoomNumber, longitude, latitude);
 
-        if (success && listId != -1){
+        if (listId != -1){
             Amenities amenities = new Amenities(false, listId);
+            amenities.addAmenity();
             amenities = editAmenities(scanner, amenities);
 
             // Add availability
@@ -97,19 +95,23 @@ public class CreateListingHandler {
 
             suggestAmenities(amenities, pricePerNight.doubleValue()); // all countries
 
-            if (addMoreAmenities(scanner))
+            if (update(scanner, "add more amenities"))
                 amenities = editAmenities(scanner, amenities);
 
-            // TODO We suggest a price for the listing now
+            suggestPrice(amenities, pricePerNight.doubleValue());
 
-            // Would you like to update the price?
+            if (update(scanner, "update the price (per night)")){
+                pricePerNight = handleInputBigDecimal(scanner, "price per night");
 
-            // 
-        }
-        System.out.println("\nSuccessfully added listing! Return to Main Menu");
+                updatePrice(listId, pricePerNight.doubleValue(), true);
+            }
+
+            System.out.println("\nSuccessfully added listing! Return to Main Menu");
+        } else
+            System.out.println("\nFailed to add listing. Please try again.");
     }
 
-    private static boolean createListing(String propertyType, String title, String description,
+    private static int createListing(String propertyType, String title, String description,
             BigDecimal pricePerNight, String address, String city, String country,
             int postalCode, String unitRoomNumber, BigDecimal longitude, BigDecimal latitude) {
         // SQL QUERY: Perform sign-up process here
@@ -124,42 +126,13 @@ public class CreateListingHandler {
         BigDecimal trLongitude = longitude.setScale(9, RoundingMode.DOWN);
         BigDecimal trLatitude = latitude.setScale(9, RoundingMode.DOWN);
 
-        String success = SQL.executeUpdate(sql, propertyType, title, description, trPrice, address, city, country,
+        int success = SQL.executeUpdateAndGetKey(sql, propertyType, title, description, trPrice, address, city, country,
                 postalCode, unitRoomNumber, trLongitude, trLatitude, userId);
-        if (success.isEmpty()) {
-            return true;
-        } else {
+        if (success == -1) {
             System.out.println("Failed to create listing! Please try again.");
             System.out.println("Error: " + success);
-            return false;
         }
-    }
-
-    private static int getListId(String propertyType, String title, String description,
-            BigDecimal pricePerNight, String address, String city, String country,
-            int postalCode, String unitRoomNumber, BigDecimal longitude, BigDecimal latitude) {
-        // SQL QUERY: Perform sign-up process here
-        String sql = "SELECT list_id FROM Listings WHERE property_type = ? AND title = ?" + 
-                " AND description = ? AND price_per_night = ? AND address = ? AND city = ?" + 
-                " AND country = ? AND postal_code = ? AND unit_room_number = ?" +
-                " AND longitude = ? AND latitude = ? AND user_id = ?";
-        int userId = UserDetails.getUserId();
-
-        // Truncated values to fit the schema specifications:
-        BigDecimal trPrice = pricePerNight.setScale(2, RoundingMode.DOWN);
-        BigDecimal trLongitude = longitude.setScale(9, RoundingMode.DOWN);
-        BigDecimal trLatitude = latitude.setScale(9, RoundingMode.DOWN);
-
-        try (ResultSet resultSet = SQL.executeQuery(sql, propertyType, title, description,
-                                trPrice, address, city, country, postalCode, unitRoomNumber,
-                                trLongitude, trLatitude, userId);) {
-            while (resultSet.next()) {
-                return resultSet.getInt("list_id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
+        return success;
     }
 
     private static Amenities editAmenities(Scanner scanner, Amenities amenities) {
@@ -172,70 +145,70 @@ public class CreateListingHandler {
 
             switch (toUpdate) {
                 case 1:
-                    amenities.setWifi(!amenities.getWifi());
+                    amenities.updateWifi(!amenities.getWifi());
                     break;
                 case 2:
-                    amenities.setKitchen(!amenities.getKitchen());
+                    amenities.updateKitchen(!amenities.getKitchen());
                     break;
                 case 3:
-                    amenities.setWasher(!amenities.getWasher());
+                    amenities.updateWasher(!amenities.getWasher());
                     break;
                 case 4:
-                    amenities.setDryer(!amenities.getDryer());
+                    amenities.updateDryer(!amenities.getDryer());
                     break;
                 case 5:
-                    amenities.setAc(!amenities.getAc());
+                    amenities.updateAc(!amenities.getAc());
                     break;
                 case 6:
-                    amenities.setHeating(!amenities.getHeating());
+                    amenities.updateHeating(!amenities.getHeating());
                     break;
                 case 7:
-                    amenities.setWorkspace(!amenities.getWorkspace());
+                    amenities.updateWorkspace(!amenities.getWorkspace());
                     break;
                 case 8:
-                    amenities.setTv(!amenities.getTv());
+                    amenities.updateTv(!amenities.getTv());
                     break;
                 case 9:
-                    amenities.setHairDryer(!amenities.getHairDryer());
+                    amenities.updateHairDryer(!amenities.getHairDryer());
                     break;
                 case 10:
-                    amenities.setIron(!amenities.getIron());
+                    amenities.updateIron(!amenities.getIron());
                     break;
                 case 11:
-                    amenities.setSmokeAlarm(!amenities.getSmokeAlarm());
+                    amenities.updateSmokeAlarm(!amenities.getSmokeAlarm());
                     break;
                 case 12:
-                    amenities.setCarbonMonoxideAlarm(!amenities.getCarbonMonoxideAlarm());
+                    amenities.updateCarbonMonoxideAlarm(!amenities.getCarbonMonoxideAlarm());
                     break;
                 case 13:
-                    amenities.setPool(!amenities.getPool());
+                    amenities.updatePool(!amenities.getPool());
                     break;
                 case 14:
-                    amenities.setFreeParking(!amenities.getFreeParking());
+                    amenities.updateFreeParking(!amenities.getFreeParking());
                     break;
                 case 15:
-                    amenities.setCrib(!amenities.getCrib());
+                    amenities.updateCrib(!amenities.getCrib());
                     break;
                 case 16:
-                    amenities.setBbqGrill(!amenities.getBbqGrill());
+                    amenities.updateBbqGrill(!amenities.getBbqGrill());
                     break;
                 case 17:
-                    amenities.setIndoorFireplace(!amenities.getIndoorFireplace());
+                    amenities.updateIndoorFireplace(!amenities.getIndoorFireplace());
                     break;
                 case 18:
-                    amenities.setSmokingAllowed(!amenities.getSmokingAllowed());
+                    amenities.updateSmokingAllowed(!amenities.getSmokingAllowed());
                     break;
                 case 19:
-                    amenities.setBreakfast(!amenities.getBreakfast());
+                    amenities.updateBreakfast(!amenities.getBreakfast());
                     break;
                 case 20:
-                    amenities.setGym(!amenities.getGym());
+                    amenities.updateGym(!amenities.getGym());
                     break;
                 case 21:
-                    amenities.setEvCharger(!amenities.getEvCharger());
+                    amenities.updateEvCharger(!amenities.getEvCharger());
                     break;
                 case 22:
-                    amenities.setHotTub(!amenities.getHotTub());
+                    amenities.updateHotTub(!amenities.getHotTub());
                     break;
                 case 23:
                     noMoreEdits = true;
@@ -245,8 +218,6 @@ public class CreateListingHandler {
                     break;
             }
         }
-
-        amenities.addAmenity();
 
         return amenities;
     }
@@ -280,7 +251,7 @@ public class CreateListingHandler {
     }
 
     private static void suggestAmenities(Amenities amenities, double price_per_night){
-        List<String> codes = amenities.getNotIncludedCodes();
+        List<String> codes = amenities.getCodes(false);
 
         for (String code : codes){
             // Get average price of listings that have this amenity
@@ -289,7 +260,7 @@ public class CreateListingHandler {
                 if (resultSet.next()) {
                     int averagePrice = resultSet.getInt("average_price");
                     if (averagePrice > price_per_night) {
-                        System.out.println("Suggested amenity to add: " + amenities.getAmenityNamebyCode(code) + "; Suggested price increase: " + (averagePrice - price_per_night));
+                        System.out.println("\nSuggested amenity to add: " + amenities.getAmenityNamebyCode(code) + "; Suggested price increase: " + (averagePrice - price_per_night));
                     }
                 }
             } catch (SQLException e) {
@@ -298,10 +269,69 @@ public class CreateListingHandler {
         }
     }
 
-    private static boolean addMoreAmenities(Scanner scanner) {
-        System.out.print("\nEnter 1 to add more amenities, or 0 to continue: ");
+    private static boolean update(Scanner scanner, String message) {
+        System.out.print("\nEnter 1 to " + message + ", or 0 to continue: ");
         int choice = getUserChoice(scanner);
         return (choice == 1);
+    }
+
+    private static void suggestPrice(Amenities amenities, double current){
+        List<String> codes = amenities.getCodes(true);
+        int count = 0;
+        double aggregatedPrice = 0;
+
+        if (codes.isEmpty()){
+            String sql = "SELECT AVG(price_per_night) AS average_price FROM Listings AS l JOIN Amenities AS am WHERE l.list_id = am.list_id";
+
+            codes = amenities.getCodes(false);
+            for (String code : codes){
+                sql += String.format("AND am.%s = false", code);
+            }
+
+            try (ResultSet resultSet = SQL.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    aggregatedPrice = resultSet.getInt("average_price");
+                    count++;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+        }
+
+        for (String code : codes){
+            // Get average price of listings that have this amenity
+            String sql = String.format("SELECT AVG(price_per_night) AS average_price FROM Listings AS l JOIN Amenities AS am WHERE l.list_id = am.list_id AND am.%s = true", code);
+            try (ResultSet resultSet = SQL.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    int averagePrice = resultSet.getInt("average_price");
+                    aggregatedPrice += averagePrice;
+                    count++;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        double suggested =  aggregatedPrice / count;
+
+        System.out.println("\nCurrent price (per night) for this listing: " + current);
+        System.out.println("Suggested price (per night) for this listing: " + suggested);
+    }
+
+    private static void updatePrice (int list_id, double price, boolean show_messages){
+        String sql = "UPDATE Listings SET price_per_night = ? WHERE list_id=?";
+        String success = SQL.executeUpdate(sql, price, list_id);
+        if (success.isEmpty()) {
+            if (show_messages)
+                System.out.println("Successfully updated price!");
+        } else {
+            if (show_messages){
+                System.out.println("Failed to update price! Please try again.");
+                System.out.println("Error: " + success);
+            }
+            return;
+        }
     }
 
     // -- Data Validation Methods:
