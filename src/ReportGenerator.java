@@ -659,7 +659,7 @@ public class ReportGenerator {
   }
 
   private static boolean isValidWord(String word) {
-    return word.matches("[a-zA-Z]+");
+    return word.matches("[a-zA-Z ]+");
   }
 
   private static String handleInputYear(Scanner scanner, String value) {
