@@ -230,9 +230,9 @@ INSERT INTO Listings (property_type, title, description, price_per_night, addres
 VALUES
 ('apartment', 'City Skyline View', 'Stunning views of the city skyline', 180.00, '123 Elm St', 'New York', 'USA', 56781, 'Unit 7A', -122.123456, 47.678910, 1),
 ('house', 'Lakefront Retreat', 'Relax by the lake in this cozy house', 150.00, '789 Oak St', 'Seattle', 'USA', 56789, 'House 5', -122.123456, 47.678910, 1),
-('apartment', 'Urban Oasis', 'Modern apartment with urban charm', 200.00, '456 Pine St', 'Bridgerton', 'USA', 56720, 'Unit 10B', -122.123456, 47.678910, 1),
+('apartment', 'Urban Oasis', 'Modern apartment with urban charm', 200.00, '456 Pine St', 'New York', 'USA', 56720, 'Unit 10B', -122.123456, 47.678910, 1),
 ('house', 'Mountain Cabin', 'Escape to the mountains in this cabin', 130.00, '789 Maple St', 'Sattleland', 'USA', 56710, 'Cabin 1', -122.123456, 47.678910, 1),
-('apartment', 'Downtown Luxury', 'Luxurious apartment in downtown area', 220.00, '123 Oak St', 'Bordstorm', 'USA', 56760, 'Unit 3D', -122.123456, 47.678910, 1);
+('apartment', 'Downtown Luxury', 'Luxurious apartment in downtown area', 220.00, '123 Oak St', 'New York', 'USA', 56760, 'Unit 3D', -122.123456, 47.678910, 1);
 
 -- Amenities for Listings (User ID: 1, Same Country)
 INSERT INTO Amenities (wifi, kitchen, washer, dryer, ac, heating, workspace, tv, hair_dryer, iron, smoke_alarm, carbon_monoxide_alarm, pool, free_parking, crib, bbq_grill, indoor_fireplace, smoking_allowed, breakfast, gym, ev_charger, hot_tub, list_id)
@@ -302,7 +302,7 @@ VALUES
 INSERT INTO Listings (property_type, title, description, price_per_night, address, city, country, postal_code, unit_room_number, longitude, latitude, user_id)
 VALUES
 ('apartment', 'Cozy Urban Studio', 'Charming studio in the heart of the city', 110.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Unit 2A', -122.123456, 47.678910, 3),
-('house', 'Modern Townhouse', 'Contemporary townhouse with all amenities', 160.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Townhouse 3', -122.123456, 47.678910, 3),
+('house', 'Modern Townhouse', 'Contemporary townhouse with all amenities', 160.00, '123 Oak St', 'New York', 'USA', 56789, 'Townhouse 3', -122.123456, 47.678910, 3),
 ('apartment', 'Riverside Retreat', 'Relax by the river in this serene apartment', 140.00, '123 Oak St', 'Seattle', 'USA', 56789, 'Unit 6B', -122.123456, 47.678910, 3);
 
 -- Amenities for Listings (User ID: 3, Same Postal Code in the USA)
@@ -467,7 +467,7 @@ VALUES
 ('hotel', 'Luxurious City Hotel', 'An elegant and luxurious hotel in the city center.', 250.00, '101 Maple Ave', 'Chicago', 'USA', 60601, 'Suite 500', -87.629798, 41.878114, 14),
 ('house', 'Spacious Family Home', 'A spacious house ideal for families and groups.', 180.00, '202 Pine St', 'Seattle', 'USA', 98101, 'Unit 3', -122.332071, 47.606209, 15),
 ('apartment', 'Modern Loft Apartment', 'A contemporary loft apartment with a city view.', 200.00, '303 Birch St', 'Boston', 'USA', 02108, 'Unit 5D', -71.058880, 42.360082, 16),
-('guesthouse', 'Rustic Mountain Retreat', 'A rustic guesthouse nestled in the mountains.', 100.00, '404 Cedar St', 'Denver', 'USA', 80202, 'Cabin 2', -104.990251, 39.739236, 17),
+('guesthouse', 'Rustic Mountain Retreat', 'A rustic guesthouse nestled in the mountains.', 100.00, '404 Cedar St', 'New York', 'USA', 80202, 'Cabin 2', -104.990251, 39.739236, 17),
 ('hotel', 'Historic Grand Hotel', 'A grand and historic hotel with classic charm.', 300.00, '505 Walnut St', 'New Orleans', 'USA', 70112, 'Suite 800', -90.071532, 29.951066, 18),
 ('house', 'Seaside Cottage', 'A charming cottage by the beach with ocean views.', 160.00, '606 Cherry St', 'Miami', 'USA', 33130, 'Unit 4', -80.191790, 25.761680, 19),
 ('apartment', 'Urban Studio Apartment', 'A cozy studio apartment in the heart of downtown.', 70.00, '707 Elm St', 'Austin', 'USA', 78701, 'Unit 7B', -97.743060, 30.267153, 20),
