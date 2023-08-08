@@ -13,7 +13,6 @@ public class CreateListingHandler {
         System.out.println("\n--- Create a Listing ---");
         scanner.nextLine();
 
-        // Get user input for each attribute of the Listings table
         System.out.print("Enter property type (house/apartment/guesthouse/hotel): ");
         String propertyType = scanner.nextLine();
         while (!isValidPropertyType(propertyType)) {
@@ -36,10 +35,6 @@ public class CreateListingHandler {
 
         BigDecimal longitude = handleInputBigDecimal(scanner, "longitude");
         BigDecimal latitude = handleInputBigDecimal(scanner, "latitude");
-
-        // TODO
-        // Longitude and latitude can be 0 and -ve
-        // City name can have spaces
 
         // Debugging
         // String propertyType = "house";
@@ -65,7 +60,7 @@ public class CreateListingHandler {
 
             // Add availability
             boolean addAvailability = true;
-            while (addAvailability){
+            while (addAvailability) {
                 System.out.println("\nAdd Availability");
                 System.out.print("Enter the start date (YYYY-MM-DD): ");
                 String start = scanner.nextLine();
@@ -73,7 +68,7 @@ public class CreateListingHandler {
                 while (!isValidStartDate(start)) {
                     System.out
                             .print("Invalid start date. Please enter a valid date in the format YYYY-MM-DD: ");
-                    
+
                     start = scanner.nextLine();
                 }
 
@@ -460,3 +455,16 @@ public class CreateListingHandler {
 // String address = "here";
 // String dateOfBirth = "2002-02-02";
 // String sin = "234567890";
+
+// Debugging
+// String propertyType = "house";
+// String title = "random title";
+// String description = "some desctip";
+// BigDecimal pricePerNight = new BigDecimal(90);
+// String address = "100 military";
+// String city = "Scar";
+// String country = "bourough";
+// int postalCode = 123;
+// String unitRoomNumber = "12";
+// BigDecimal longitude = new BigDecimal(100);
+// BigDecimal latitude = new BigDecimal(-100);
